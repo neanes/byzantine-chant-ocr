@@ -1,0 +1,10 @@
+fiftyone
+imutils
+jupyter
+onnx
+onnxruntime
+opencv-contrib-python
+opencv-python
+PyMuPDF
+torch
+torchvision
