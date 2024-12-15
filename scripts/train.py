@@ -54,7 +54,7 @@ class AugmentedDataset(Dataset):
         return augmented_img, label
 
 
-data_dir = "data"
+data_dir = "../data"
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -146,7 +146,8 @@ optimizer = optim.Adam(
 criterion = nn.CrossEntropyLoss()
 
 # Training loop (same as before)
-early_stopper = EarlyStopper(patience=5, min_delta=1e-4)
+# patience=5, min_delta=1e-4
+early_stopper = EarlyStopper(patience=3, min_delta=1e-3)
 
 num_epochs = 50
 try:
