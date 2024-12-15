@@ -314,7 +314,7 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
         maxima = maxima + start
 
         # We should only find one maximum
-        if maxima:
+        if maxima.any():
             textlines.append(maxima.tolist()[0])
 
     # Find textlines before the first baselines. These could be titles, mode keys, etc
@@ -327,7 +327,7 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
             distance=oligon_width / 2,
         )
 
-        if maxima:
+        if maxima.any():
             textlines.extend(maxima.tolist())
             textlines.sort()
 

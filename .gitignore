@@ -2,7 +2,7 @@
 __pycache__/
 .ipynb_checkpoints/
 *.pth
-data/pages/
-data/unclassified*/
+__pages/
+__unclassified/
 __junk/
 __sources/

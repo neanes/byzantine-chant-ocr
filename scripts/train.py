@@ -1,4 +1,5 @@
 import os
+import json
 import torch
 from torchvision import models
 from torchvision import transforms
@@ -7,6 +8,8 @@ from torch.utils.data import Dataset
 from torchvision import datasets
 import torch.nn as nn
 import torch.optim as optim
+
+from test import test_model
 
 
 class EarlyStopper:
@@ -54,7 +57,7 @@ class AugmentedDataset(Dataset):
         return augmented_img, label
 
 
-data_dir = "../data"
+data_dir = "../data/dataset"
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -96,35 +99,51 @@ data_transforms = {
 #         os.rmdir(folder_path)  # Remove empty folder
 
 # Load datasets with augmentations
+# image_datasets = {
+#     "train": AugmentedDataset(
+#         root_dir=os.path.join(data_dir, "train"),
+#         transform=data_transforms["train"],
+#         num_augments=1,
+#     ),
+#     "val": datasets.ImageFolder(
+#         os.path.join(data_dir, "val"),
+#         transform=data_transforms["val"],
+#     ),
+# }
+
+full_dataset = datasets.ImageFolder(data_dir, transform=data_transforms["train"])
+
+
+class_names = full_dataset.classes
+
+with open("../models/classes.json", "w") as f:
+    json.dump(class_names, f, indent=4)
+
+train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
+    full_dataset, [0.7, 0.15, 0.15]
+)
+
 image_datasets = {
-    "train": AugmentedDataset(
-        root_dir=os.path.join(data_dir, "train"),
-        transform=data_transforms["train"],
-        num_augments=1,
-    ),
-    "val": datasets.ImageFolder(
-        os.path.join(data_dir, "val"),
-        transform=data_transforms["val"],
-    ),
+    "train": train_dataset,
+    "val": val_dataset,
+    "test": test_dataset,
 }
 
 # Create DataLoaders
 batch_size = 32
 dataloaders = {
-    "train": DataLoader(image_datasets["train"], batch_size=batch_size, shuffle=True),
-    "val": DataLoader(image_datasets["val"], batch_size=batch_size, shuffle=False),
+    "train": DataLoader(train_dataset, batch_size=batch_size, shuffle=True),
+    "val": DataLoader(val_dataset, batch_size=batch_size, shuffle=False),
+    "test": DataLoader(test_dataset, batch_size=batch_size, shuffle=False),
 }
 
-# Get class names
-class_names = image_datasets["train"].classes
+# print("train classes\n")
+# for n in class_names:
+#     print(n)
 
-print("train classes\n")
-for n in class_names:
-    print(n)
-
-print("val classes\n")
-for n in image_datasets["val"].classes:
-    print(n)
+# print("val classes\n")
+# for n in image_datasets["val"].classes:
+#     print(n)
 
 # Load the pre-trained MobileNetV2 model
 model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
@@ -191,3 +210,6 @@ except KeyboardInterrupt:
     print("Training interrupted! Saving the current model...")
     torch.save(model.state_dict(), "interrupted_model.pth")
     print("Model saved. You can resume training later or use the saved model as is.")
+
+print("\n\nTesting Model\n\n")
+test_model(model, dataloaders["test"], device)

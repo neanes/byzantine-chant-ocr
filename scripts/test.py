@@ -5,18 +5,6 @@ import torchvision.models as models
 import torch
 from torch import nn
 
-transform = transforms.Compose(
-    [
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    ]
-)
-
-# Load test dataset
-test_dataset = datasets.ImageFolder("data/test", transform=transform)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
-
 
 def test_model(model, test_loader, device):
     model.eval()
@@ -47,18 +35,31 @@ def test_model(model, test_loader, device):
     return accuracy, average_loss
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if __name__ == "__main__":
+    transform = transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
 
-with open("models/classes.json") as f:
-    classes = json.load(f)
+    # Load test dataset
+    test_dataset = datasets.ImageFolder("data/test", transform=transform)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
-model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
-num_features = model.last_channel  # Get the size of the last layer
-model.classifier[1] = nn.Linear(num_features, len(classes))  # Replace classifier
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model.load_state_dict(torch.load("models/current_model.pth"))
+    with open("models/classes.json") as f:
+        classes = json.load(f)
 
-model.to(device)
+    model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
+    num_features = model.last_channel  # Get the size of the last layer
+    model.classifier[1] = nn.Linear(num_features, len(classes))  # Replace classifier
 
-# Test the model
-test_accuracy, test_loss = test_model(model, test_loader, device)
+    model.load_state_dict(torch.load("../models/current_model.pth"))
+
+    model.to(device)
+
+    # Test the model
+    test_accuracy, test_loss = test_model(model, test_loader, device)
