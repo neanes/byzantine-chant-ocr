@@ -5,7 +5,7 @@ sys.path.append("../src")
 from segmentation import segment
 from text_removal import remove_text
 
-img_path = "../data/pages/heirmologion_john.pdf_page_15.png"
+img_path = "../data/pages/heirmologion_john.pdf_page_5.png"
 
 img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
 
