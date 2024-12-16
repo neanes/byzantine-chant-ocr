@@ -3,6 +3,6 @@ __pycache__/
 .ipynb_checkpoints/
 *.pth
 __pages/
-__unclassified/
+__unclassified*/
 __junk/
 __sources/

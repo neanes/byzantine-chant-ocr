@@ -8,6 +8,7 @@ and mathematical tools.
 
 import cv2
 import numpy as np
+import math
 from scipy import signal, stats
 
 import util
@@ -53,9 +54,7 @@ def segment(binary_image):
 
     result.oligon_height = find_oligon_height(binary_image, wide_contours)
 
-    result.oligon_width = find_oligon_width(
-        binary_image, wide_contours, result.oligon_height
-    )
+    result.oligon_width = find_oligon_width(wide_contours, result.oligon_height)
 
     find_baselines(binary_image, result)
     find_textlines(binary_image, result)
@@ -129,7 +128,7 @@ def find_oligon_height(binary_image, wide_contours):
     return stats.mode(heights)[0]
 
 
-def find_oligon_width(binary_image, wide_contours, oligon_height):
+def find_oligon_width(wide_contours, oligon_height):
     """
     Estimates the oligon width by finding the median width among all wide contours that are of similar height to the calculated `oligon_height`
     Parameters
@@ -153,7 +152,7 @@ def find_oligon_width(binary_image, wide_contours, oligon_height):
     for c in wide_contours:
         x, y, w, h = cv2.boundingRect(c)
 
-        if oligon_height <= h and h <= oligon_height * 1.5:
+        if oligon_height <= h and h <= math.ceil(oligon_height * 1.5):
             widths.append(w)
 
     if len(widths) == 0:
@@ -305,17 +304,19 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
             end = baseline + avg_baseline_gap - oligon_width
 
         # Find the maxima between between the baselines
-        maxima, _ = signal.find_peaks(
-            pixels_in_row[start:end],
-            height=1,
-            distance=end - start,
-        )
 
-        maxima = maxima + start
+        if end - start > 0:
+            maxima, _ = signal.find_peaks(
+                pixels_in_row[start:end],
+                height=1,
+                distance=end - start,
+            )
 
-        # We should only find one maximum
-        if maxima.any():
-            textlines.append(maxima.tolist()[0])
+            maxima = maxima + start
+
+            # We should only find one maximum
+            if maxima.any():
+                textlines.append(maxima.tolist()[0])
 
     # Find textlines before the first baselines. These could be titles, mode keys, etc
     if baselines:

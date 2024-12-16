@@ -1,4 +1,5 @@
 import os
+import csv
 import json
 import torch
 import datetime
@@ -172,6 +173,12 @@ early_stopper = EarlyStopper(patience=3, min_delta=1e-3)
 stop_early = False
 num_epochs = 50
 
+log_filepath = "train_log.txt"
+
+with open(log_filepath, mode="w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["epoch", "train_loss", "train_acc", "val_loss", "val_acc"])
+
 try:
     for epoch in range(num_epochs):
         if stop_early:
@@ -204,6 +211,26 @@ try:
 
             epoch_loss = running_loss / len(image_datasets[phase])
             epoch_acc = running_corrects.double() / len(image_datasets[phase])
+
+            if phase == "train":
+                train_loss = epoch_loss
+                train_acc = epoch_acc
+
+            if phase == "val":
+                val_loss = epoch_loss
+                val_acc = epoch_acc
+
+                with open(log_filepath, mode="a", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(
+                        [
+                            epoch + 1,
+                            train_loss,
+                            float(train_acc),
+                            val_loss,
+                            float(val_acc),
+                        ]
+                    )
 
             print(f"{phase} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}")
 

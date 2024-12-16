@@ -20,16 +20,17 @@ def update_dataset(dataset, dataset_folder):
     print(f"Added {count} files to {dataset_folder}")
 
 
-if len(sys.argv) < 2:
-    print("Please specify the name of the dataset.")
-    exit(1)
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Please specify the name of the dataset.")
+        exit(1)
 
-dataset_name = sys.argv[1]
+    dataset_name = sys.argv[1]
 
-print("Loading FiftyOne...")
-import fiftyone as fo
+    print("Loading FiftyOne...")
+    import fiftyone as fo
 
-print("Loading dataset...")
-dataset = fo.load_dataset(dataset_name)
-print("Adding files...")
-update_dataset(dataset, "../data/dataset")
+    print("Loading dataset...")
+    dataset = fo.load_dataset(dataset_name)
+    print("Adding files...")
+    update_dataset(dataset, "../data/dataset")
