@@ -1,6 +1,7 @@
 import os
 import json
 import torch
+import datetime
 from torchvision import models
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -120,7 +121,7 @@ with open("../models/classes.json", "w") as f:
     json.dump(class_names, f, indent=4)
 
 train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
-    full_dataset, [0.7, 0.15, 0.15]
+    full_dataset, [0.7, 0.15, 0.15], generator=torch.Generator().manual_seed(255247200)
 )
 
 image_datasets = {
@@ -168,10 +169,14 @@ criterion = nn.CrossEntropyLoss()
 # patience=5, min_delta=1e-4
 early_stopper = EarlyStopper(patience=3, min_delta=1e-3)
 
+stop_early = False
 num_epochs = 50
+
 try:
     for epoch in range(num_epochs):
-        print(f"Epoch {epoch+1}/{num_epochs}")
+        if stop_early:
+            break
+        print(f"Epoch {epoch+1}/{num_epochs} [{datetime.datetime.now()}]")
         for phase in ["train", "val"]:
             if phase == "train":
                 model.train()
@@ -204,6 +209,7 @@ try:
 
             if phase == "val" and early_stopper.early_stop(epoch_loss):
                 print("Stopping early.")
+                stop_early = True
                 break
     torch.save(model.state_dict(), "current_model.pth")
 except KeyboardInterrupt:
