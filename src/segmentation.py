@@ -25,12 +25,14 @@ class Segmentation:
         self.avg_text_height = None
         self.baselines = None
         self.textlines = None
+        self.textlines_adj = None
 
     def __str__(self):
         return f"""oligon: ({self.oligon_width},{self.oligon_height})
 avg_text_height: {self.avg_text_height}
 baselines: {self.baselines}
 textlines: {self.textlines}
+textlines_adj: {self.textlines_adj}
 """
 
 
@@ -58,6 +60,7 @@ def segment(binary_image):
 
     find_baselines(binary_image, result)
     find_textlines(binary_image, result)
+    find_adjusted_textlines(binary_image, result)
 
     result.avg_text_height = find_average_text_height(binary_image, result.textlines)
 
@@ -165,8 +168,7 @@ def find_average_text_height(image, textlines):
     """
     Finds the average height of all contours that touch textlines
     """
-    copy = image.copy()
-    contours = util.find_contours(copy)
+    contours = util.find_contours(image)
 
     heights = list()
 
@@ -333,3 +335,22 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
             textlines.sort()
 
     segmentation.textlines = textlines
+
+
+def find_adjusted_textlines(image, segmentation):
+    contours = util.find_contours(image)
+
+    textlines_adj = []
+    for line in segmentation.textlines:
+        midpoints = []
+        for c in contours:
+            rect = cv2.boundingRect(c)
+            x, y, w, h = rect
+
+            if y <= line and line <= y + h:
+                midpoints.append(y + h / 2)
+
+        if len(midpoints) > 0:
+            textlines_adj.append(int(np.median(midpoints)))
+
+    segmentation.textlines_adj = textlines_adj

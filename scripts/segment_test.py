@@ -15,6 +15,7 @@ binary = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
 segmentation = segment(binary)
 
+
 print(segmentation)
 
 cv2.namedWindow("with text removed", cv2.WINDOW_NORMAL)

@@ -3,10 +3,10 @@ import cv2
 import util
 
 
-def remove_text(image, segmentation):
-    copy = image.copy()
+def find_text_contours(image, segmentation, min_contour_height=5):
+    contours = util.find_contours(image)
 
-    contours = util.find_contours(copy)
+    text_contours = list()
 
     baseline_rects = list()
 
@@ -26,13 +26,21 @@ def remove_text(image, segmentation):
         textline = -1
 
         # Find contours that touch the textline +- avg_height / 2
-        for line in segmentation.textlines:
+        for line in segmentation.textlines_adj:
             top = max(y, line - segmentation.avg_text_height / 2)
             bottom = min(y + h, line + segmentation.avg_text_height / 2)
 
             if bottom - top > 0:
                 textline = y
                 break
+
+            # if (
+            #     line - segmentation.avg_text_height / 2 <= y
+            #     and y <= line + segmentation.avg_text_height
+            #     and w > h
+            # ):
+            #     textline = y
+            #     break
 
         # If the contour doesn't touch the textline, skip it
         if textline == -1:
@@ -41,12 +49,15 @@ def remove_text(image, segmentation):
         # If the textline is before the first baseline, then this is a heading
         # and should be removed. That is, it's a title or mode key signature, etc.
         if textline < segmentation.baselines[0]:
-            cv2.rectangle(copy, (x, y), (x + w, y + h), (0, 0, 0), cv2.FILLED)
+            text_contours.append(c)
             continue
 
         # Check for neumes that are more than twice as wide as they are tall.
         # These may be neumes that happen to extend down to the textline.
-        if w / h > 2.2:
+        # But if the neume is thin, it may be a hyphen or a melisma, so
+        # we remove it.
+        if w / h > 2.2 and h > min_contour_height:
+            print(h)
             continue
 
         # If the contour extends high enough above the textline,
@@ -96,9 +107,9 @@ def remove_text(image, segmentation):
 
             # Check to see whether there is a contour above this one
             # that satisfies certain criteria
-            for c in contours:
+            for inner_c in contours:
                 other_rect_x, other_rect_y, other_rect_w, other_rect_h = (
-                    cv2.boundingRect(c)
+                    cv2.boundingRect(inner_c)
                 )
 
                 # If the contour is above the other one...
@@ -124,6 +135,32 @@ def remove_text(image, segmentation):
 
         # If we got this far, the contour is probably text and should be removed.
         # Mask the contour by drawing a filled rectangle over it
+        text_contours.append(c)
+
+    # Find melismas
+    for c in contours:
+        x, y, w, h = cv2.boundingRect(c)
+
+        # Find contours that touch the textline +- avg_height / 2
+        for line in segmentation.textlines_adj:
+            if (
+                h <= min_contour_height
+                and w > h
+                and line <= y
+                and y <= line + segmentation.avg_text_height
+            ):
+                text_contours.append(c)
+
+    return text_contours
+
+
+def remove_text(image, segmentation):
+    contours = find_text_contours(image, segmentation)
+
+    copy = image.copy()
+
+    for c in contours:
+        x, y, w, h = cv2.boundingRect(c)
         cv2.rectangle(copy, (x, y), (x + w, y + h), (0, 0, 0), cv2.FILLED)
 
     return copy
