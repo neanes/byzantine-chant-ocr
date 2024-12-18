@@ -5,7 +5,7 @@ sys.path.append("../src")
 from segmentation import segment
 from text_removal import remove_text
 
-img_path = "../data/__pages/vespers_sam_p0036.png"
+img_path = "../data/__pages/vespers_sam_p0042.png"
 # img_path = "../data/__pages/vespers_sam_p0035.png"
 # img_path = "../data/__pages/heirmologion_john_p0005.png"
 

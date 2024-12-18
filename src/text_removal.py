@@ -57,7 +57,6 @@ def find_text_contours(image, segmentation, min_contour_height=5):
         # But if the neume is thin, it may be a hyphen or a melisma, so
         # we remove it.
         if w / h > 2.2 and h > min_contour_height:
-            print(h)
             continue
 
         # If the contour extends high enough above the textline,
@@ -141,7 +140,6 @@ def find_text_contours(image, segmentation, min_contour_height=5):
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
 
-        # Find contours that touch the textline +- avg_height / 2
         for line in segmentation.textlines_adj:
             if (
                 h <= min_contour_height
