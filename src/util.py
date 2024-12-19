@@ -2,6 +2,10 @@ import cv2
 import imutils
 
 
+def to_binary(image):
+    return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+
+
 def find_contours(image):
     blurred = cv2.GaussianBlur(image, (5, 5), 0)
     edged = cv2.Canny(blurred, 30, 150)

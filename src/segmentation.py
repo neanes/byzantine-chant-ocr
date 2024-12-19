@@ -128,7 +128,7 @@ def find_oligon_height(binary_image, wide_contours):
     if len(heights) == 0:
         return 0
 
-    return stats.mode(heights)[0]
+    return stats.mode(heights)[0].item()
 
 
 def find_oligon_width(wide_contours, oligon_height):
