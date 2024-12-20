@@ -23,5 +23,7 @@ if __name__ == "__main__":
         image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
         results = process_image(image, model, classes)
 
-    with open("output.yml", "w") as outfile:
-        yaml.dump(results.to_dict(), outfile)
+    with open("output.yaml", "w") as outfile:
+        yaml.safe_dump(
+            results.to_dict(), outfile, sort_keys=False, default_flow_style=False
+        )

@@ -23,6 +23,7 @@ class Segmentation:
         self.oligon_height = None
         self.oligon_width = None
         self.avg_text_height = None
+        self.avg_baseline_gap = None
         self.baselines = None
         self.textlines = None
         self.textlines_adj = None
@@ -30,10 +31,22 @@ class Segmentation:
     def __str__(self):
         return f"""oligon: ({self.oligon_width},{self.oligon_height})
 avg_text_height: {self.avg_text_height}
+avg_baseline_gap: {self.avg_baseline_gap}
 baselines: {self.baselines}
 textlines: {self.textlines}
 textlines_adj: {self.textlines_adj}
 """
+
+    def to_dict(self):
+        return {
+            "oligon_height": self.oligon_height,
+            "oligon_height": self.oligon_height,
+            "avg_text_height": self.avg_text_height,
+            "avg_baseline_gap": self.avg_baseline_gap,
+            "baselines": self.baselines,
+            "textlines": self.textlines,
+            "textlines_adj": self.textlines_adj,
+        }
 
 
 def segment(binary_image):

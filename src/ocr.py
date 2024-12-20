@@ -19,6 +19,14 @@ class Rect:
         self.w = w
         self.h = h
 
+    def to_dict(self):
+        return {
+            "x": self.x,
+            "y": self.y,
+            "w": self.w,
+            "h": self.h,
+        }
+
 
 class Circle:
     def __init__(self, circle):
@@ -26,6 +34,13 @@ class Circle:
         self.x = x
         self.y = y
         self.r = r
+
+    def to_dict(self):
+        return {
+            "x": self.x,
+            "y": self.y,
+            "r": self.r,
+        }
 
 
 class ContourMatch:
@@ -42,10 +57,10 @@ class ContourMatch:
         return {
             "label": self.label,
             "confidence": self.confidence,
-            "bounding_rect": self.bounding_rect,
-            "bounding_circle": self.bounding_circle,
             "line": self.line,
-            "grouped": self.grouped,
+            "bounding_rect": self.bounding_rect.to_dict(),
+            "bounding_circle": self.bounding_circle.to_dict(),
+            # "grouped": self.grouped,
         }
 
 
@@ -74,8 +89,9 @@ class Analysis:
     def to_dict(self):
         return {
             "model_version": self.model_version,
-            "neume_groups": [x.to_dict() for x in self.neume_groups],
-            "segmentation": self.segmentation,
+            "segmentation": self.segmentation.to_dict(),
+            "matches": [x.to_dict() for x in self.matches],
+            # "neume_groups": [x.to_dict() for x in self.neume_groups],
         }
 
 
@@ -102,7 +118,10 @@ def process_image(image, model, classes):
     results = prepare_image(image)
 
     recognize_contours(results.matches, model, classes)
-    results.neume_groups = group_matches(results.matches)
+
+    # TODO disabling grouping for now
+    # I think this should be the responsibilty of the consumer
+    # results.neume_groups = group_matches(results.matches)
 
     # TODO store model version in the metadata and read it here
     # results.model_version = _model_data.version
@@ -259,8 +278,9 @@ def recognize_contours(matches, model, classes):
         m.confidence = probabilities[class_id].item()
 
         # For debugging
-        # cv2.namedWindow(m.label, cv2.WINDOW_NORMAL)
-        # cv2.imshow(m.label, m.test_image)
+        # window_name = f"{m.label} ({m.confidence:0.2f})"
+        # cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        # cv2.imshow(window_name, m.test_image)
         # cv2.waitKey()
         # cv2.destroyAllWindows()
 

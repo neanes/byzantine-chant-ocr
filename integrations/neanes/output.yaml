@@ -1,0 +1,7345 @@
+model_version: null
+segmentation:
+  oligon_height: 11
+  avg_text_height: 22
+  baselines:
+  - 392
+  - 567
+  - 740
+  - 913
+  - 1083
+  - 1257
+  - 1430
+  - 1603
+  - 1775
+  - 1948
+  - 2123
+  - 2294
+  - 2467
+  textlines:
+  - 266
+  - 459
+  - 645
+  - 819
+  - 978
+  - 1150
+  - 1337
+  - 1508
+  - 1670
+  - 1841
+  - 2024
+  - 2201
+  - 2374
+  - 2533
+  textlines_adj:
+  - 252
+  - 465
+  - 639
+  - 813
+  - 985
+  - 1158
+  - 1331
+  - 1502
+  - 1676
+  - 1848
+  - 2020
+  - 2195
+  - 2368
+  - 2540
+matches:
+- label: apostrofos
+  confidence: 0.9931273460388184
+  line: 0
+  bounding_rect:
+    x: 272
+    y: 374
+    w: 42
+    h: 26
+  bounding_circle:
+    x: 292.0
+    y: 386.0
+    r: 22.825523376464844
+- label: kentima
+  confidence: 0.9998388290405273
+  line: 0
+  bounding_rect:
+    x: 319
+    y: 380
+    w: 20
+    h: 21
+  bounding_circle:
+    x: 328.5
+    y: 389.5
+    r: 12.103818893432617
+- label: kentima
+  confidence: 0.999432384967804
+  line: 0
+  bounding_rect:
+    x: 340
+    y: 379
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 348.5294189453125
+    y: 389.5294189453125
+    r: 12.0625
+- label: ison
+  confidence: 0.9885864853858948
+  line: 0
+  bounding_rect:
+    x: 359
+    y: 350
+    w: 78
+    h: 26
+  bounding_circle:
+    x: 397.5
+    y: 364.5
+    r: 39.65485763549805
+- label: oligon
+  confidence: 0.9354149103164673
+  line: 0
+  bounding_rect:
+    x: 372
+    y: 383
+    w: 114
+    h: 13
+  bounding_circle:
+    x: 428.5
+    y: 389.0
+    r: 56.81779098510742
+- label: martyria_diatonic_ke
+  confidence: 0.6138360500335693
+  line: 0
+  bounding_rect:
+    x: 414
+    y: 437
+    w: 17
+    h: 35
+  bounding_circle:
+    x: 422.0
+    y: 454.0
+    r: 17.262775421142578
+- label: kentima
+  confidence: 0.9998490810394287
+  line: 0
+  bounding_rect:
+    x: 439
+    y: 354
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 448.0
+    y: 363.5
+    r: 11.715475082397461
+- label: gorgon
+  confidence: 0.998714804649353
+  line: 0
+  bounding_rect:
+    x: 451
+    y: 331
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 463.5
+    y: 340.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.9992954730987549
+  line: 0
+  bounding_rect:
+    x: 460
+    y: 354
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 469.5
+    y: 363.5
+    r: 12.103818893432617
+- label: yporroe
+  confidence: 0.5594238042831421
+  line: 0
+  bounding_rect:
+    x: 480
+    y: 329
+    w: 10
+    h: 12
+  bounding_circle:
+    x: 484.85443115234375
+    y: 334.7405090332031
+    r: 6.128469467163086
+- label: ison
+  confidence: 0.9966400861740112
+  line: 0
+  bounding_rect:
+    x: 489
+    y: 350
+    w: 75
+    h: 26
+  bounding_circle:
+    x: 526.0
+    y: 364.0
+    r: 38.32763671875
+- label: oligon
+  confidence: 0.9715657830238342
+  line: 0
+  bounding_rect:
+    x: 493
+    y: 382
+    w: 113
+    h: 16
+  bounding_circle:
+    x: 549.0
+    y: 388.5
+    r: 56.376068115234375
+- label: kentima
+  confidence: 0.9992954730987549
+  line: 0
+  bounding_rect:
+    x: 567
+    y: 356
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 575.5
+    y: 365.5
+    r: 11.335884094238281
+- label: gorgon
+  confidence: 0.9967404007911682
+  line: 0
+  bounding_rect:
+    x: 579
+    y: 333
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 592.5
+    y: 343.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.9961481094360352
+  line: 0
+  bounding_rect:
+    x: 589
+    y: 356
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 598.5
+    y: 365.5
+    r: 12.103818893432617
+- label: elafron
+  confidence: 0.9798622727394104
+  line: 0
+  bounding_rect:
+    x: 612
+    y: 376
+    w: 71
+    h: 30
+  bounding_circle:
+    x: 647.0
+    y: 394.5
+    r: 35.42960739135742
+- label: klasma
+  confidence: 0.9868527054786682
+  line: 0
+  bounding_rect:
+    x: 631
+    y: 358
+    w: 36
+    h: 15
+  bounding_circle:
+    x: 648.5
+    y: 364.5
+    r: 17.846668243408203
+- label: martyria_diatonic_ke
+  confidence: 0.5038082599639893
+  line: 0
+  bounding_rect:
+    x: 652
+    y: 435
+    w: 19
+    h: 46
+  bounding_circle:
+    x: 661.0
+    y: 457.5
+    r: 23.048959732055664
+- label: psifiston
+  confidence: 0.9960137605667114
+  line: 0
+  bounding_rect:
+    x: 686
+    y: 407
+    w: 109
+    h: 29
+  bounding_circle:
+    x: 740.0
+    y: 411.0
+    r: 54.03712463378906
+- label: oligon
+  confidence: 0.993894636631012
+  line: 0
+  bounding_rect:
+    x: 691
+    y: 386
+    w: 112
+    h: 14
+  bounding_circle:
+    x: 746.5
+    y: 392.0
+    r: 55.823482513427734
+- label: kentima
+  confidence: 0.9990079998970032
+  line: 0
+  bounding_rect:
+    x: 721
+    y: 358
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 729.5
+    y: 368.0
+    r: 11.672718048095703
+- label: kentima
+  confidence: 0.9982349872589111
+  line: 0
+  bounding_rect:
+    x: 741
+    y: 358
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 750.0
+    y: 367.0
+    r: 12.041694641113281
+- label: apostrofos
+  confidence: 0.9956458210945129
+  line: 0
+  bounding_rect:
+    x: 812
+    y: 378
+    w: 41
+    h: 25
+  bounding_circle:
+    x: 831.7120971679688
+    y: 388.1060485839844
+    r: 22.151878356933594
+- label: apostrofos
+  confidence: 0.9988771080970764
+  line: 0
+  bounding_rect:
+    x: 863
+    y: 378
+    w: 42
+    h: 27
+  bounding_circle:
+    x: 883.5
+    y: 390.0
+    r: 22.8090877532959
+- label: apostrofos
+  confidence: 0.9997435212135315
+  line: 0
+  bounding_rect:
+    x: 916
+    y: 378
+    w: 42
+    h: 27
+  bounding_circle:
+    x: 936.5
+    y: 390.0
+    r: 22.8090877532959
+- label: kentima
+  confidence: 0.9953184723854065
+  line: 0
+  bounding_rect:
+    x: 963
+    y: 384
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 971.5294189453125
+    y: 393.5294189453125
+    r: 12.0625
+- label: kentima
+  confidence: 0.9945992231369019
+  line: 0
+  bounding_rect:
+    x: 982
+    y: 383
+    w: 22
+    h: 21
+  bounding_circle:
+    x: 992.5
+    y: 393.0
+    r: 13.200478553771973
+- label: ison
+  confidence: 0.9847860932350159
+  line: 0
+  bounding_rect:
+    x: 987
+    y: 354
+    w: 76
+    h: 26
+  bounding_circle:
+    x: 1024.5
+    y: 366.5
+    r: 38.94236373901367
+- label: oligon
+  confidence: 0.9975696206092834
+  line: 0
+  bounding_rect:
+    x: 1009
+    y: 386
+    w: 111
+    h: 16
+  bounding_circle:
+    x: 1064.0
+    y: 393.5
+    r: 55.50910568237305
+- label: martyria_diatonic_ke
+  confidence: 0.9113768935203552
+  line: 0
+  bounding_rect:
+    x: 1039
+    y: 456
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 1045.5
+    y: 473.0
+    r: 17.86766815185547
+- label: kentima
+  confidence: 0.9988779425621033
+  line: 0
+  bounding_rect:
+    x: 1066
+    y: 358
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1074.5
+    y: 367.5
+    r: 12.020915031433105
+- label: gorgon
+  confidence: 0.9979887008666992
+  line: 0
+  bounding_rect:
+    x: 1078
+    y: 334
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 1091.0
+    y: 344.0
+    r: 15.620599746704102
+- label: kentima
+  confidence: 0.9983188509941101
+  line: 0
+  bounding_rect:
+    x: 1087
+    y: 358
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1096.0
+    y: 367.5
+    r: 11.715475082397461
+- label: gorgon
+  confidence: 0.5639927983283997
+  line: 0
+  bounding_rect:
+    x: 1107
+    y: 334
+    w: 5
+    h: 6
+  bounding_circle:
+    x: 1109.0
+    y: 336.8999938964844
+    r: 2.900104284286499
+- label: vareia
+  confidence: 0.9948307871818542
+  line: 0
+  bounding_rect:
+    x: 1130
+    y: 361
+    w: 36
+    h: 63
+  bounding_circle:
+    x: 1148.0
+    y: 392.0
+    r: 35.355438232421875
+- label: ison
+  confidence: 0.9980666041374207
+  line: 0
+  bounding_rect:
+    x: 1169
+    y: 371
+    w: 92
+    h: 30
+  bounding_circle:
+    x: 1214.5
+    y: 386.0
+    r: 47.05591583251953
+- label: apostrofos
+  confidence: 0.9931294322013855
+  line: 0
+  bounding_rect:
+    x: 1265
+    y: 379
+    w: 41
+    h: 30
+  bounding_circle:
+    x: 1285.0
+    y: 392.0
+    r: 23.32390594482422
+- label: gorgon
+  confidence: 0.9853780269622803
+  line: 0
+  bounding_rect:
+    x: 1275
+    y: 353
+    w: 22
+    h: 19
+  bounding_circle:
+    x: 1286.0
+    y: 363.0
+    r: 12.80634880065918
+- label: ison
+  confidence: 0.7463815212249756
+  line: 0
+  bounding_rect:
+    x: 1307
+    y: 370
+    w: 93
+    h: 31
+  bounding_circle:
+    x: 1353.0
+    y: 386.5
+    r: 47.94016647338867
+- label: martyria_diatonic_ke
+  confidence: 0.8239161372184753
+  line: 0
+  bounding_rect:
+    x: 1340
+    y: 438
+    w: 18
+    h: 41
+  bounding_circle:
+    x: 1344.1204833984375
+    y: 457.98193359375
+    r: 20.22420883178711
+- label: klasma
+  confidence: 0.9978444576263428
+  line: 0
+  bounding_rect:
+    x: 1345
+    y: 364
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 1361.5
+    y: 370.0
+    r: 17.241039276123047
+- label: martyria_diatonic_ke
+  confidence: 0.8500336408615112
+  line: 0
+  bounding_rect:
+    x: 1360
+    y: 457
+    w: 17
+    h: 34
+  bounding_circle:
+    x: 1366.5
+    y: 473.5
+    r: 17.10272979736328
+- label: gorgon
+  confidence: 0.8799700736999512
+  line: 0
+  bounding_rect:
+    x: 1429
+    y: 411
+    w: 32
+    h: 26
+  bounding_circle:
+    x: 1444.0882568359375
+    y: 423.3823547363281
+    r: 16.79751968383789
+- label: martyria_diatonic_ke
+  confidence: 0.9945961833000183
+  line: 0
+  bounding_rect:
+    x: 1441
+    y: 454
+    w: 20
+    h: 40
+  bounding_circle:
+    x: 1455.227294921875
+    y: 473.5
+    r: 19.861703872680664
+- label: oligon
+  confidence: 0.9941211342811584
+  line: 0
+  bounding_rect:
+    x: 1461
+    y: 386
+    w: 110
+    h: 15
+  bounding_circle:
+    x: 1515.5
+    y: 392.0
+    r: 54.82938003540039
+- label: kentima
+  confidence: 0.9999430179595947
+  line: 0
+  bounding_rect:
+    x: 1498
+    y: 356
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1507.0
+    y: 366.0
+    r: 12.728022575378418
+- label: gorgon
+  confidence: 0.9982452392578125
+  line: 0
+  bounding_rect:
+    x: 1510
+    y: 334
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1522.5
+    y: 343.5
+    r: 15.116316795349121
+- label: kentima
+  confidence: 0.9999291896820068
+  line: 0
+  bounding_rect:
+    x: 1519
+    y: 357
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 1528.5
+    y: 366.5
+    r: 12.103818893432617
+- label: kentima
+  confidence: 0.5232321619987488
+  line: 0
+  bounding_rect:
+    x: 1538
+    y: 333
+    w: 10
+    h: 11
+  bounding_circle:
+    x: 1542.4747314453125
+    y: 337.7025451660156
+    r: 5.8470563888549805
+- label: kentima
+  confidence: 0.9997113347053528
+  line: 0
+  bounding_rect:
+    x: 1576
+    y: 381
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 1585.0
+    y: 390.5
+    r: 12.419842720031738
+- label: ison
+  confidence: 0.9684557914733887
+  line: 0
+  bounding_rect:
+    x: 1589
+    y: 353
+    w: 75
+    h: 23
+  bounding_circle:
+    x: 1626.179443359375
+    y: 364.16986083984375
+    r: 37.86465835571289
+- label: oligon
+  confidence: 0.9892221689224243
+  line: 0
+  bounding_rect:
+    x: 1601
+    y: 384
+    w: 113
+    h: 14
+  bounding_circle:
+    x: 1657.0
+    y: 391.0
+    r: 56.222869873046875
+- label: kentima
+  confidence: 0.9995583891868591
+  line: 0
+  bounding_rect:
+    x: 1668
+    y: 354
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 1677.0
+    y: 363.5
+    r: 12.379518508911133
+- label: gorgon
+  confidence: 0.90201336145401
+  line: 0
+  bounding_rect:
+    x: 1680
+    y: 329
+    w: 26
+    h: 23
+  bounding_circle:
+    x: 1693.0
+    y: 341.0
+    r: 15.620599746704102
+- label: kentima
+  confidence: 0.9997385144233704
+  line: 0
+  bounding_rect:
+    x: 1689
+    y: 354
+    w: 20
+    h: 21
+  bounding_circle:
+    x: 1698.5
+    y: 364.0
+    r: 12.419842720031738
+- label: kentima
+  confidence: 0.502777099609375
+  line: 0
+  bounding_rect:
+    x: 1709
+    y: 330
+    w: 9
+    h: 10
+  bounding_circle:
+    x: 1712.5
+    y: 334.5
+    r: 5.700977325439453
+- label: ison
+  confidence: 0.9968652129173279
+  line: 1
+  bounding_rect:
+    x: 250
+    y: 522
+    w: 78
+    h: 27
+  bounding_circle:
+    x: 288.5
+    y: 537.5
+    r: 39.9062385559082
+- label: oligon
+  confidence: 0.996597945690155
+  line: 1
+  bounding_rect:
+    x: 268
+    y: 558
+    w: 112
+    h: 14
+  bounding_circle:
+    x: 323.5
+    y: 564.5
+    r: 55.879432678222656
+- label: kentima
+  confidence: 0.9985792636871338
+  line: 1
+  bounding_rect:
+    x: 331
+    y: 527
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 339.257568359375
+    y: 536.257568359375
+    r: 11.678086280822754
+- label: gorgon
+  confidence: 0.997619092464447
+  line: 1
+  bounding_rect:
+    x: 343
+    y: 503
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 355.5
+    y: 513.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.9990467429161072
+  line: 1
+  bounding_rect:
+    x: 352
+    y: 527
+    w: 20
+    h: 19
+  bounding_circle:
+    x: 361.5
+    y: 536.5
+    r: 12.103818893432617
+- label: elafron
+  confidence: 0.9863051176071167
+  line: 1
+  bounding_rect:
+    x: 384
+    y: 547
+    w: 72
+    h: 31
+  bounding_circle:
+    x: 419.5469665527344
+    y: 568.76171875
+    r: 36.18449401855469
+- label: klasma
+  confidence: 0.9992173910140991
+  line: 1
+  bounding_rect:
+    x: 409
+    y: 533
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 425.5
+    y: 539.5
+    r: 16.86722755432129
+- label: apostrofos
+  confidence: 0.9990608096122742
+  line: 1
+  bounding_rect:
+    x: 468
+    y: 549
+    w: 40
+    h: 26
+  bounding_circle:
+    x: 487.5
+    y: 560.5
+    r: 21.691110610961914
+- label: yporroe
+  confidence: 0.9352706670761108
+  line: 1
+  bounding_rect:
+    x: 519
+    y: 555
+    w: 22
+    h: 20
+  bounding_circle:
+    x: 529.5
+    y: 563.5
+    r: 12.90358829498291
+- label: gorgon
+  confidence: 0.9988549947738647
+  line: 1
+  bounding_rect:
+    x: 521
+    y: 524
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 534.5
+    y: 534.5
+    r: 15.116316795349121
+- label: oligon
+  confidence: 0.9898567199707031
+  line: 1
+  bounding_rect:
+    x: 546
+    y: 559
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 588.0
+    y: 565.0
+    r: 42.29667282104492
+- label: klasma
+  confidence: 0.9968298077583313
+  line: 1
+  bounding_rect:
+    x: 570
+    y: 534
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 586.5
+    y: 539.5
+    r: 17.10272979736328
+- label: oligon
+  confidence: 0.9951779842376709
+  line: 1
+  bounding_rect:
+    x: 638
+    y: 559
+    w: 86
+    h: 14
+  bounding_circle:
+    x: 680.5
+    y: 565.5
+    r: 42.8545036315918
+- label: martyria_diatonic_ke
+  confidence: 0.35744941234588623
+  line: 1
+  bounding_rect:
+    x: 658
+    y: 615
+    w: 29
+    h: 34
+  bounding_circle:
+    x: 672.5
+    y: 631.4091186523438
+    r: 16.598567962646484
+- label: kentima
+  confidence: 0.9995346069335938
+  line: 1
+  bounding_rect:
+    x: 661
+    y: 530
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 669.257568359375
+    y: 539.257568359375
+    r: 11.678086280822754
+- label: gorgon
+  confidence: 0.9989822506904602
+  line: 1
+  bounding_rect:
+    x: 673
+    y: 507
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 686.5
+    y: 517.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.9989883303642273
+  line: 1
+  bounding_rect:
+    x: 683
+    y: 530
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 692.0
+    y: 539.5
+    r: 11.715475082397461
+- label: apostrofos
+  confidence: 0.9990310668945312
+  line: 1
+  bounding_rect:
+    x: 732
+    y: 553
+    w: 41
+    h: 26
+  bounding_circle:
+    x: 752.0
+    y: 564.5
+    r: 22.14168930053711
+- label: oligon
+  confidence: 0.9937293529510498
+  line: 1
+  bounding_rect:
+    x: 781
+    y: 562
+    w: 84
+    h: 12
+  bounding_circle:
+    x: 822.5
+    y: 567.5
+    r: 41.74336242675781
+- label: klasma
+  confidence: 0.9976503252983093
+  line: 1
+  bounding_rect:
+    x: 801
+    y: 536
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 817.5
+    y: 542.0
+    r: 17.241039276123047
+- label: kentima
+  confidence: 0.5514068007469177
+  line: 1
+  bounding_rect:
+    x: 900
+    y: 614
+    w: 7
+    h: 8
+  bounding_circle:
+    x: 902.5
+    y: 617.5
+    r: 4.301262855529785
+- label: apostrofos
+  confidence: 0.46891510486602783
+  line: 1
+  bounding_rect:
+    x: 900
+    y: 589
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 913.3405151367188
+    y: 602.5733032226562
+    r: 13.773683547973633
+- label: kentima
+  confidence: 0.689630925655365
+  line: 1
+  bounding_rect:
+    x: 916
+    y: 615
+    w: 7
+    h: 8
+  bounding_circle:
+    x: 918.5
+    y: 618.5
+    r: 4.301262855529785
+- label: oligon
+  confidence: 0.9899067282676697
+  line: 1
+  bounding_rect:
+    x: 942
+    y: 559
+    w: 115
+    h: 15
+  bounding_circle:
+    x: 999.0
+    y: 566.0
+    r: 57.428314208984375
+- label: psifiston
+  confidence: 0.9977536797523499
+  line: 1
+  bounding_rect:
+    x: 946
+    y: 583
+    w: 109
+    h: 27
+  bounding_circle:
+    x: 1000.0
+    y: 586.0
+    r: 54.03712463378906
+- label: martyria_diatonic_ke
+  confidence: 0.4947720766067505
+  line: 1
+  bounding_rect:
+    x: 985
+    y: 612
+    w: 19
+    h: 39
+  bounding_circle:
+    x: 992.0
+    y: 631.0
+    r: 19.646982192993164
+- label: kentima
+  confidence: 0.9984720349311829
+  line: 1
+  bounding_rect:
+    x: 988
+    y: 529
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 995.5
+    y: 539.0
+    r: 11.715475082397461
+- label: apostrofos
+  confidence: 0.9993466734886169
+  line: 1
+  bounding_rect:
+    x: 1063
+    y: 552
+    w: 40
+    h: 29
+  bounding_circle:
+    x: 1082.5
+    y: 564.5
+    r: 22.638561248779297
+- label: klasma
+  confidence: 0.9978222846984863
+  line: 1
+  bounding_rect:
+    x: 1111
+    y: 532
+    w: 35
+    h: 15
+  bounding_circle:
+    x: 1128.0
+    y: 537.0
+    r: 17.46434783935547
+- label: apostrofos
+  confidence: 0.9968311190605164
+  line: 1
+  bounding_rect:
+    x: 1113
+    y: 555
+    w: 38
+    h: 25
+  bounding_circle:
+    x: 1131.5
+    y: 566.0
+    r: 21.02984046936035
+- label: martyria_diatonic_ke
+  confidence: 0.4867795705795288
+  line: 1
+  bounding_rect:
+    x: 1117
+    y: 611
+    w: 17
+    h: 46
+  bounding_circle:
+    x: 1126.5
+    y: 633.5
+    r: 23.162569046020508
+- label: antikenoma
+  confidence: 0.8128607273101807
+  line: 1
+  bounding_rect:
+    x: 1160
+    y: 591
+    w: 85
+    h: 19
+  bounding_circle:
+    x: 1202.0
+    y: 598.5
+    r: 42.500099182128906
+- label: apostrofos
+  confidence: 0.999756395816803
+  line: 1
+  bounding_rect:
+    x: 1163
+    y: 554
+    w: 41
+    h: 27
+  bounding_circle:
+    x: 1183.287841796875
+    y: 565.8939208984375
+    r: 22.151893615722656
+- label: yporroe
+  confidence: 0.5601333975791931
+  line: 1
+  bounding_rect:
+    x: 1198
+    y: 598
+    w: 8
+    h: 8
+  bounding_circle:
+    x: 1201.5
+    y: 601.5
+    r: 4.301262855529785
+- label: gorgon
+  confidence: 0.7536553740501404
+  line: 1
+  bounding_rect:
+    x: 1199
+    y: 629
+    w: 21
+    h: 26
+  bounding_circle:
+    x: 1209.0
+    y: 641.5
+    r: 15.403021812438965
+- label: apostrofos
+  confidence: 0.9962770342826843
+  line: 1
+  bounding_rect:
+    x: 1216
+    y: 554
+    w: 39
+    h: 26
+  bounding_circle:
+    x: 1234.5
+    y: 565.5
+    r: 21.272146224975586
+- label: gorgon
+  confidence: 0.995688259601593
+  line: 1
+  bounding_rect:
+    x: 1222
+    y: 527
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 1235.5
+    y: 538.0
+    r: 15.403021812438965
+- label: gorgon
+  confidence: 0.3901621103286743
+  line: 1
+  bounding_rect:
+    x: 1242
+    y: 629
+    w: 21
+    h: 26
+  bounding_circle:
+    x: 1252.0
+    y: 641.5
+    r: 15.403021812438965
+- label: vareia
+  confidence: 0.9754984974861145
+  line: 1
+  bounding_rect:
+    x: 1253
+    y: 533
+    w: 46
+    h: 66
+  bounding_circle:
+    x: 1275.5
+    y: 565.5
+    r: 38.96803283691406
+- label: ison
+  confidence: 0.994318425655365
+  line: 1
+  bounding_rect:
+    x: 1287
+    y: 544
+    w: 93
+    h: 30
+  bounding_circle:
+    x: 1333.36669921875
+    y: 560.4666748046875
+    r: 47.32326889038086
+- label: martyria_diatonic_ke
+  confidence: 0.5756904482841492
+  line: 1
+  bounding_rect:
+    x: 1318
+    y: 612
+    w: 19
+    h: 40
+  bounding_circle:
+    x: 1324.5
+    y: 631.5
+    r: 19.81171226501465
+- label: apostrofos
+  confidence: 0.9992455244064331
+  line: 1
+  bounding_rect:
+    x: 1384
+    y: 555
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 1403.5
+    y: 567.5
+    r: 23.162569046020508
+- label: gorgon
+  confidence: 0.9983077049255371
+  line: 1
+  bounding_rect:
+    x: 1392
+    y: 528
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 1405.5
+    y: 538.5
+    r: 15.116316795349121
+- label: oligon
+  confidence: 0.9978342652320862
+  line: 1
+  bounding_rect:
+    x: 1429
+    y: 562
+    w: 84
+    h: 12
+  bounding_circle:
+    x: 1470.5
+    y: 568.0
+    r: 41.80022048950195
+- label: oligon
+  confidence: 0.9996234178543091
+  line: 1
+  bounding_rect:
+    x: 1518
+    y: 563
+    w: 87
+    h: 13
+  bounding_circle:
+    x: 1561.0
+    y: 569.0
+    r: 43.41668701171875
+- label: klasma
+  confidence: 0.9932385683059692
+  line: 1
+  bounding_rect:
+    x: 1540
+    y: 537
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 1556.5
+    y: 543.5
+    r: 17.10272979736328
+- label: elafron_apostrofos
+  confidence: 0.7024275064468384
+  line: 1
+  bounding_rect:
+    x: 1596
+    y: 521
+    w: 70
+    h: 36
+  bounding_circle:
+    x: 1630.5
+    y: 541.0
+    r: 34.73120880126953
+- label: oligon
+  confidence: 0.9817817211151123
+  line: 1
+  bounding_rect:
+    x: 1611
+    y: 562
+    w: 104
+    h: 13
+  bounding_circle:
+    x: 1662.5
+    y: 569.0
+    r: 51.65520477294922
+- label: martyria_diatonic_ke
+  confidence: 0.5450460314750671
+  line: 1
+  bounding_rect:
+    x: 1625
+    y: 629
+    w: 24
+    h: 35
+  bounding_circle:
+    x: 1635.0
+    y: 646.0
+    r: 18.788393020629883
+- label: null
+  confidence: 0
+  line: 1
+  bounding_rect:
+    x: 1635
+    y: 572
+    w: 78
+    h: 3
+  bounding_circle:
+    x: 1673.5
+    y: 573.5
+    r: 38.50334548950195
+- label: kentima
+  confidence: 0.9980893731117249
+  line: 1
+  bounding_rect:
+    x: 1675
+    y: 533
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1683.5
+    y: 542.0
+    r: 11.672718048095703
+- label: gorgon
+  confidence: 0.9983720183372498
+  line: 1
+  bounding_rect:
+    x: 1686
+    y: 509
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 1699.5
+    y: 519.5
+    r: 15.700418472290039
+- label: kentima
+  confidence: 0.998599112033844
+  line: 1
+  bounding_rect:
+    x: 1696
+    y: 532
+    w: 20
+    h: 22
+  bounding_circle:
+    x: 1705.02783203125
+    y: 543.0277709960938
+    r: 12.767268180847168
+- label: apostrofos
+  confidence: 0.9289243817329407
+  line: 2
+  bounding_rect:
+    x: 271
+    y: 727
+    w: 42
+    h: 25
+  bounding_circle:
+    x: 291.0
+    y: 738.0
+    r: 22.36077880859375
+- label: oligon
+  confidence: 0.9974570870399475
+  line: 2
+  bounding_rect:
+    x: 322
+    y: 732
+    w: 111
+    h: 14
+  bounding_circle:
+    x: 377.0
+    y: 739.0
+    r: 55.3264045715332
+- label: kentima
+  confidence: 0.9995819926261902
+  line: 2
+  bounding_rect:
+    x: 362
+    y: 703
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 371.0
+    y: 712.0
+    r: 12.041694641113281
+- label: gorgon
+  confidence: 0.9949357509613037
+  line: 2
+  bounding_rect:
+    x: 375
+    y: 680
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 388.0
+    y: 689.5
+    r: 15.305328369140625
+- label: kentima
+  confidence: 0.9945214986801147
+  line: 2
+  bounding_rect:
+    x: 383
+    y: 703
+    w: 20
+    h: 19
+  bounding_circle:
+    x: 392.5
+    y: 711.5
+    r: 12.103818893432617
+- label: apostrofos
+  confidence: 0.9844731688499451
+  line: 2
+  bounding_rect:
+    x: 440
+    y: 722
+    w: 36
+    h: 29
+  bounding_circle:
+    x: 457.5
+    y: 735.5
+    r: 21.50591278076172
+- label: oligon
+  confidence: 0.9959047436714172
+  line: 2
+  bounding_rect:
+    x: 481
+    y: 731
+    w: 84
+    h: 15
+  bounding_circle:
+    x: 522.5
+    y: 738.5
+    r: 42.00605010986328
+- label: oligon
+  confidence: 0.9993696808815002
+  line: 2
+  bounding_rect:
+    x: 572
+    y: 733
+    w: 86
+    h: 14
+  bounding_circle:
+    x: 614.5
+    y: 740.5
+    r: 42.8545036315918
+- label: antikenoma
+  confidence: 0.9939157366752625
+  line: 2
+  bounding_rect:
+    x: 660
+    y: 762
+    w: 104
+    h: 25
+  bounding_circle:
+    x: 711.5
+    y: 774.5
+    r: 52.196842193603516
+- label: oligon
+  confidence: 0.9771738052368164
+  line: 2
+  bounding_rect:
+    x: 662
+    y: 733
+    w: 86
+    h: 15
+  bounding_circle:
+    x: 704.5
+    y: 741.0
+    r: 42.921539306640625
+- label: gorgon
+  confidence: 0.9989703893661499
+  line: 2
+  bounding_rect:
+    x: 696
+    y: 701
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 709.0
+    y: 711.0
+    r: 15.000100135803223
+- label: apostrofos
+  confidence: 0.9957001209259033
+  line: 2
+  bounding_rect:
+    x: 758
+    y: 727
+    w: 39
+    h: 26
+  bounding_circle:
+    x: 777.0
+    y: 737.0
+    r: 21.471010208129883
+- label: oligon
+  confidence: 0.997499406337738
+  line: 2
+  bounding_rect:
+    x: 806
+    y: 734
+    w: 111
+    h: 16
+  bounding_circle:
+    x: 861.0
+    y: 741.5
+    r: 55.50910568237305
+- label: apostrofos
+  confidence: 0.9951971173286438
+  line: 2
+  bounding_rect:
+    x: 815
+    y: 697
+    w: 39
+    h: 27
+  bounding_circle:
+    x: 834.0
+    y: 709.5
+    r: 22.209331512451172
+- label: kentima
+  confidence: 0.9988763928413391
+  line: 2
+  bounding_rect:
+    x: 870
+    y: 706
+    w: 18
+    h: 18
+  bounding_circle:
+    x: 878.5
+    y: 714.5
+    r: 11.335884094238281
+- label: martyria_diatonic_di
+  confidence: 0.9973177313804626
+  line: 2
+  bounding_rect:
+    x: 882
+    y: 626
+    w: 49
+    h: 51
+  bounding_circle:
+    x: 909.383056640625
+    y: 654.7914428710938
+    r: 28.890016555786133
+- label: gorgon
+  confidence: 0.9985405206680298
+  line: 2
+  bounding_rect:
+    x: 883
+    y: 683
+    w: 28
+    h: 20
+  bounding_circle:
+    x: 897.0
+    y: 692.5
+    r: 15.53232479095459
+- label: kentima
+  confidence: 0.9983044862747192
+  line: 2
+  bounding_rect:
+    x: 892
+    y: 705
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 901.0
+    y: 715.0
+    r: 12.041694641113281
+- label: vareia
+  confidence: 0.9887836575508118
+  line: 2
+  bounding_rect:
+    x: 925
+    y: 707
+    w: 42
+    h: 66
+  bounding_circle:
+    x: 945.5
+    y: 740.0
+    r: 38.003387451171875
+- label: apostrofos
+  confidence: 0.9997627139091492
+  line: 2
+  bounding_rect:
+    x: 972
+    y: 728
+    w: 40
+    h: 25
+  bounding_circle:
+    x: 991.5
+    y: 739.5
+    r: 22.1473331451416
+- label: martyria_diatonic_ke
+  confidence: 0.6235845685005188
+  line: 2
+  bounding_rect:
+    x: 976
+    y: 805
+    w: 17
+    h: 35
+  bounding_circle:
+    x: 983.5
+    y: 822.0
+    r: 17.585603713989258
+- label: klasma
+  confidence: 0.9975911378860474
+  line: 2
+  bounding_rect:
+    x: 978
+    y: 705
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 994.5
+    y: 711.0
+    r: 16.978025436401367
+- label: yporroe
+  confidence: 0.9804835319519043
+  line: 2
+  bounding_rect:
+    x: 1022
+    y: 728
+    w: 32
+    h: 25
+  bounding_circle:
+    x: 1037.5
+    y: 741.0
+    r: 19.006677627563477
+- label: gorgon
+  confidence: 0.9993351101875305
+  line: 2
+  bounding_rect:
+    x: 1034
+    y: 702
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 1047.5
+    y: 712.0
+    r: 15.403021812438965
+- label: oligon
+  confidence: 0.9888228178024292
+  line: 2
+  bounding_rect:
+    x: 1059
+    y: 736
+    w: 85
+    h: 13
+  bounding_circle:
+    x: 1101.0
+    y: 742.5
+    r: 42.240482330322266
+- label: antikenoma
+  confidence: 0.996973991394043
+  line: 2
+  bounding_rect:
+    x: 1063
+    y: 763
+    w: 105
+    h: 26
+  bounding_circle:
+    x: 1115.0
+    y: 775.0
+    r: 52.61188507080078
+- label: gorgon
+  confidence: 0.9993911981582642
+  line: 2
+  bounding_rect:
+    x: 1110
+    y: 702
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 1123.0
+    y: 713.0
+    r: 15.620599746704102
+- label: apostrofos
+  confidence: 0.998184859752655
+  line: 2
+  bounding_rect:
+    x: 1154
+    y: 729
+    w: 41
+    h: 29
+  bounding_circle:
+    x: 1174.0
+    y: 742.0
+    r: 23.32390594482422
+- label: ison
+  confidence: 0.9669649004936218
+  line: 2
+  bounding_rect:
+    x: 1203
+    y: 720
+    w: 91
+    h: 29
+  bounding_circle:
+    x: 1248.0
+    y: 735.0
+    r: 46.84025192260742
+- label: yporroe
+  confidence: 0.8935173749923706
+  line: 2
+  bounding_rect:
+    x: 1241
+    y: 757
+    w: 15
+    h: 11
+  bounding_circle:
+    x: 1248.0
+    y: 762.0
+    r: 8.602425575256348
+- label: yporroe
+  confidence: 0.9491115808486938
+  line: 2
+  bounding_rect:
+    x: 1258
+    y: 756
+    w: 13
+    h: 12
+  bounding_circle:
+    x: 1264.0
+    y: 761.5
+    r: 7.500100135803223
+- label: gorgon
+  confidence: 0.9291583895683289
+  line: 2
+  bounding_rect:
+    x: 1691
+    y: 754
+    w: 28
+    h: 26
+  bounding_circle:
+    x: 1704.0
+    y: 766.8571166992188
+    r: 15.730596542358398
+- label: martyria_diatonic_ke
+  confidence: 0.9910506010055542
+  line: 2
+  bounding_rect:
+    x: 1694
+    y: 795
+    w: 21
+    h: 40
+  bounding_circle:
+    x: 1707.5
+    y: 814.5
+    r: 20.26089859008789
+- label: vareia
+  confidence: 0.35451313853263855
+  line: 3
+  bounding_rect:
+    x: 269
+    y: 934
+    w: 44
+    h: 57
+  bounding_circle:
+    x: 289.5
+    y: 962.1363525390625
+    r: 34.00938415527344
+- label: oligon
+  confidence: 0.995840311050415
+  line: 3
+  bounding_rect:
+    x: 321
+    y: 905
+    w: 114
+    h: 17
+  bounding_circle:
+    x: 377.5
+    y: 913.0
+    r: 56.93207550048828
+- label: ypsili
+  confidence: 0.9651004672050476
+  line: 3
+  bounding_rect:
+    x: 384
+    y: 838
+    w: 52
+    h: 56
+  bounding_circle:
+    x: 409.5
+    y: 862.0
+    r: 34.340309143066406
+- label: ison
+  confidence: 0.9908114671707153
+  line: 3
+  bounding_rect:
+    x: 440
+    y: 888
+    w: 93
+    h: 32
+  bounding_circle:
+    x: 486.5
+    y: 904.0
+    r: 47.90886688232422
+- label: ison
+  confidence: 0.999584972858429
+  line: 3
+  bounding_rect:
+    x: 537
+    y: 889
+    w: 92
+    h: 32
+  bounding_circle:
+    x: 583.0
+    y: 905.5
+    r: 47.27853012084961
+- label: martyria_diatonic_ke
+  confidence: 0.8635216951370239
+  line: 3
+  bounding_rect:
+    x: 543
+    y: 963
+    w: 20
+    h: 44
+  bounding_circle:
+    x: 549.5
+    y: 984.5
+    r: 21.96598243713379
+- label: martyria_diatonic_ke
+  confidence: 0.9909173846244812
+  line: 3
+  bounding_rect:
+    x: 565
+    y: 976
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 571.0
+    y: 993.0
+    r: 17.720144271850586
+- label: oligon
+  confidence: 0.9997695088386536
+  line: 3
+  bounding_rect:
+    x: 637
+    y: 907
+    w: 110
+    h: 15
+  bounding_circle:
+    x: 691.5
+    y: 914.5
+    r: 54.88634490966797
+- label: psifiston
+  confidence: 0.9793884754180908
+  line: 3
+  bounding_rect:
+    x: 640
+    y: 931
+    w: 108
+    h: 27
+  bounding_circle:
+    x: 693.5
+    y: 933.5
+    r: 53.521121978759766
+- label: kentima
+  confidence: 0.9993168115615845
+  line: 3
+  bounding_rect:
+    x: 668
+    y: 880
+    w: 17
+    h: 18
+  bounding_circle:
+    x: 676.241943359375
+    y: 889.241943359375
+    r: 10.971649169921875
+- label: kentima
+  confidence: 0.9984917640686035
+  line: 3
+  bounding_rect:
+    x: 689
+    y: 880
+    w: 17
+    h: 18
+  bounding_circle:
+    x: 697.0
+    y: 889.0
+    r: 10.63024616241455
+- label: apostrofos
+  confidence: 0.9148476719856262
+  line: 3
+  bounding_rect:
+    x: 756
+    y: 901
+    w: 41
+    h: 25
+  bounding_circle:
+    x: 776.0
+    y: 912.0
+    r: 22.36077880859375
+- label: apostrofos
+  confidence: 0.9986748695373535
+  line: 3
+  bounding_rect:
+    x: 810
+    y: 898
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 829.5
+    y: 911.0
+    r: 21.914705276489258
+- label: vareia
+  confidence: 0.9261146783828735
+  line: 3
+  bounding_rect:
+    x: 865
+    y: 880
+    w: 51
+    h: 71
+  bounding_circle:
+    x: 890.0
+    y: 915.0
+    r: 42.438289642333984
+- label: ison
+  confidence: 0.9912564754486084
+  line: 3
+  bounding_rect:
+    x: 903
+    y: 891
+    w: 91
+    h: 30
+  bounding_circle:
+    x: 948.0
+    y: 907.5
+    r: 46.44630432128906
+- label: yporroe
+  confidence: 0.9333164095878601
+  line: 3
+  bounding_rect:
+    x: 996
+    y: 928
+    w: 15
+    h: 13
+  bounding_circle:
+    x: 1003.0
+    y: 934.5
+    r: 8.90234661102295
+- label: apostrofos
+  confidence: 0.9946446418762207
+  line: 3
+  bounding_rect:
+    x: 1000
+    y: 899
+    w: 40
+    h: 29
+  bounding_circle:
+    x: 1019.0
+    y: 912.5
+    r: 22.74323081970215
+- label: yporroe
+  confidence: 0.9536640048027039
+  line: 3
+  bounding_rect:
+    x: 1013
+    y: 929
+    w: 12
+    h: 11
+  bounding_circle:
+    x: 1018.5
+    y: 934.5
+    r: 7.106435298919678
+- label: psifiston
+  confidence: 0.9450873136520386
+  line: 3
+  bounding_rect:
+    x: 1041
+    y: 929
+    w: 99
+    h: 29
+  bounding_circle:
+    x: 1090.0
+    y: 935.5
+    r: 49.206298828125
+- label: oligon
+  confidence: 0.9460728168487549
+  line: 3
+  bounding_rect:
+    x: 1050
+    y: 906
+    w: 108
+    h: 16
+  bounding_circle:
+    x: 1103.5
+    y: 918.0
+    r: 53.584144592285156
+- label: apostrofos
+  confidence: 0.995416522026062
+  line: 3
+  bounding_rect:
+    x: 1167
+    y: 901
+    w: 42
+    h: 26
+  bounding_circle:
+    x: 1187.0
+    y: 912.5
+    r: 22.58881378173828
+- label: vareia
+  confidence: 0.9911519885063171
+  line: 3
+  bounding_rect:
+    x: 1222
+    y: 879
+    w: 41
+    h: 68
+  bounding_circle:
+    x: 1242.0
+    y: 912.5
+    r: 39.01612091064453
+- label: apostrofos
+  confidence: 0.9965967535972595
+  line: 3
+  bounding_rect:
+    x: 1266
+    y: 900
+    w: 42
+    h: 26
+  bounding_circle:
+    x: 1286.5
+    y: 912.0
+    r: 22.8090877532959
+- label: apostrofos
+  confidence: 0.9986621141433716
+  line: 3
+  bounding_rect:
+    x: 1320
+    y: 900
+    w: 41
+    h: 25
+  bounding_circle:
+    x: 1340.0
+    y: 912.0
+    r: 22.825523376464844
+- label: oligon
+  confidence: 0.9981399774551392
+  line: 3
+  bounding_rect:
+    x: 1368
+    y: 908
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 1410.0
+    y: 914.0
+    r: 42.29667282104492
+- label: kentima
+  confidence: 0.9996765851974487
+  line: 3
+  bounding_rect:
+    x: 1393
+    y: 878
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1401.257568359375
+    y: 887.257568359375
+    r: 11.678086280822754
+- label: gorgon
+  confidence: 0.9980334639549255
+  line: 3
+  bounding_rect:
+    x: 1405
+    y: 855
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1418.0
+    y: 864.5
+    r: 15.305328369140625
+- label: kentima
+  confidence: 0.9991855025291443
+  line: 3
+  bounding_rect:
+    x: 1414
+    y: 878
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 1423.5
+    y: 887.5
+    r: 12.103818893432617
+- label: apostrofos
+  confidence: 0.9992757439613342
+  line: 3
+  bounding_rect:
+    x: 1460
+    y: 898
+    w: 38
+    h: 29
+  bounding_circle:
+    x: 1478.5
+    y: 911.0
+    r: 22.051176071166992
+- label: oligon
+  confidence: 0.9971018433570862
+  line: 3
+  bounding_rect:
+    x: 1502
+    y: 906
+    w: 100
+    h: 15
+  bounding_circle:
+    x: 1551.5
+    y: 914.0
+    r: 49.751983642578125
+- label: klasma
+  confidence: 0.994425892829895
+  line: 3
+  bounding_rect:
+    x: 1531
+    y: 880
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 1547.5
+    y: 886.0
+    r: 16.978025436401367
+- label: oligon
+  confidence: 0.9963467717170715
+  line: 3
+  bounding_rect:
+    x: 1610
+    y: 905
+    w: 109
+    h: 14
+  bounding_circle:
+    x: 1664.0
+    y: 913.0
+    r: 54.083370208740234
+- label: gorgon
+  confidence: 0.6473121047019958
+  line: 3
+  bounding_rect:
+    x: 1641
+    y: 974
+    w: 23
+    h: 20
+  bounding_circle:
+    x: 1653.2142333984375
+    y: 983.5
+    r: 12.962015151977539
+- label: gorgon
+  confidence: 0.9983739852905273
+  line: 3
+  bounding_rect:
+    x: 1641
+    y: 931
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1653.5
+    y: 941.0
+    r: 15.403021812438965
+- label: psifiston
+  confidence: 0.9615849852561951
+  line: 4
+  bounding_rect:
+    x: 273
+    y: 1096
+    w: 111
+    h: 28
+  bounding_circle:
+    x: 328.0
+    y: 1099.5
+    r: 55.02054977416992
+- label: ison
+  confidence: 0.9965141415596008
+  line: 4
+  bounding_rect:
+    x: 273
+    y: 1055
+    w: 92
+    h: 32
+  bounding_circle:
+    x: 318.5
+    y: 1072.5
+    r: 47.1859016418457
+- label: apostrofos
+  confidence: 0.9997612833976746
+  line: 4
+  bounding_rect:
+    x: 376
+    y: 1068
+    w: 41
+    h: 27
+  bounding_circle:
+    x: 395.5
+    y: 1080.0
+    r: 22.38871192932129
+- label: apostrofos
+  confidence: 0.9993208646774292
+  line: 4
+  bounding_rect:
+    x: 428
+    y: 1069
+    w: 42
+    h: 25
+  bounding_circle:
+    x: 448.5
+    y: 1079.5
+    r: 22.59434700012207
+- label: apostrofos
+  confidence: 0.9728320240974426
+  line: 4
+  bounding_rect:
+    x: 483
+    y: 1069
+    w: 38
+    h: 28
+  bounding_circle:
+    x: 501.5
+    y: 1081.0
+    r: 21.52334213256836
+- label: apostrofos
+  confidence: 0.9995488524436951
+  line: 4
+  bounding_rect:
+    x: 531
+    y: 1071
+    w: 42
+    h: 27
+  bounding_circle:
+    x: 550.5
+    y: 1083.0
+    r: 22.38871192932129
+- label: klasma
+  confidence: 0.9866085648536682
+  line: 4
+  bounding_rect:
+    x: 541
+    y: 1049
+    w: 33
+    h: 13
+  bounding_circle:
+    x: 557.0
+    y: 1054.0
+    r: 16.492521286010742
+- label: oligon
+  confidence: 0.999752938747406
+  line: 4
+  bounding_rect:
+    x: 581
+    y: 1080
+    w: 84
+    h: 13
+  bounding_circle:
+    x: 622.5
+    y: 1086.0
+    r: 41.69242477416992
+- label: kentima
+  confidence: 0.9998310804367065
+  line: 4
+  bounding_rect:
+    x: 612
+    y: 1043
+    w: 18
+    h: 21
+  bounding_circle:
+    x: 620.5
+    y: 1053.0
+    r: 12.500100135803223
+- label: kentima
+  confidence: 0.9987643957138062
+  line: 4
+  bounding_rect:
+    x: 669
+    y: 1076
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 678.0
+    y: 1086.0
+    r: 12.041694641113281
+- label: kentima
+  confidence: 0.9999890327453613
+  line: 4
+  bounding_rect:
+    x: 689
+    y: 1076
+    w: 20
+    h: 21
+  bounding_circle:
+    x: 698.5
+    y: 1085.5
+    r: 12.747649192810059
+- label: ison
+  confidence: 0.9854294061660767
+  line: 4
+  bounding_rect:
+    x: 712
+    y: 1063
+    w: 92
+    h: 30
+  bounding_circle:
+    x: 757.5
+    y: 1079.5
+    r: 47.1859016418457
+- label: klasma
+  confidence: 0.9909909963607788
+  line: 4
+  bounding_rect:
+    x: 752
+    y: 1055
+    w: 32
+    h: 15
+  bounding_circle:
+    x: 767.5
+    y: 1062.0
+    r: 15.628600120544434
+- label: martyria_diatonic_ke
+  confidence: 0.9871236085891724
+  line: 4
+  bounding_rect:
+    x: 822
+    y: 1147
+    w: 20
+    h: 40
+  bounding_circle:
+    x: 835.9511108398438
+    y: 1166.3834228515625
+    r: 20.030284881591797
+- label: yporroe
+  confidence: 0.7195561528205872
+  line: 4
+  bounding_rect:
+    x: 823
+    y: 1132
+    w: 7
+    h: 6
+  bounding_circle:
+    x: 826.0
+    y: 1135.0
+    r: 3.6056511402130127
+- label: kentima
+  confidence: 0.5301638245582581
+  line: 4
+  bounding_rect:
+    x: 826
+    y: 1103
+    w: 23
+    h: 26
+  bounding_circle:
+    x: 837.5
+    y: 1115.5
+    r: 16.324926376342773
+- label: gorgon
+  confidence: 0.5039291381835938
+  line: 4
+  bounding_rect:
+    x: 836
+    y: 1133
+    w: 6
+    h: 6
+  bounding_circle:
+    x: 838.0999755859375
+    y: 1135.5
+    r: 3.265087127685547
+- label: oligon
+  confidence: 0.996614396572113
+  line: 4
+  bounding_rect:
+    x: 865
+    y: 1077
+    w: 113
+    h: 16
+  bounding_circle:
+    x: 921.0
+    y: 1084.5
+    r: 56.500099182128906
+- label: psifiston
+  confidence: 0.8112099170684814
+  line: 4
+  bounding_rect:
+    x: 869
+    y: 1103
+    w: 110
+    h: 28
+  bounding_circle:
+    x: 923.5
+    y: 1105.0
+    r: 54.509273529052734
+- label: kentima
+  confidence: 0.9994819760322571
+  line: 4
+  bounding_rect:
+    x: 899
+    y: 1044
+    w: 17
+    h: 21
+  bounding_circle:
+    x: 906.5
+    y: 1054.0
+    r: 12.500100135803223
+- label: klasma
+  confidence: 0.9913755059242249
+  line: 4
+  bounding_rect:
+    x: 926
+    y: 1056
+    w: 32
+    h: 15
+  bounding_circle:
+    x: 941.5
+    y: 1062.5
+    r: 15.890348434448242
+- label: martyria_diatonic_ke
+  confidence: 0.6717625260353088
+  line: 4
+  bounding_rect:
+    x: 946
+    y: 1132
+    w: 21
+    h: 40
+  bounding_circle:
+    x: 955.0
+    y: 1151.5
+    r: 19.72951889038086
+- label: apostrofos
+  confidence: 0.997191846370697
+  line: 4
+  bounding_rect:
+    x: 986
+    y: 1073
+    w: 42
+    h: 25
+  bounding_circle:
+    x: 1006.5
+    y: 1083.0
+    r: 22.8090877532959
+- label: klasma
+  confidence: 0.9993934631347656
+  line: 4
+  bounding_rect:
+    x: 996
+    y: 1048
+    w: 35
+    h: 15
+  bounding_circle:
+    x: 1013.0
+    y: 1054.5
+    r: 17.585603713989258
+- label: vareia
+  confidence: 0.9492416381835938
+  line: 4
+  bounding_rect:
+    x: 1048
+    y: 1053
+    w: 33
+    h: 60
+  bounding_circle:
+    x: 1064.0
+    y: 1082.5
+    r: 33.55974578857422
+- label: martyria_diatonic_ke
+  confidence: 0.869310736656189
+  line: 4
+  bounding_rect:
+    x: 1075
+    y: 1148
+    w: 15
+    h: 36
+  bounding_circle:
+    x: 1081.5
+    y: 1165.5
+    r: 18.06941032409668
+- label: fthora_enharmonic
+  confidence: 0.9777993559837341
+  line: 4
+  bounding_rect:
+    x: 1090
+    y: 1040
+    w: 32
+    h: 32
+  bounding_circle:
+    x: 1104.5357666015625
+    y: 1056.4642333984375
+    r: 19.86211395263672
+- label: apostrofos
+  confidence: 0.9388697743415833
+  line: 4
+  bounding_rect:
+    x: 1100
+    y: 1075
+    w: 25
+    h: 27
+  bounding_circle:
+    x: 1112.0
+    y: 1086.5
+    r: 15.945319175720215
+- label: apostrofos
+  confidence: 0.998489499092102
+  line: 4
+  bounding_rect:
+    x: 1129
+    y: 1072
+    w: 38
+    h: 28
+  bounding_circle:
+    x: 1147.5
+    y: 1085.0
+    r: 22.051176071166992
+- label: kentima
+  confidence: 0.6388858556747437
+  line: 4
+  bounding_rect:
+    x: 1133
+    y: 1148
+    w: 16
+    h: 22
+  bounding_circle:
+    x: 1140.5
+    y: 1158.5
+    r: 11.068072319030762
+- label: gorgon
+  confidence: 0.9969695210456848
+  line: 4
+  bounding_rect:
+    x: 1143
+    y: 1047
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1156.5
+    y: 1057.5
+    r: 14.916534423828125
+- label: yporroe
+  confidence: 0.9650607109069824
+  line: 4
+  bounding_rect:
+    x: 1147
+    y: 1107
+    w: 13
+    h: 10
+  bounding_circle:
+    x: 1153.0
+    y: 1111.5
+    r: 6.946321964263916
+- label: psifiston
+  confidence: 0.9690537452697754
+  line: 4
+  bounding_rect:
+    x: 1171
+    y: 1100
+    w: 109
+    h: 30
+  bounding_circle:
+    x: 1225.0
+    y: 1104.5
+    r: 54.18727493286133
+- label: oligon
+  confidence: 0.9978210926055908
+  line: 4
+  bounding_rect:
+    x: 1172
+    y: 1077
+    w: 110
+    h: 14
+  bounding_circle:
+    x: 1226.5
+    y: 1084.0
+    r: 54.72897720336914
+- label: martyria_diatonic_ke
+  confidence: 0.8728311061859131
+  line: 4
+  bounding_rect:
+    x: 1186
+    y: 1148
+    w: 22
+    h: 35
+  bounding_circle:
+    x: 1197.153076171875
+    y: 1164.6434326171875
+    r: 17.640687942504883
+- label: kentima
+  confidence: 0.9998325109481812
+  line: 4
+  bounding_rect:
+    x: 1214
+    y: 1050
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1222.742431640625
+    y: 1059.742431640625
+    r: 11.678065299987793
+- label: kentima
+  confidence: 0.9955568909645081
+  line: 4
+  bounding_rect:
+    x: 1235
+    y: 1050
+    w: 16
+    h: 20
+  bounding_circle:
+    x: 1242.5
+    y: 1060.0
+    r: 11.10190200805664
+- label: apostrofos
+  confidence: 0.9993939399719238
+  line: 4
+  bounding_rect:
+    x: 1294
+    y: 1071
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 1313.0
+    y: 1083.5
+    r: 22.209331512451172
+- label: apostrofos
+  confidence: 0.99637371301651
+  line: 4
+  bounding_rect:
+    x: 1352
+    y: 1072
+    w: 32
+    h: 24
+  bounding_circle:
+    x: 1367.5
+    y: 1082.5
+    r: 18.179758071899414
+- label: vareia
+  confidence: 0.9452281594276428
+  line: 4
+  bounding_rect:
+    x: 1399
+    y: 1054
+    w: 36
+    h: 61
+  bounding_circle:
+    x: 1416.5
+    y: 1084.5
+    r: 34.30024337768555
+- label: ison
+  confidence: 0.9917592406272888
+  line: 4
+  bounding_rect:
+    x: 1436
+    y: 1060
+    w: 93
+    h: 30
+  bounding_circle:
+    x: 1482.0
+    y: 1076.0
+    r: 47.80177307128906
+- label: apostrofos
+  confidence: 0.9967292547225952
+  line: 4
+  bounding_rect:
+    x: 1539
+    y: 1070
+    w: 40
+    h: 24
+  bounding_circle:
+    x: 1558.0
+    y: 1081.0
+    r: 21.471010208129883
+- label: gorgon
+  confidence: 0.9910683631896973
+  line: 4
+  bounding_rect:
+    x: 1547
+    y: 1046
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 1560.0
+    y: 1056.0
+    r: 15.000100135803223
+- label: yporroe
+  confidence: 0.8558887839317322
+  line: 4
+  bounding_rect:
+    x: 1559
+    y: 1099
+    w: 15
+    h: 10
+  bounding_circle:
+    x: 1566.0
+    y: 1103.5
+    r: 7.826338291168213
+- label: martyria_diatonic_di
+  confidence: 0.9621681571006775
+  line: 4
+  bounding_rect:
+    x: 1577
+    y: 1143
+    w: 42
+    h: 40
+  bounding_circle:
+    x: 1598.32666015625
+    y: 1166.4351806640625
+    r: 23.896705627441406
+- label: yporroe
+  confidence: 0.6266922354698181
+  line: 4
+  bounding_rect:
+    x: 1589
+    y: 1130
+    w: 8
+    h: 9
+  bounding_circle:
+    x: 1593.0
+    y: 1134.0
+    r: 4.472236156463623
+- label: kentima
+  confidence: 0.34627267718315125
+  line: 4
+  bounding_rect:
+    x: 1602
+    y: 1130
+    w: 8
+    h: 8
+  bounding_circle:
+    x: 1605.5
+    y: 1133.5
+    r: 4.94984769821167
+- label: klasma
+  confidence: 0.2444642037153244
+  line: 4
+  bounding_rect:
+    x: 1610
+    y: 1098
+    w: 21
+    h: 28
+  bounding_circle:
+    x: 1620.0860595703125
+    y: 1112.36474609375
+    r: 14.657418251037598
+- label: gorgon
+  confidence: 0.25563845038414
+  line: 4
+  bounding_rect:
+    x: 1651
+    y: 1133
+    w: 27
+    h: 32
+  bounding_circle:
+    x: 1663.9869384765625
+    y: 1150.673583984375
+    r: 17.924392700195312
+- label: elafron_apostrofos
+  confidence: 0.9746549725532532
+  line: 4
+  bounding_rect:
+    x: 1654
+    y: 1064
+    w: 68
+    h: 31
+  bounding_circle:
+    x: 1687.5
+    y: 1082.0
+    r: 33.634159088134766
+- label: apostrofos
+  confidence: 0.7074156403541565
+  line: 4
+  bounding_rect:
+    x: 1674
+    y: 1076
+    w: 37
+    h: 28
+  bounding_circle:
+    x: 1692.0
+    y: 1089.5
+    r: 21.360109329223633
+- label: martyria_diatonic_ke
+  confidence: 0.8842403888702393
+  line: 4
+  bounding_rect:
+    x: 1681
+    y: 1125
+    w: 21
+    h: 39
+  bounding_circle:
+    x: 1691.0
+    y: 1144.0
+    r: 19.105072021484375
+- label: ison
+  confidence: 0.9851323962211609
+  line: 5
+  bounding_rect:
+    x: 272
+    y: 1235
+    w: 96
+    h: 29
+  bounding_circle:
+    x: 319.5
+    y: 1250.5
+    r: 49.117305755615234
+- label: martyria_diatonic_di
+  confidence: 0.7422086596488953
+  line: 5
+  bounding_rect:
+    x: 302
+    y: 1310
+    w: 45
+    h: 45
+  bounding_circle:
+    x: 320.29833984375
+    y: 1333.6021728515625
+    r: 26.745250701904297
+- label: oligon
+  confidence: 0.995394229888916
+  line: 5
+  bounding_rect:
+    x: 374
+    y: 1251
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 416.0
+    y: 1257.0
+    r: 42.29667282104492
+- label: oligon
+  confidence: 0.9920338988304138
+  line: 5
+  bounding_rect:
+    x: 468
+    y: 1250
+    w: 111
+    h: 17
+  bounding_circle:
+    x: 523.0
+    y: 1257.0
+    r: 55.443763732910156
+- label: kentima
+  confidence: 0.9993265867233276
+  line: 5
+  bounding_rect:
+    x: 540
+    y: 1274
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 549.2428588867188
+    y: 1284.2427978515625
+    r: 12.384611129760742
+- label: kentima
+  confidence: 0.9932988882064819
+  line: 5
+  bounding_rect:
+    x: 561
+    y: 1274
+    w: 18
+    h: 22
+  bounding_circle:
+    x: 569.5
+    y: 1285.5
+    r: 12.747649192810059
+- label: oligon
+  confidence: 0.9912281036376953
+  line: 5
+  bounding_rect:
+    x: 593
+    y: 1251
+    w: 109
+    h: 15
+  bounding_circle:
+    x: 647.0
+    y: 1258.0
+    r: 54.3324089050293
+- label: kentima
+  confidence: 0.9991543292999268
+  line: 5
+  bounding_rect:
+    x: 625
+    y: 1224
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 633.5
+    y: 1233.0
+    r: 11.672718048095703
+- label: gorgon
+  confidence: 0.9932603240013123
+  line: 5
+  bounding_rect:
+    x: 637
+    y: 1199
+    w: 25
+    h: 22
+  bounding_circle:
+    x: 649.280517578125
+    y: 1210.719482421875
+    r: 14.60748291015625
+- label: kentima
+  confidence: 0.9969203472137451
+  line: 5
+  bounding_rect:
+    x: 646
+    y: 1224
+    w: 20
+    h: 19
+  bounding_circle:
+    x: 655.5
+    y: 1233.5
+    r: 12.103818893432617
+- label: antikenoma_apli
+  confidence: 0.9796001315116882
+  line: 5
+  bounding_rect:
+    x: 701
+    y: 1280
+    w: 104
+    h: 25
+  bounding_circle:
+    x: 752.5
+    y: 1292.0
+    r: 52.11775588989258
+- label: elafron
+  confidence: 0.9680083990097046
+  line: 5
+  bounding_rect:
+    x: 718
+    y: 1246
+    w: 70
+    h: 28
+  bounding_circle:
+    x: 752.5
+    y: 1263.0
+    r: 35.01795196533203
+- label: martyria_diatonic_ke
+  confidence: 0.8240473866462708
+  line: 5
+  bounding_rect:
+    x: 749
+    y: 1321
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 754.5
+    y: 1338.0
+    r: 17.585603713989258
+- label: kentima
+  confidence: 0.6951433420181274
+  line: 5
+  bounding_rect:
+    x: 751
+    y: 1287
+    w: 12
+    h: 12
+  bounding_circle:
+    x: 757.2000122070312
+    y: 1292.5
+    r: 6.685151100158691
+- label: apostrofos
+  confidence: 0.9976863861083984
+  line: 5
+  bounding_rect:
+    x: 793
+    y: 1247
+    w: 41
+    h: 28
+  bounding_circle:
+    x: 813.0
+    y: 1259.0
+    r: 22.825523376464844
+- label: gorgon
+  confidence: 0.9971508383750916
+  line: 5
+  bounding_rect:
+    x: 796
+    y: 1220
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 809.5
+    y: 1230.5
+    r: 15.116316795349121
+- label: vareia
+  confidence: 0.7421896457672119
+  line: 5
+  bounding_rect:
+    x: 846
+    y: 1230
+    w: 51
+    h: 68
+  bounding_circle:
+    x: 871.0
+    y: 1263.5
+    r: 41.80022048950195
+- label: ison
+  confidence: 0.9961850047111511
+  line: 5
+  bounding_rect:
+    x: 882
+    y: 1236
+    w: 92
+    h: 30
+  bounding_circle:
+    x: 927.5
+    y: 1252.5
+    r: 47.1859016418457
+- label: martyria_diatonic_ke
+  confidence: 0.7453415989875793
+  line: 5
+  bounding_rect:
+    x: 911
+    y: 1322
+    w: 19
+    h: 35
+  bounding_circle:
+    x: 921.0
+    y: 1339.0
+    r: 18.788393020629883
+- label: apostrofos
+  confidence: 0.9972195625305176
+  line: 5
+  bounding_rect:
+    x: 980
+    y: 1246
+    w: 39
+    h: 27
+  bounding_circle:
+    x: 998.5
+    y: 1259.0
+    r: 22.051176071166992
+- label: gorgon
+  confidence: 0.9996389150619507
+  line: 5
+  bounding_rect:
+    x: 983
+    y: 1222
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 996.0
+    y: 1232.5
+    r: 15.305328369140625
+- label: heteron
+  confidence: 0.9992315769195557
+  line: 5
+  bounding_rect:
+    x: 984
+    y: 1276
+    w: 101
+    h: 25
+  bounding_circle:
+    x: 1034.0
+    y: 1289.0
+    r: 50.99029541015625
+- label: oligon
+  confidence: 0.9975154399871826
+  line: 5
+  bounding_rect:
+    x: 1024
+    y: 1253
+    w: 84
+    h: 12
+  bounding_circle:
+    x: 1065.5
+    y: 1258.0
+    r: 41.69242477416992
+- label: kentima
+  confidence: 0.9984570741653442
+  line: 5
+  bounding_rect:
+    x: 1040
+    y: 1224
+    w: 17
+    h: 19
+  bounding_circle:
+    x: 1048.241943359375
+    y: 1233.241943359375
+    r: 10.971649169921875
+- label: gorgon
+  confidence: 0.9929600358009338
+  line: 5
+  bounding_rect:
+    x: 1051
+    y: 1201
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 1064.0
+    y: 1211.0
+    r: 15.000100135803223
+- label: kentima
+  confidence: 0.998244047164917
+  line: 5
+  bounding_rect:
+    x: 1061
+    y: 1224
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1069.5
+    y: 1233.0
+    r: 11.672718048095703
+- label: apostrofos
+  confidence: 0.9918672442436218
+  line: 5
+  bounding_rect:
+    x: 1111
+    y: 1216
+    w: 39
+    h: 28
+  bounding_circle:
+    x: 1130.0
+    y: 1227.5
+    r: 22.209331512451172
+- label: oligon
+  confidence: 0.9949654936790466
+  line: 5
+  bounding_rect:
+    x: 1112
+    y: 1254
+    w: 87
+    h: 12
+  bounding_circle:
+    x: 1155.0
+    y: 1259.5
+    r: 43.23492431640625
+- label: kentima
+  confidence: 0.9997605681419373
+  line: 5
+  bounding_rect:
+    x: 1153
+    y: 1225
+    w: 17
+    h: 19
+  bounding_circle:
+    x: 1160.758056640625
+    y: 1233.758056640625
+    r: 10.971672058105469
+- label: gorgon
+  confidence: 0.9269835948944092
+  line: 5
+  bounding_rect:
+    x: 1163
+    y: 1201
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 1176.5
+    y: 1211.0
+    r: 14.840922355651855
+- label: kentima
+  confidence: 0.9988270401954651
+  line: 5
+  bounding_rect:
+    x: 1174
+    y: 1224
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 1183.0
+    y: 1233.0
+    r: 12.041694641113281
+- label: apostrofos
+  confidence: 0.9990079998970032
+  line: 5
+  bounding_rect:
+    x: 1203
+    y: 1244
+    w: 41
+    h: 29
+  bounding_circle:
+    x: 1222.5
+    y: 1256.5
+    r: 22.638561248779297
+- label: yporroe
+  confidence: 0.967337429523468
+  line: 5
+  bounding_rect:
+    x: 1249
+    y: 1243
+    w: 29
+    h: 26
+  bounding_circle:
+    x: 1263.0
+    y: 1256.0
+    r: 18.43918800354004
+- label: gorgon
+  confidence: 0.9918137788772583
+  line: 5
+  bounding_rect:
+    x: 1252
+    y: 1220
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1265.0
+    y: 1230.0
+    r: 15.000100135803223
+- label: antikenoma
+  confidence: 0.9721531271934509
+  line: 5
+  bounding_rect:
+    x: 1288
+    y: 1278
+    w: 104
+    h: 25
+  bounding_circle:
+    x: 1339.5
+    y: 1290.5
+    r: 52.04335021972656
+- label: oligon
+  confidence: 0.9983722567558289
+  line: 5
+  bounding_rect:
+    x: 1288
+    y: 1251
+    w: 85
+    h: 13
+  bounding_circle:
+    x: 1330.0
+    y: 1257.0
+    r: 42.19014358520508
+- label: gorgon
+  confidence: 0.9999687671661377
+  line: 5
+  bounding_rect:
+    x: 1323
+    y: 1220
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1336.0
+    y: 1230.5
+    r: 15.305328369140625
+- label: apostrofos
+  confidence: 0.9950053095817566
+  line: 5
+  bounding_rect:
+    x: 1384
+    y: 1243
+    w: 39
+    h: 25
+  bounding_circle:
+    x: 1403.0
+    y: 1254.0
+    r: 21.471010208129883
+- label: ison
+  confidence: 0.9958849549293518
+  line: 5
+  bounding_rect:
+    x: 1429
+    y: 1234
+    w: 92
+    h: 30
+  bounding_circle:
+    x: 1474.5
+    y: 1250.5
+    r: 47.1859016418457
+- label: kentima
+  confidence: 0.8734989762306213
+  line: 5
+  bounding_rect:
+    x: 1471
+    y: 1226
+    w: 17
+    h: 12
+  bounding_circle:
+    x: 1478.5
+    y: 1231.0
+    r: 9.013978004455566
+- label: kentima
+  confidence: 0.6284224987030029
+  line: 5
+  bounding_rect:
+    x: 1489
+    y: 1225
+    w: 15
+    h: 14
+  bounding_circle:
+    x: 1496.0
+    y: 1233.0
+    r: 8.602425575256348
+- label: gorgon
+  confidence: 0.9848884344100952
+  line: 5
+  bounding_rect:
+    x: 1544
+    y: 1277
+    w: 29
+    h: 24
+  bounding_circle:
+    x: 1559.0517578125
+    y: 1288.362060546875
+    r: 15.978371620178223
+- label: martyria_diatonic_ke
+  confidence: 0.9900146722793579
+  line: 5
+  bounding_rect:
+    x: 1550
+    y: 1318
+    w: 20
+    h: 39
+  bounding_circle:
+    x: 1563.3116455078125
+    y: 1336.863525390625
+    r: 19.702634811401367
+- label: apostrofos
+  confidence: 0.9987431168556213
+  line: 5
+  bounding_rect:
+    x: 1583
+    y: 1238
+    w: 43
+    h: 28
+  bounding_circle:
+    x: 1603.5
+    y: 1252.0
+    r: 23.754045486450195
+- label: gorgon
+  confidence: 0.9438726902008057
+  line: 5
+  bounding_rect:
+    x: 1603
+    y: 1319
+    w: 10
+    h: 21
+  bounding_circle:
+    x: 1608.0
+    y: 1329.0
+    r: 10.198139190673828
+- label: gorgon
+  confidence: 0.9914894104003906
+  line: 5
+  bounding_rect:
+    x: 1605
+    y: 1275
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 1618.0
+    y: 1286.0
+    r: 15.000100135803223
+- label: martyria_diatonic_ke
+  confidence: 0.7994639873504639
+  line: 5
+  bounding_rect:
+    x: 1635
+    y: 1301
+    w: 21
+    h: 41
+  bounding_circle:
+    x: 1643.5
+    y: 1321.1500244140625
+    r: 20.156278610229492
+- label: oligon
+  confidence: 0.9990645051002502
+  line: 5
+  bounding_rect:
+    x: 1637
+    y: 1250
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 1679.0
+    y: 1256.5
+    r: 42.240482330322266
+- label: kentima
+  confidence: 0.9993871450424194
+  line: 5
+  bounding_rect:
+    x: 1661
+    y: 1217
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 1669.5
+    y: 1227.0
+    r: 11.715475082397461
+- label: ison
+  confidence: 0.9986101388931274
+  line: 6
+  bounding_rect:
+    x: 274
+    y: 1410
+    w: 94
+    h: 30
+  bounding_circle:
+    x: 320.9658203125
+    y: 1425.616455078125
+    r: 47.94032287597656
+- label: oligon
+  confidence: 0.9771815538406372
+  line: 6
+  bounding_rect:
+    x: 372
+    y: 1423
+    w: 87
+    h: 14
+  bounding_circle:
+    x: 415.0
+    y: 1430.0
+    r: 43.41668701171875
+- label: martyria_diatonic_ke
+  confidence: 0.8778882622718811
+  line: 6
+  bounding_rect:
+    x: 381
+    y: 1492
+    w: 22
+    h: 34
+  bounding_circle:
+    x: 392.0
+    y: 1508.3636474609375
+    r: 17.110591888427734
+- label: klasma
+  confidence: 0.9969720840454102
+  line: 6
+  bounding_rect:
+    x: 396
+    y: 1400
+    w: 35
+    h: 14
+  bounding_circle:
+    x: 413.0
+    y: 1405.0
+    r: 17.46434783935547
+- label: martyria_diatonic_ke
+  confidence: 0.8979368805885315
+  line: 6
+  bounding_rect:
+    x: 403
+    y: 1492
+    w: 17
+    h: 35
+  bounding_circle:
+    x: 409.95947265625
+    y: 1509.12158203125
+    r: 17.591983795166016
+- label: antikenoma
+  confidence: 0.9710299372673035
+  line: 6
+  bounding_rect:
+    x: 461
+    y: 1452
+    w: 104
+    h: 25
+  bounding_circle:
+    x: 512.5
+    y: 1463.5
+    r: 52.04335021972656
+- label: oligon
+  confidence: 0.9695157408714294
+  line: 6
+  bounding_rect:
+    x: 463
+    y: 1425
+    w: 88
+    h: 14
+  bounding_circle:
+    x: 506.5
+    y: 1432.0
+    r: 43.91194152832031
+- label: gorgon
+  confidence: 0.9988985061645508
+  line: 6
+  bounding_rect:
+    x: 499
+    y: 1393
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 511.5
+    y: 1402.5
+    r: 15.116316795349121
+- label: apostrofos
+  confidence: 0.9995759129524231
+  line: 6
+  bounding_rect:
+    x: 561
+    y: 1417
+    w: 40
+    h: 25
+  bounding_circle:
+    x: 580.1082763671875
+    y: 1427.3040771484375
+    r: 21.709537506103516
+- label: kentima
+  confidence: 0.9978430271148682
+  line: 6
+  bounding_rect:
+    x: 607
+    y: 1420
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 616.5
+    y: 1429.0
+    r: 11.715475082397461
+- label: kentima
+  confidence: 0.998717188835144
+  line: 6
+  bounding_rect:
+    x: 627
+    y: 1419
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 635.7571411132812
+    y: 1429.7572021484375
+    r: 12.38453197479248
+- label: ypsili
+  confidence: 0.5604189038276672
+  line: 6
+  bounding_rect:
+    x: 662
+    y: 1408
+    w: 52
+    h: 63
+  bounding_circle:
+    x: 687.5
+    y: 1439.0
+    r: 40.14047622680664
+- label: ison
+  confidence: 0.9987301230430603
+  line: 6
+  bounding_rect:
+    x: 696
+    y: 1407
+    w: 93
+    h: 30
+  bounding_circle:
+    x: 742.0
+    y: 1422.5
+    r: 47.94016647338867
+- label: heteron
+  confidence: 0.9026276469230652
+  line: 6
+  bounding_rect:
+    x: 727
+    y: 1454
+    w: 86
+    h: 21
+  bounding_circle:
+    x: 769.5
+    y: 1469.0
+    r: 42.5471305847168
+- label: yporroe
+  confidence: 0.726983904838562
+  line: 6
+  bounding_rect:
+    x: 752
+    y: 1451
+    w: 6
+    h: 8
+  bounding_circle:
+    x: 754.5
+    y: 1454.5
+    r: 3.8079864978790283
+- label: gorgon
+  confidence: 0.37294909358024597
+  line: 6
+  bounding_rect:
+    x: 753
+    y: 1491
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 765.8724365234375
+    y: 1501.4183349609375
+    r: 13.851242065429688
+- label: yporroe
+  confidence: 0.3643713593482971
+  line: 6
+  bounding_rect:
+    x: 762
+    y: 1451
+    w: 7
+    h: 7
+  bounding_circle:
+    x: 765.0
+    y: 1454.4166259765625
+    r: 3.9591176509857178
+- label: apostrofos
+  confidence: 0.9958794116973877
+  line: 6
+  bounding_rect:
+    x: 793
+    y: 1417
+    w: 39
+    h: 27
+  bounding_circle:
+    x: 811.5
+    y: 1429.5
+    r: 21.783119201660156
+- label: gorgon
+  confidence: 0.9601782560348511
+  line: 6
+  bounding_rect:
+    x: 798
+    y: 1495
+    w: 26
+    h: 19
+  bounding_circle:
+    x: 810.5
+    y: 1503.0
+    r: 13.463011741638184
+- label: yporroe
+  confidence: 0.5944706797599792
+  line: 6
+  bounding_rect:
+    x: 803
+    y: 1455
+    w: 12
+    h: 10
+  bounding_circle:
+    x: 808.6764526367188
+    y: 1460.676513671875
+    r: 6.275904178619385
+- label: null
+  confidence: 0
+  line: 6
+  bounding_rect:
+    x: 812
+    y: 1498
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 812.0
+    y: 1498.0
+    r: 9.999999747378752e-05
+- label: oligon
+  confidence: 0.9928094148635864
+  line: 6
+  bounding_rect:
+    x: 838
+    y: 1426
+    w: 111
+    h: 14
+  bounding_circle:
+    x: 893.0
+    y: 1432.5
+    r: 55.38285827636719
+- label: psifiston
+  confidence: 0.992364764213562
+  line: 6
+  bounding_rect:
+    x: 840
+    y: 1448
+    w: 106
+    h: 27
+  bounding_circle:
+    x: 892.5
+    y: 1451.5
+    r: 52.521522521972656
+- label: apostrofos
+  confidence: 0.9960489869117737
+  line: 6
+  bounding_rect:
+    x: 954
+    y: 1417
+    w: 40
+    h: 29
+  bounding_circle:
+    x: 973.5
+    y: 1429.0
+    r: 22.896604537963867
+- label: apostrofos
+  confidence: 0.9949593544006348
+  line: 6
+  bounding_rect:
+    x: 996
+    y: 1417
+    w: 39
+    h: 28
+  bounding_circle:
+    x: 1015.0
+    y: 1430.0
+    r: 22.47230339050293
+- label: apostrofos
+  confidence: 0.9922656416893005
+  line: 6
+  bounding_rect:
+    x: 1039
+    y: 1416
+    w: 39
+    h: 28
+  bounding_circle:
+    x: 1057.5
+    y: 1428.5
+    r: 22.327213287353516
+- label: oligon
+  confidence: 0.999454915523529
+  line: 6
+  bounding_rect:
+    x: 1082
+    y: 1424
+    w: 86
+    h: 13
+  bounding_circle:
+    x: 1124.5
+    y: 1430.5
+    r: 42.8545036315918
+- label: kentima
+  confidence: 0.9989252686500549
+  line: 6
+  bounding_rect:
+    x: 1100
+    y: 1395
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1109.0
+    y: 1405.0
+    r: 12.041694641113281
+- label: martyria_diatonic_ke
+  confidence: 0.23008622229099274
+  line: 6
+  bounding_rect:
+    x: 1104
+    y: 1474
+    w: 19
+    h: 46
+  bounding_circle:
+    x: 1113.5
+    y: 1496.5
+    r: 22.94568634033203
+- label: gorgon
+  confidence: 0.994885265827179
+  line: 6
+  bounding_rect:
+    x: 1113
+    y: 1373
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 1125.5
+    y: 1382.5
+    r: 15.116316795349121
+- label: kentima
+  confidence: 0.9989056587219238
+  line: 6
+  bounding_rect:
+    x: 1122
+    y: 1396
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 1131.0
+    y: 1405.5
+    r: 11.715475082397461
+- label: apostrofos
+  confidence: 0.9968739748001099
+  line: 6
+  bounding_rect:
+    x: 1172
+    y: 1416
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 1191.5
+    y: 1429.0
+    r: 22.896604537963867
+- label: oligon
+  confidence: 0.9992104768753052
+  line: 6
+  bounding_rect:
+    x: 1216
+    y: 1425
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 1258.0
+    y: 1430.0
+    r: 42.29667282104492
+- label: klasma
+  confidence: 0.9992423057556152
+  line: 6
+  bounding_rect:
+    x: 1244
+    y: 1399
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 1260.5
+    y: 1405.0
+    r: 16.978025436401367
+- label: psifiston
+  confidence: 0.9912713766098022
+  line: 6
+  bounding_rect:
+    x: 1306
+    y: 1446
+    w: 106
+    h: 28
+  bounding_circle:
+    x: 1358.5
+    y: 1450.0
+    r: 52.53818130493164
+- label: oligon
+  confidence: 0.9818830490112305
+  line: 6
+  bounding_rect:
+    x: 1307
+    y: 1422
+    w: 115
+    h: 16
+  bounding_circle:
+    x: 1364.0
+    y: 1429.5
+    r: 57.49140167236328
+- label: martyria_diatonic_ke
+  confidence: 0.7291551232337952
+  line: 6
+  bounding_rect:
+    x: 1344
+    y: 1478
+    w: 17
+    h: 35
+  bounding_circle:
+    x: 1352.5
+    y: 1495.0
+    r: 17.182939529418945
+- label: apostrofos
+  confidence: 0.9994008541107178
+  line: 6
+  bounding_rect:
+    x: 1432
+    y: 1417
+    w: 41
+    h: 24
+  bounding_circle:
+    x: 1452.0
+    y: 1427.0
+    r: 22.36077880859375
+- label: apostrofos
+  confidence: 0.9969333410263062
+  line: 6
+  bounding_rect:
+    x: 1487
+    y: 1416
+    w: 39
+    h: 26
+  bounding_circle:
+    x: 1506.0
+    y: 1427.0
+    r: 21.95459747314453
+- label: apostrofos
+  confidence: 0.9788705110549927
+  line: 6
+  bounding_rect:
+    x: 1538
+    y: 1417
+    w: 41
+    h: 24
+  bounding_circle:
+    x: 1557.5
+    y: 1427.0
+    r: 21.914705276489258
+- label: apostrofos
+  confidence: 0.997352123260498
+  line: 6
+  bounding_rect:
+    x: 1592
+    y: 1415
+    w: 40
+    h: 25
+  bounding_circle:
+    x: 1611.5
+    y: 1426.0
+    r: 21.914705276489258
+- label: klasma
+  confidence: 0.9991717338562012
+  line: 6
+  bounding_rect:
+    x: 1595
+    y: 1391
+    w: 35
+    h: 14
+  bounding_circle:
+    x: 1612.0
+    y: 1396.0
+    r: 17.46434783935547
+- label: petaste
+  confidence: 0.9954997897148132
+  line: 6
+  bounding_rect:
+    x: 1653
+    y: 1412
+    w: 70
+    h: 30
+  bounding_circle:
+    x: 1687.5
+    y: 1425.5
+    r: 35.305904388427734
+- label: kentima
+  confidence: 0.9993182420730591
+  line: 6
+  bounding_rect:
+    x: 1665
+    y: 1393
+    w: 17
+    h: 19
+  bounding_circle:
+    x: 1673.0
+    y: 1402.0
+    r: 11.31380844116211
+- label: digorgon
+  confidence: 0.6696370840072632
+  line: 7
+  bounding_rect:
+    x: 272
+    y: 1561
+    w: 43
+    h: 26
+  bounding_circle:
+    x: 293.5
+    y: 1574.5
+    r: 23.505416870117188
+- label: apostrofos
+  confidence: 0.9954423904418945
+  line: 7
+  bounding_rect:
+    x: 285
+    y: 1591
+    w: 36
+    h: 27
+  bounding_circle:
+    x: 302.0
+    y: 1603.5
+    r: 20.52447509765625
+- label: kentima
+  confidence: 0.9999233484268188
+  line: 7
+  bounding_rect:
+    x: 330
+    y: 1594
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 338.257568359375
+    y: 1603.257568359375
+    r: 11.678086280822754
+- label: kentima
+  confidence: 0.999846339225769
+  line: 7
+  bounding_rect:
+    x: 350
+    y: 1594
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 358.5
+    y: 1603.5
+    r: 11.335884094238281
+- label: oligon
+  confidence: 0.9975700974464417
+  line: 7
+  bounding_rect:
+    x: 376
+    y: 1597
+    w: 85
+    h: 13
+  bounding_circle:
+    x: 418.0
+    y: 1603.5
+    r: 42.35868835449219
+- label: ison
+  confidence: 0.9923033714294434
+  line: 7
+  bounding_rect:
+    x: 464
+    y: 1581
+    w: 93
+    h: 31
+  bounding_circle:
+    x: 510.5
+    y: 1596.5
+    r: 47.460609436035156
+- label: klasma
+  confidence: 0.9953077435493469
+  line: 7
+  bounding_rect:
+    x: 515
+    y: 1572
+    w: 32
+    h: 15
+  bounding_circle:
+    x: 530.5
+    y: 1577.5
+    r: 16.140111923217773
+- label: kentima
+  confidence: 0.6413275003433228
+  line: 7
+  bounding_rect:
+    x: 577
+    y: 1622
+    w: 24
+    h: 24
+  bounding_circle:
+    x: 588.5
+    y: 1633.5
+    r: 14.916534423828125
+- label: martyria_diatonic_ke
+  confidence: 0.9992367029190063
+  line: 7
+  bounding_rect:
+    x: 586
+    y: 1665
+    w: 20
+    h: 40
+  bounding_circle:
+    x: 599.3461303710938
+    y: 1684.5
+    r: 19.839473724365234
+- label: kentima
+  confidence: 0.5274166464805603
+  line: 7
+  bounding_rect:
+    x: 587
+    y: 1650
+    w: 6
+    h: 7
+  bounding_circle:
+    x: 589.0
+    y: 1653.0
+    r: 3.6056511402130127
+- label: gorgon
+  confidence: 0.4062395691871643
+  line: 7
+  bounding_rect:
+    x: 599
+    y: 1651
+    w: 6
+    h: 7
+  bounding_circle:
+    x: 601.5
+    y: 1654.0
+    r: 3.9052248001098633
+- label: oligon
+  confidence: 0.9876998662948608
+  line: 7
+  bounding_rect:
+    x: 621
+    y: 1595
+    w: 111
+    h: 16
+  bounding_circle:
+    x: 676.0
+    y: 1602.5
+    r: 55.50910568237305
+- label: psifiston
+  confidence: 0.9935651421546936
+  line: 7
+  bounding_rect:
+    x: 624
+    y: 1621
+    w: 106
+    h: 26
+  bounding_circle:
+    x: 676.5
+    y: 1623.5
+    r: 52.55958938598633
+- label: kentima
+  confidence: 0.9993348717689514
+  line: 7
+  bounding_rect:
+    x: 670
+    y: 1565
+    w: 17
+    h: 20
+  bounding_circle:
+    x: 678.5
+    y: 1574.5
+    r: 11.335884094238281
+- label: klasma
+  confidence: 0.9979821443557739
+  line: 7
+  bounding_rect:
+    x: 694
+    y: 1574
+    w: 33
+    h: 14
+  bounding_circle:
+    x: 710.0
+    y: 1579.0
+    r: 16.763153076171875
+- label: apostrofos
+  confidence: 0.9898189902305603
+  line: 7
+  bounding_rect:
+    x: 740
+    y: 1587
+    w: 50
+    h: 29
+  bounding_circle:
+    x: 764.5
+    y: 1599.5
+    r: 27.064836502075195
+- label: klasma
+  confidence: 0.9993438124656677
+  line: 7
+  bounding_rect:
+    x: 763
+    y: 1566
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 779.5
+    y: 1571.5
+    r: 16.86722755432129
+- label: martyria_diatonic_ke
+  confidence: 0.620098352432251
+  line: 7
+  bounding_rect:
+    x: 797
+    y: 1653
+    w: 19
+    h: 47
+  bounding_circle:
+    x: 803.5
+    y: 1676.0
+    r: 23.26487922668457
+- label: gorgon
+  confidence: 0.7034708857536316
+  line: 7
+  bounding_rect:
+    x: 804
+    y: 1656
+    w: 6
+    h: 9
+  bounding_circle:
+    x: 806.5
+    y: 1660.0
+    r: 4.272101879119873
+- label: apostrofos
+  confidence: 0.994121253490448
+  line: 7
+  bounding_rect:
+    x: 812
+    y: 1590
+    w: 39
+    h: 25
+  bounding_circle:
+    x: 831.0
+    y: 1600.0
+    r: 21.023895263671875
+- label: klasma
+  confidence: 0.9956477284431458
+  line: 7
+  bounding_rect:
+    x: 819
+    y: 1566
+    w: 35
+    h: 15
+  bounding_circle:
+    x: 836.0
+    y: 1573.0
+    r: 17.46434783935547
+- label: martyria_diatonic_ke
+  confidence: 0.845172643661499
+  line: 7
+  bounding_rect:
+    x: 820
+    y: 1667
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 824.0
+    y: 1684.0
+    r: 17.117341995239258
+- label: fthora_enharmonic
+  confidence: 0.6958467364311218
+  line: 7
+  bounding_rect:
+    x: 821
+    y: 1624
+    w: 34
+    h: 33
+  bounding_circle:
+    x: 836.3135375976562
+    y: 1641.6864013671875
+    r: 20.9615478515625
+- label: kentima
+  confidence: 0.500573456287384
+  line: 7
+  bounding_rect:
+    x: 841
+    y: 1665
+    w: 13
+    h: 21
+  bounding_circle:
+    x: 847.0
+    y: 1675.0
+    r: 10.770429611206055
+- label: null
+  confidence: 0
+  line: 7
+  bounding_rect:
+    x: 851
+    y: 1676
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 851.0
+    y: 1676.0
+    r: 9.999999747378752e-05
+- label: martyria_diatonic_ke
+  confidence: 0.5623564124107361
+  line: 7
+  bounding_rect:
+    x: 866
+    y: 1664
+    w: 21
+    h: 35
+  bounding_circle:
+    x: 876.0
+    y: 1680.86767578125
+    r: 17.593236923217773
+- label: apostrofos
+  confidence: 0.9971157312393188
+  line: 7
+  bounding_rect:
+    x: 876
+    y: 1589
+    w: 42
+    h: 27
+  bounding_circle:
+    x: 896.5
+    y: 1601.0
+    r: 22.8090877532959
+- label: klasma
+  confidence: 0.9801394939422607
+  line: 7
+  bounding_rect:
+    x: 877
+    y: 1565
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 893.5
+    y: 1571.5
+    r: 17.39262580871582
+- label: null
+  confidence: 0
+  line: 7
+  bounding_rect:
+    x: 884
+    y: 1678
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 884.0
+    y: 1678.0
+    r: 9.999999747378752e-05
+- label: null
+  confidence: 0
+  line: 7
+  bounding_rect:
+    x: 884
+    y: 1669
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 884.0
+    y: 1669.0
+    r: 9.999999747378752e-05
+- label: kentima
+  confidence: 0.5761899948120117
+  line: 7
+  bounding_rect:
+    x: 885
+    y: 1665
+    w: 21
+    h: 21
+  bounding_circle:
+    x: 896.1835327148438
+    y: 1675.069580078125
+    r: 11.234658241271973
+- label: null
+  confidence: 0
+  line: 7
+  bounding_rect:
+    x: 886
+    y: 1667
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 886.0
+    y: 1667.0
+    r: 9.999999747378752e-05
+- label: gorgon
+  confidence: 0.331418514251709
+  line: 7
+  bounding_rect:
+    x: 911
+    y: 1665
+    w: 16
+    h: 27
+  bounding_circle:
+    x: 920.5
+    y: 1678.0
+    r: 13.756916999816895
+- label: vareia
+  confidence: 0.8897777795791626
+  line: 7
+  bounding_rect:
+    x: 922
+    y: 1571
+    w: 47
+    h: 66
+  bounding_circle:
+    x: 945.5
+    y: 1603.5
+    r: 39.528568267822266
+- label: ison
+  confidence: 0.9995787739753723
+  line: 7
+  bounding_rect:
+    x: 953
+    y: 1580
+    w: 92
+    h: 29
+  bounding_circle:
+    x: 998.5
+    y: 1595.0
+    r: 46.810890197753906
+- label: martyria_diatonic_ke
+  confidence: 0.7358293533325195
+  line: 7
+  bounding_rect:
+    x: 982
+    y: 1665
+    w: 21
+    h: 36
+  bounding_circle:
+    x: 993.0
+    y: 1681.471435546875
+    r: 18.769973754882812
+- label: apostrofos
+  confidence: 0.996853768825531
+  line: 7
+  bounding_rect:
+    x: 1050
+    y: 1589
+    w: 39
+    h: 27
+  bounding_circle:
+    x: 1069.0
+    y: 1601.0
+    r: 22.47230339050293
+- label: yporroe
+  confidence: 0.9894228577613831
+  line: 7
+  bounding_rect:
+    x: 1054
+    y: 1618
+    w: 14
+    h: 11
+  bounding_circle:
+    x: 1060.5
+    y: 1623.5
+    r: 7.905794143676758
+- label: martyria_diatonic_ke
+  confidence: 0.9835981726646423
+  line: 7
+  bounding_rect:
+    x: 1066
+    y: 1665
+    w: 15
+    h: 35
+  bounding_circle:
+    x: 1072.0
+    y: 1682.0
+    r: 17.720144271850586
+- label: yporroe
+  confidence: 0.7315658330917358
+  line: 7
+  bounding_rect:
+    x: 1071
+    y: 1619
+    w: 13
+    h: 10
+  bounding_circle:
+    x: 1077.0
+    y: 1623.0
+    r: 7.211202621459961
+- label: martyria_diatonic_di
+  confidence: 0.9742237329483032
+  line: 7
+  bounding_rect:
+    x: 1103
+    y: 1662
+    w: 49
+    h: 43
+  bounding_circle:
+    x: 1126.922119140625
+    y: 1687.604736328125
+    r: 26.226058959960938
+- label: kentima
+  confidence: 0.7772841453552246
+  line: 7
+  bounding_rect:
+    x: 1117
+    y: 1623
+    w: 23
+    h: 27
+  bounding_circle:
+    x: 1128.5
+    y: 1637.5
+    r: 14.916534423828125
+- label: gorgon
+  confidence: 0.7496004104614258
+  line: 7
+  bounding_rect:
+    x: 1122
+    y: 1653
+    w: 5
+    h: 5
+  bounding_circle:
+    x: 1124.0
+    y: 1655.0
+    r: 2.8285269737243652
+- label: yporroe
+  confidence: 0.7604944109916687
+  line: 7
+  bounding_rect:
+    x: 1137
+    y: 1651
+    w: 7
+    h: 5
+  bounding_circle:
+    x: 1140.1666259765625
+    y: 1653.5
+    r: 3.206033229827881
+- label: apostrofos
+  confidence: 0.9901708960533142
+  line: 7
+  bounding_rect:
+    x: 1145
+    y: 1558
+    w: 44
+    h: 29
+  bounding_circle:
+    x: 1166.5
+    y: 1571.5
+    r: 24.010513305664062
+- label: petaste
+  confidence: 0.9970700740814209
+  line: 7
+  bounding_rect:
+    x: 1150
+    y: 1588
+    w: 72
+    h: 33
+  bounding_circle:
+    x: 1185.5
+    y: 1598.5
+    r: 36.09026336669922
+- label: klasma
+  confidence: 0.9993352293968201
+  line: 7
+  bounding_rect:
+    x: 1175
+    y: 1627
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 1191.5
+    y: 1632.5
+    r: 17.10272979736328
+- label: kentima
+  confidence: 0.5220303535461426
+  line: 7
+  bounding_rect:
+    x: 1178
+    y: 1667
+    w: 17
+    h: 23
+  bounding_circle:
+    x: 1185.9166259765625
+    y: 1678.25
+    r: 11.441383361816406
+- label: yporroe
+  confidence: 0.9741218090057373
+  line: 7
+  bounding_rect:
+    x: 1238
+    y: 1564
+    w: 21
+    h: 19
+  bounding_circle:
+    x: 1248.0
+    y: 1573.0
+    r: 12.206655502319336
+- label: oligon
+  confidence: 0.9926037192344666
+  line: 7
+  bounding_rect:
+    x: 1243
+    y: 1596
+    w: 84
+    h: 13
+  bounding_circle:
+    x: 1284.5
+    y: 1602.5
+    r: 41.74336242675781
+- label: gorgon
+  confidence: 0.9896326065063477
+  line: 7
+  bounding_rect:
+    x: 1244
+    y: 1534
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 1257.3233642578125
+    y: 1545.260986328125
+    r: 14.303516387939453
+- label: kentima
+  confidence: 0.9998667240142822
+  line: 7
+  bounding_rect:
+    x: 1274
+    y: 1567
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1282.5
+    y: 1576.5
+    r: 12.020915031433105
+- label: gorgon
+  confidence: 0.9870654344558716
+  line: 7
+  bounding_rect:
+    x: 1285
+    y: 1542
+    w: 28
+    h: 22
+  bounding_circle:
+    x: 1298.8043212890625
+    y: 1553.7174072265625
+    r: 15.815254211425781
+- label: kentima
+  confidence: 0.9994502663612366
+  line: 7
+  bounding_rect:
+    x: 1295
+    y: 1567
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1303.7572021484375
+    y: 1576.7572021484375
+    r: 12.38448715209961
+- label: elafron
+  confidence: 0.9760493040084839
+  line: 7
+  bounding_rect:
+    x: 1332
+    y: 1586
+    w: 71
+    h: 31
+  bounding_circle:
+    x: 1367.0
+    y: 1606.0
+    r: 35.90274429321289
+- label: martyria_diatonic_ke
+  confidence: 0.5100393891334534
+  line: 7
+  bounding_rect:
+    x: 1366
+    y: 1652
+    w: 20
+    h: 43
+  bounding_circle:
+    x: 1375.27783203125
+    y: 1672.8333740234375
+    r: 21.491609573364258
+- label: oligon
+  confidence: 0.9963151812553406
+  line: 7
+  bounding_rect:
+    x: 1411
+    y: 1595
+    w: 84
+    h: 12
+  bounding_circle:
+    x: 1452.5
+    y: 1601.0
+    r: 41.80022048950195
+- label: kentima
+  confidence: 0.9998712539672852
+  line: 7
+  bounding_rect:
+    x: 1501
+    y: 1591
+    w: 20
+    h: 21
+  bounding_circle:
+    x: 1510.2567138671875
+    y: 1600.2567138671875
+    r: 13.091191291809082
+- label: kentima
+  confidence: 0.9999047517776489
+  line: 7
+  bounding_rect:
+    x: 1522
+    y: 1591
+    w: 18
+    h: 21
+  bounding_circle:
+    x: 1530.0
+    y: 1601.0
+    r: 12.041694641113281
+- label: oligon
+  confidence: 0.9995881915092468
+  line: 7
+  bounding_rect:
+    x: 1544
+    y: 1595
+    w: 87
+    h: 13
+  bounding_circle:
+    x: 1587.0
+    y: 1601.0
+    r: 43.28982162475586
+- label: oligon
+  confidence: 0.9998034834861755
+  line: 7
+  bounding_rect:
+    x: 1636
+    y: 1593
+    w: 88
+    h: 15
+  bounding_circle:
+    x: 1679.5
+    y: 1599.5
+    r: 43.98305130004883
+- label: martyria_diatonic_ke
+  confidence: 0.9319911599159241
+  line: 7
+  bounding_rect:
+    x: 1651
+    y: 1663
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 1657.5
+    y: 1680.0
+    r: 17.585603713989258
+- label: ison
+  confidence: 0.9993318915367126
+  line: 8
+  bounding_rect:
+    x: 278
+    y: 1755
+    w: 93
+    h: 29
+  bounding_circle:
+    x: 324.0
+    y: 1769.5
+    r: 47.6682243347168
+- label: antikenoma
+  confidence: 0.9440059661865234
+  line: 8
+  bounding_rect:
+    x: 279
+    y: 1799
+    w: 105
+    h: 25
+  bounding_circle:
+    x: 331.0
+    y: 1810.5
+    r: 52.69023132324219
+- label: gorgon
+  confidence: 0.40664637088775635
+  line: 8
+  bounding_rect:
+    x: 330
+    y: 1840
+    w: 17
+    h: 26
+  bounding_circle:
+    x: 341.0
+    y: 1852.5
+    r: 12.855060577392578
+- label: kentima
+  confidence: 0.4802578389644623
+  line: 8
+  bounding_rect:
+    x: 330
+    y: 1807
+    w: 13
+    h: 13
+  bounding_circle:
+    x: 335.6000061035156
+    y: 1813.4000244140625
+    r: 7.24718713760376
+- label: apostrofos
+  confidence: 0.9982962012290955
+  line: 8
+  bounding_rect:
+    x: 376
+    y: 1764
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 395.5
+    y: 1775.5
+    r: 22.638561248779297
+- label: gorgon
+  confidence: 0.9999138116836548
+  line: 8
+  bounding_rect:
+    x: 379
+    y: 1736
+    w: 25
+    h: 21
+  bounding_circle:
+    x: 391.5
+    y: 1746.5
+    r: 14.916534423828125
+- label: ison
+  confidence: 0.9851401448249817
+  line: 8
+  bounding_rect:
+    x: 409
+    y: 1739
+    w: 76
+    h: 24
+  bounding_circle:
+    x: 446.5
+    y: 1751.5
+    r: 38.684722900390625
+- label: oligon
+  confidence: 0.9966754913330078
+  line: 8
+  bounding_rect:
+    x: 421
+    y: 1770
+    w: 110
+    h: 16
+  bounding_circle:
+    x: 475.5
+    y: 1778.0
+    r: 54.94780349731445
+- label: kentima
+  confidence: 0.9996542930603027
+  line: 8
+  bounding_rect:
+    x: 489
+    y: 1742
+    w: 17
+    h: 19
+  bounding_circle:
+    x: 497.5
+    y: 1751.5
+    r: 11.335884094238281
+- label: martyria_diatonic_ke
+  confidence: 0.9379887580871582
+  line: 8
+  bounding_rect:
+    x: 508
+    y: 1840
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 514.0
+    y: 1857.0
+    r: 17.720144271850586
+- label: kentima
+  confidence: 0.9993457198143005
+  line: 8
+  bounding_rect:
+    x: 508
+    y: 1743
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 517.5
+    y: 1753.0
+    r: 12.419842720031738
+- label: vareia
+  confidence: 0.8692097663879395
+  line: 8
+  bounding_rect:
+    x: 531
+    y: 1744
+    w: 49
+    h: 65
+  bounding_circle:
+    x: 555.5
+    y: 1777.0
+    r: 38.900611877441406
+- label: apostrofos
+  confidence: 0.9679834842681885
+  line: 8
+  bounding_rect:
+    x: 583
+    y: 1763
+    w: 42
+    h: 24
+  bounding_circle:
+    x: 603.5
+    y: 1773.5
+    r: 22.59434700012207
+- label: klasma
+  confidence: 0.9971398115158081
+  line: 8
+  bounding_rect:
+    x: 592
+    y: 1740
+    w: 31
+    h: 13
+  bounding_circle:
+    x: 607.0
+    y: 1745.5
+    r: 15.403021812438965
+- label: martyria_diatonic_ke
+  confidence: 0.7888017892837524
+  line: 8
+  bounding_rect:
+    x: 594
+    y: 1824
+    w: 16
+    h: 35
+  bounding_circle:
+    x: 601.5
+    y: 1841.0
+    r: 17.182939529418945
+- label: yporroe
+  confidence: 0.9313550591468811
+  line: 8
+  bounding_rect:
+    x: 634
+    y: 1767
+    w: 22
+    h: 20
+  bounding_circle:
+    x: 644.5
+    y: 1776.5
+    r: 12.90358829498291
+- label: gorgon
+  confidence: 0.9879789352416992
+  line: 8
+  bounding_rect:
+    x: 644
+    y: 1736
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 657.5
+    y: 1746.5
+    r: 15.116316795349121
+- label: antikenoma
+  confidence: 0.992045521736145
+  line: 8
+  bounding_rect:
+    x: 657
+    y: 1794
+    w: 105
+    h: 25
+  bounding_circle:
+    x: 709.0
+    y: 1805.5
+    r: 52.4047737121582
+- label: oligon
+  confidence: 0.9979516863822937
+  line: 8
+  bounding_rect:
+    x: 663
+    y: 1770
+    w: 85
+    h: 12
+  bounding_circle:
+    x: 705.0
+    y: 1775.5
+    r: 42.240482330322266
+- label: gorgon
+  confidence: 0.9997617602348328
+  line: 8
+  bounding_rect:
+    x: 702
+    y: 1736
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 715.5
+    y: 1746.5
+    r: 15.116316795349121
+- label: apostrofos
+  confidence: 0.9995301961898804
+  line: 8
+  bounding_rect:
+    x: 754
+    y: 1761
+    w: 39
+    h: 29
+  bounding_circle:
+    x: 773.0
+    y: 1773.0
+    r: 22.47230339050293
+- label: ison
+  confidence: 0.9973254203796387
+  line: 8
+  bounding_rect:
+    x: 795
+    y: 1752
+    w: 93
+    h: 30
+  bounding_circle:
+    x: 841.0
+    y: 1768.0
+    r: 47.80177307128906
+- label: klasma
+  confidence: 0.9906257390975952
+  line: 8
+  bounding_rect:
+    x: 843
+    y: 1745
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 859.5
+    y: 1750.5
+    r: 17.10272979736328
+- label: martyria_diatonic_ke
+  confidence: 0.99491947889328
+  line: 8
+  bounding_rect:
+    x: 900
+    y: 1835
+    w: 21
+    h: 38
+  bounding_circle:
+    x: 912.5
+    y: 1853.337890625
+    r: 19.455900192260742
+- label: gorgon
+  confidence: 0.9569626450538635
+  line: 8
+  bounding_rect:
+    x: 902
+    y: 1794
+    w: 28
+    h: 26
+  bounding_circle:
+    x: 915.8085327148438
+    y: 1806.829833984375
+    r: 15.874002456665039
+- label: kentima
+  confidence: 0.4465819001197815
+  line: 8
+  bounding_rect:
+    x: 907
+    y: 1806
+    w: 7
+    h: 13
+  bounding_circle:
+    x: 910.0
+    y: 1812.0
+    r: 6.324655532836914
+- label: ison
+  confidence: 0.9995566010475159
+  line: 8
+  bounding_rect:
+    x: 944
+    y: 1751
+    w: 91
+    h: 30
+  bounding_circle:
+    x: 989.0
+    y: 1767.0
+    r: 46.84025192260742
+- label: gorgon
+  confidence: 0.9975481629371643
+  line: 8
+  bounding_rect:
+    x: 973
+    y: 1795
+    w: 26
+    h: 22
+  bounding_circle:
+    x: 986.0
+    y: 1806.0
+    r: 15.000100135803223
+- label: kentima
+  confidence: 0.41648274660110474
+  line: 8
+  bounding_rect:
+    x: 978
+    y: 1838
+    w: 13
+    h: 22
+  bounding_circle:
+    x: 984.0
+    y: 1848.5
+    r: 10.920265197753906
+- label: oligon
+  confidence: 0.9988036155700684
+  line: 8
+  bounding_rect:
+    x: 1040
+    y: 1770
+    w: 93
+    h: 14
+  bounding_circle:
+    x: 1086.0
+    y: 1778.0
+    r: 46.27104187011719
+- label: klasma
+  confidence: 0.9577676653862
+  line: 8
+  bounding_rect:
+    x: 1061
+    y: 1800
+    w: 33
+    h: 12
+  bounding_circle:
+    x: 1077.0
+    y: 1804.5
+    r: 16.37843894958496
+- label: apostrofos
+  confidence: 0.2580435574054718
+  line: 8
+  bounding_rect:
+    x: 1071
+    y: 1823
+    w: 18
+    h: 42
+  bounding_circle:
+    x: 1082.5
+    y: 1843.5
+    r: 20.651975631713867
+- label: kentima
+  confidence: 0.9982708692550659
+  line: 8
+  bounding_rect:
+    x: 1083
+    y: 1733
+    w: 17
+    h: 20
+  bounding_circle:
+    x: 1091.5
+    y: 1743.0
+    r: 11.715475082397461
+- label: gorgon
+  confidence: 0.5591272711753845
+  line: 8
+  bounding_rect:
+    x: 1092
+    y: 1838
+    w: 21
+    h: 28
+  bounding_circle:
+    x: 1101.5
+    y: 1851.5
+    r: 16.507673263549805
+- label: heteron
+  confidence: 0.9955282807350159
+  line: 8
+  bounding_rect:
+    x: 1105
+    y: 1794
+    w: 97
+    h: 23
+  bounding_circle:
+    x: 1153.0
+    y: 1805.5
+    r: 48.58250427246094
+- label: ison
+  confidence: 0.9847230911254883
+  line: 8
+  bounding_rect:
+    x: 1134
+    y: 1737
+    w: 75
+    h: 24
+  bounding_circle:
+    x: 1171.0
+    y: 1749.5
+    r: 38.461116790771484
+- label: oligon
+  confidence: 0.981044352054596
+  line: 8
+  bounding_rect:
+    x: 1139
+    y: 1769
+    w: 112
+    h: 14
+  bounding_circle:
+    x: 1194.5
+    y: 1775.5
+    r: 55.879432678222656
+- label: kentima
+  confidence: 0.9995717406272888
+  line: 8
+  bounding_rect:
+    x: 1213
+    y: 1741
+    w: 17
+    h: 18
+  bounding_circle:
+    x: 1221.0
+    y: 1750.0
+    r: 11.31380844116211
+- label: gorgon
+  confidence: 0.9914751052856445
+  line: 8
+  bounding_rect:
+    x: 1224
+    y: 1716
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 1237.0
+    y: 1726.0
+    r: 15.620599746704102
+- label: kentima
+  confidence: 0.9986741542816162
+  line: 8
+  bounding_rect:
+    x: 1234
+    y: 1740
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1243.0
+    y: 1750.0
+    r: 12.041694641113281
+- label: apostrofos
+  confidence: 0.9971814155578613
+  line: 8
+  bounding_rect:
+    x: 1257
+    y: 1761
+    w: 37
+    h: 28
+  bounding_circle:
+    x: 1274.5
+    y: 1774.5
+    r: 21.50591278076172
+- label: apostrofos
+  confidence: 0.9934584498405457
+  line: 8
+  bounding_rect:
+    x: 1298
+    y: 1762
+    w: 40
+    h: 30
+  bounding_circle:
+    x: 1317.5
+    y: 1774.5
+    r: 23.162569046020508
+- label: gorgon
+  confidence: 0.979724645614624
+  line: 8
+  bounding_rect:
+    x: 1310
+    y: 1734
+    w: 24
+    h: 20
+  bounding_circle:
+    x: 1322.0
+    y: 1744.0
+    r: 14.212770462036133
+- label: apostrofos
+  confidence: 0.4562903642654419
+  line: 8
+  bounding_rect:
+    x: 1333
+    y: 1824
+    w: 22
+    h: 32
+  bounding_circle:
+    x: 1344.5
+    y: 1839.5
+    r: 18.179758071899414
+- label: ison
+  confidence: 0.9900083541870117
+  line: 8
+  bounding_rect:
+    x: 1340
+    y: 1736
+    w: 78
+    h: 24
+  bounding_circle:
+    x: 1378.831298828125
+    y: 1748.582763671875
+    r: 39.56483840942383
+- label: oligon
+  confidence: 0.9901925325393677
+  line: 8
+  bounding_rect:
+    x: 1344
+    y: 1768
+    w: 110
+    h: 15
+  bounding_circle:
+    x: 1398.5
+    y: 1775.0
+    r: 54.646690368652344
+- label: martyria_diatonic_ke
+  confidence: 0.87032550573349
+  line: 8
+  bounding_rect:
+    x: 1378
+    y: 1823
+    w: 16
+    h: 34
+  bounding_circle:
+    x: 1385.5
+    y: 1839.5
+    r: 16.688419342041016
+- label: kentima
+  confidence: 0.9711286425590515
+  line: 8
+  bounding_rect:
+    x: 1420
+    y: 1739
+    w: 17
+    h: 20
+  bounding_circle:
+    x: 1428.241943359375
+    y: 1748.241943359375
+    r: 10.971649169921875
+- label: gorgon
+  confidence: 0.9982055425643921
+  line: 8
+  bounding_rect:
+    x: 1431
+    y: 1716
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 1444.0
+    y: 1726.0
+    r: 15.000100135803223
+- label: kentima
+  confidence: 0.9986147880554199
+  line: 8
+  bounding_rect:
+    x: 1441
+    y: 1739
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 1450.0
+    y: 1748.0
+    r: 12.041694641113281
+- label: apostrofos
+  confidence: 0.9981093406677246
+  line: 8
+  bounding_rect:
+    x: 1460
+    y: 1760
+    w: 38
+    h: 28
+  bounding_circle:
+    x: 1478.5
+    y: 1772.5
+    r: 21.783119201660156
+- label: apostrofos
+  confidence: 0.9979833364486694
+  line: 8
+  bounding_rect:
+    x: 1501
+    y: 1760
+    w: 39
+    h: 29
+  bounding_circle:
+    x: 1520.0
+    y: 1773.5
+    r: 22.74323081970215
+- label: elafron
+  confidence: 0.9053114056587219
+  line: 8
+  bounding_rect:
+    x: 1544
+    y: 1759
+    w: 55
+    h: 30
+  bounding_circle:
+    x: 1571.0
+    y: 1773.0
+    r: 27.45915985107422
+- label: kentima
+  confidence: 0.8053650856018066
+  line: 8
+  bounding_rect:
+    x: 1596
+    y: 1772
+    w: 19
+    h: 13
+  bounding_circle:
+    x: 1605.0
+    y: 1781.0
+    r: 9.486932754516602
+- label: antikenoma
+  confidence: 0.9966564178466797
+  line: 8
+  bounding_rect:
+    x: 1622
+    y: 1794
+    w: 105
+    h: 25
+  bounding_circle:
+    x: 1674.0
+    y: 1806.5
+    r: 52.53818130493164
+- label: oligon
+  confidence: 0.9642088413238525
+  line: 8
+  bounding_rect:
+    x: 1623
+    y: 1766
+    w: 102
+    h: 12
+  bounding_circle:
+    x: 1673.5
+    y: 1772.0
+    r: 50.74702072143555
+- label: gorgon
+  confidence: 0.9995170831680298
+  line: 8
+  bounding_rect:
+    x: 1644
+    y: 1734
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1657.0
+    y: 1744.5
+    r: 15.305328369140625
+- label: apostrofos
+  confidence: 0.9978289008140564
+  line: 9
+  bounding_rect:
+    x: 279
+    y: 1936
+    w: 40
+    h: 30
+  bounding_circle:
+    x: 298.0
+    y: 1950.0
+    r: 23.021827697753906
+- label: ison
+  confidence: 0.9836786389350891
+  line: 9
+  bounding_rect:
+    x: 320
+    y: 1928
+    w: 93
+    h: 29
+  bounding_circle:
+    x: 366.0
+    y: 1943.0
+    r: 47.297035217285156
+- label: klasma
+  confidence: 0.9972376823425293
+  line: 9
+  bounding_rect:
+    x: 349
+    y: 1919
+    w: 34
+    h: 14
+  bounding_circle:
+    x: 365.5
+    y: 1924.5
+    r: 17.10272979736328
+- label: kentima
+  confidence: 0.7758321762084961
+  line: 9
+  bounding_rect:
+    x: 418
+    y: 1939
+    w: 16
+    h: 20
+  bounding_circle:
+    x: 425.0
+    y: 1949.0
+    r: 11.401854515075684
+- label: gorgon
+  confidence: 0.9312157034873962
+  line: 9
+  bounding_rect:
+    x: 423
+    y: 2012
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 435.5
+    y: 2021.5
+    r: 13.209944725036621
+- label: gorgon
+  confidence: 0.9994738698005676
+  line: 9
+  bounding_rect:
+    x: 434
+    y: 1972
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 447.0
+    y: 1982.5
+    r: 15.305328369140625
+- label: kentima
+  confidence: 0.9981050491333008
+  line: 9
+  bounding_rect:
+    x: 436
+    y: 1939
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 445.5
+    y: 1948.5
+    r: 12.747649192810059
+- label: psifiston
+  confidence: 0.985450029373169
+  line: 9
+  bounding_rect:
+    x: 466
+    y: 1966
+    w: 112
+    h: 30
+  bounding_circle:
+    x: 521.5
+    y: 1970.5
+    r: 55.55637741088867
+- label: oligon
+  confidence: 0.999534010887146
+  line: 9
+  bounding_rect:
+    x: 466
+    y: 1945
+    w: 108
+    h: 13
+  bounding_circle:
+    x: 519.5
+    y: 1950.0
+    r: 53.64942169189453
+- label: kentima
+  confidence: 0.9993664622306824
+  line: 9
+  bounding_rect:
+    x: 500
+    y: 1916
+    w: 16
+    h: 19
+  bounding_circle:
+    x: 508.5
+    y: 1924.5
+    r: 10.700567245483398
+- label: kentima
+  confidence: 0.9997863173484802
+  line: 9
+  bounding_rect:
+    x: 518
+    y: 1915
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 527.0
+    y: 1925.5
+    r: 12.379518508911133
+- label: apostrofos
+  confidence: 0.9961591958999634
+  line: 9
+  bounding_rect:
+    x: 591
+    y: 1935
+    w: 42
+    h: 30
+  bounding_circle:
+    x: 611.0
+    y: 1949.0
+    r: 23.32390594482422
+- label: apostrofos
+  confidence: 0.9982459545135498
+  line: 9
+  bounding_rect:
+    x: 652
+    y: 1936
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 671.0
+    y: 1949.0
+    r: 22.47230339050293
+- label: apostrofos
+  confidence: 0.9927303194999695
+  line: 9
+  bounding_rect:
+    x: 707
+    y: 1935
+    w: 41
+    h: 29
+  bounding_circle:
+    x: 726.5
+    y: 1948.0
+    r: 22.896604537963867
+- label: heteron
+  confidence: 0.9954549074172974
+  line: 9
+  bounding_rect:
+    x: 727
+    y: 1967
+    w: 101
+    h: 26
+  bounding_circle:
+    x: 776.9117431640625
+    y: 1982.2646484375
+    r: 50.36426544189453
+- label: oligon
+  confidence: 0.9980373978614807
+  line: 9
+  bounding_rect:
+    x: 761
+    y: 1942
+    w: 109
+    h: 15
+  bounding_circle:
+    x: 815.0
+    y: 1948.5
+    r: 54.18727493286133
+- label: apostrofos
+  confidence: 0.9958477020263672
+  line: 9
+  bounding_rect:
+    x: 767
+    y: 1905
+    w: 41
+    h: 28
+  bounding_circle:
+    x: 787.0
+    y: 1917.5
+    r: 23.070642471313477
+- label: kentima
+  confidence: 0.9996887445449829
+  line: 9
+  bounding_rect:
+    x: 825
+    y: 1911
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 833.5
+    y: 1920.5
+    r: 12.020915031433105
+- label: gorgon
+  confidence: 0.9969539642333984
+  line: 9
+  bounding_rect:
+    x: 837
+    y: 1889
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 850.0
+    y: 1898.0
+    r: 15.811488151550293
+- label: kentima
+  confidence: 0.9983787536621094
+  line: 9
+  bounding_rect:
+    x: 846
+    y: 1911
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 855.5
+    y: 1920.5
+    r: 12.103818893432617
+- label: elafron
+  confidence: 0.9905537962913513
+  line: 9
+  bounding_rect:
+    x: 876
+    y: 1932
+    w: 72
+    h: 31
+  bounding_circle:
+    x: 911.5
+    y: 1952.0
+    r: 36.39034652709961
+- label: klasma
+  confidence: 0.998609185218811
+  line: 9
+  bounding_rect:
+    x: 892
+    y: 1917
+    w: 34
+    h: 15
+  bounding_circle:
+    x: 908.5
+    y: 1922.0
+    r: 17.241039276123047
+- label: martyria_diatonic_zo_low
+  confidence: 0.9492995738983154
+  line: 9
+  bounding_rect:
+    x: 952
+    y: 2005
+    w: 72
+    h: 23
+  bounding_circle:
+    x: 987.5211181640625
+    y: 2013.0
+    r: 35.535308837890625
+- label: kentima
+  confidence: 0.661436140537262
+  line: 9
+  bounding_rect:
+    x: 975
+    y: 1966
+    w: 26
+    h: 26
+  bounding_circle:
+    x: 986.5
+    y: 1978.9000244140625
+    r: 16.02073097229004
+- label: psifiston
+  confidence: 0.9869873523712158
+  line: 9
+  bounding_rect:
+    x: 1006
+    y: 1963
+    w: 106
+    h: 28
+  bounding_circle:
+    x: 1058.5
+    y: 1966.5
+    r: 52.521522521972656
+- label: oligon
+  confidence: 0.9683301448822021
+  line: 9
+  bounding_rect:
+    x: 1009
+    y: 1942
+    w: 113
+    h: 13
+  bounding_circle:
+    x: 1065.0
+    y: 1948.5
+    r: 56.26953887939453
+- label: ypsili
+  confidence: 0.9885789155960083
+  line: 9
+  bounding_rect:
+    x: 1091
+    y: 1874
+    w: 55
+    h: 55
+  bounding_circle:
+    x: 1118.0
+    y: 1897.5
+    r: 35.14622116088867
+- label: apostrofos
+  confidence: 0.9997854828834534
+  line: 9
+  bounding_rect:
+    x: 1127
+    y: 1932
+    w: 40
+    h: 29
+  bounding_circle:
+    x: 1146.5
+    y: 1945.0
+    r: 22.896604537963867
+- label: vareia
+  confidence: 0.9858866930007935
+  line: 9
+  bounding_rect:
+    x: 1179
+    y: 1917
+    w: 34
+    h: 57
+  bounding_circle:
+    x: 1195.5
+    y: 1945.0
+    r: 32.500099182128906
+- label: apostrofos
+  confidence: 0.9995673298835754
+  line: 9
+  bounding_rect:
+    x: 1216
+    y: 1932
+    w: 40
+    h: 28
+  bounding_circle:
+    x: 1235.0
+    y: 1945.0
+    r: 22.47230339050293
+- label: apostrofos
+  confidence: 0.9993078708648682
+  line: 9
+  bounding_rect:
+    x: 1260
+    y: 1931
+    w: 38
+    h: 28
+  bounding_circle:
+    x: 1278.5
+    y: 1943.0
+    r: 22.051176071166992
+- label: oligon
+  confidence: 0.982373833656311
+  line: 9
+  bounding_rect:
+    x: 1301
+    y: 1939
+    w: 86
+    h: 12
+  bounding_circle:
+    x: 1343.5
+    y: 1945.5
+    r: 42.7376708984375
+- label: oligon
+  confidence: 0.9883281588554382
+  line: 9
+  bounding_rect:
+    x: 1395
+    y: 1938
+    w: 107
+    h: 15
+  bounding_circle:
+    x: 1448.0
+    y: 1945.5
+    r: 53.190792083740234
+- label: kentima
+  confidence: 0.40877267718315125
+  line: 9
+  bounding_rect:
+    x: 1444
+    y: 2008
+    w: 22
+    h: 20
+  bounding_circle:
+    x: 1455.0
+    y: 2016.0
+    r: 12.80634880065918
+- label: yporroe
+  confidence: 0.9316522479057312
+  line: 9
+  bounding_rect:
+    x: 1458
+    y: 2022
+    w: 10
+    h: 6
+  bounding_circle:
+    x: 1462.5
+    y: 2024.0
+    r: 4.924529075622559
+- label: kentima
+  confidence: 0.9987699389457703
+  line: 9
+  bounding_rect:
+    x: 1458
+    y: 1961
+    w: 16
+    h: 18
+  bounding_circle:
+    x: 1465.5
+    y: 1969.5
+    r: 9.924817085266113
+- label: kentima
+  confidence: 0.9983900785446167
+  line: 9
+  bounding_rect:
+    x: 1478
+    y: 1960
+    w: 17
+    h: 19
+  bounding_circle:
+    x: 1486.0
+    y: 1969.0
+    r: 11.31380844116211
+- label: oligon
+  confidence: 0.9961588382720947
+  line: 9
+  bounding_rect:
+    x: 1509
+    y: 1937
+    w: 113
+    h: 16
+  bounding_circle:
+    x: 1565.0
+    y: 1944.5
+    r: 56.500099182128906
+- label: kentima
+  confidence: 0.9978627562522888
+  line: 9
+  bounding_rect:
+    x: 1552
+    y: 1910
+    w: 18
+    h: 19
+  bounding_circle:
+    x: 1560.5
+    y: 1919.0
+    r: 11.011457443237305
+- label: gorgon
+  confidence: 0.9992109537124634
+  line: 9
+  bounding_rect:
+    x: 1565
+    y: 1888
+    w: 26
+    h: 19
+  bounding_circle:
+    x: 1577.5
+    y: 1897.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.9984773993492126
+  line: 9
+  bounding_rect:
+    x: 1574
+    y: 1910
+    w: 17
+    h: 18
+  bounding_circle:
+    x: 1582.0
+    y: 1918.5
+    r: 10.30786418914795
+- label: antikenoma
+  confidence: 0.9385503530502319
+  line: 9
+  bounding_rect:
+    x: 1615
+    y: 1965
+    w: 96
+    h: 24
+  bounding_circle:
+    x: 1662.5
+    y: 1976.0
+    r: 48.169071197509766
+- label: apostrofos
+  confidence: 0.999405026435852
+  line: 9
+  bounding_rect:
+    x: 1632
+    y: 1931
+    w: 40
+    h: 24
+  bounding_circle:
+    x: 1651.1082763671875
+    y: 1942.3040771484375
+    r: 21.709537506103516
+- label: kentima
+  confidence: 0.6334737539291382
+  line: 9
+  bounding_rect:
+    x: 1646
+    y: 2007
+    w: 22
+    h: 21
+  bounding_circle:
+    x: 1658.0323486328125
+    y: 2017.3734130859375
+    r: 12.496334075927734
+- label: yporroe
+  confidence: 0.9008446931838989
+  line: 9
+  bounding_rect:
+    x: 1658
+    y: 1976
+    w: 7
+    h: 6
+  bounding_circle:
+    x: 1661.2586669921875
+    y: 1978.0517578125
+    r: 3.424222707748413
+- label: apostrofos
+  confidence: 0.9985818862915039
+  line: 9
+  bounding_rect:
+    x: 1683
+    y: 1930
+    w: 41
+    h: 27
+  bounding_circle:
+    x: 1703.0
+    y: 1941.0
+    r: 22.825523376464844
+- label: gorgon
+  confidence: 0.9987995624542236
+  line: 9
+  bounding_rect:
+    x: 1703
+    y: 1905
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 1717.0
+    y: 1915.0
+    r: 15.000100135803223
+- label: vareia
+  confidence: 0.6258853673934937
+  line: 10
+  bounding_rect:
+    x: 285
+    y: 2088
+    w: 56
+    h: 69
+  bounding_circle:
+    x: 313.0
+    y: 2122.0
+    r: 43.41668701171875
+- label: ison
+  confidence: 0.9992221593856812
+  line: 10
+  bounding_rect:
+    x: 325
+    y: 2099
+    w: 93
+    h: 30
+  bounding_circle:
+    x: 371.0
+    y: 2115.5
+    r: 47.6682243347168
+- label: apostrofos
+  confidence: 0.998891294002533
+  line: 10
+  bounding_rect:
+    x: 428
+    y: 2108
+    w: 39
+    h: 24
+  bounding_circle:
+    x: 447.0
+    y: 2118.0
+    r: 21.471010208129883
+- label: gorgon
+  confidence: 0.9976220726966858
+  line: 10
+  bounding_rect:
+    x: 439
+    y: 2081
+    w: 27
+    h: 21
+  bounding_circle:
+    x: 452.5
+    y: 2091.0
+    r: 15.403021812438965
+- label: heteron
+  confidence: 0.9992156028747559
+  line: 10
+  bounding_rect:
+    x: 441
+    y: 2140
+    w: 102
+    h: 24
+  bounding_circle:
+    x: 491.5
+    y: 2151.5
+    r: 50.91669845581055
+- label: oligon
+  confidence: 0.9981560111045837
+  line: 10
+  bounding_rect:
+    x: 479
+    y: 2117
+    w: 78
+    h: 13
+  bounding_circle:
+    x: 517.5
+    y: 2123.0
+    r: 38.96482849121094
+- label: kentima
+  confidence: 0.9988226294517517
+  line: 10
+  bounding_rect:
+    x: 497
+    y: 2086
+    w: 17
+    h: 21
+  bounding_circle:
+    x: 504.5
+    y: 2095.5
+    r: 12.103818893432617
+- label: gorgon
+  confidence: 0.9987496137619019
+  line: 10
+  bounding_rect:
+    x: 508
+    y: 2063
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 521.5
+    y: 2072.5
+    r: 15.700418472290039
+- label: kentima
+  confidence: 0.9995126724243164
+  line: 10
+  bounding_rect:
+    x: 518
+    y: 2086
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 527.0
+    y: 2095.5
+    r: 11.715475082397461
+- label: apostrofos
+  confidence: 0.9828108549118042
+  line: 10
+  bounding_rect:
+    x: 568
+    y: 2078
+    w: 42
+    h: 29
+  bounding_circle:
+    x: 588.5
+    y: 2090.0
+    r: 23.26487922668457
+- label: oligon
+  confidence: 0.9990886449813843
+  line: 10
+  bounding_rect:
+    x: 570
+    y: 2117
+    w: 87
+    h: 13
+  bounding_circle:
+    x: 613.0
+    y: 2123.0
+    r: 43.41668701171875
+- label: kentima
+  confidence: 0.7898265719413757
+  line: 10
+  bounding_rect:
+    x: 616
+    y: 2088
+    w: 11
+    h: 19
+  bounding_circle:
+    x: 619.0
+    y: 2097.0
+    r: 9.219644546508789
+- label: gorgon
+  confidence: 0.981846034526825
+  line: 10
+  bounding_rect:
+    x: 623
+    y: 2065
+    w: 26
+    h: 20
+  bounding_circle:
+    x: 636.0
+    y: 2075.0
+    r: 15.000100135803223
+- label: kentima
+  confidence: 0.9994136095046997
+  line: 10
+  bounding_rect:
+    x: 632
+    y: 2088
+    w: 18
+    h: 18
+  bounding_circle:
+    x: 640.5
+    y: 2097.0
+    r: 11.672718048095703
+- label: apostrofos
+  confidence: 0.9978994131088257
+  line: 10
+  bounding_rect:
+    x: 663
+    y: 2110
+    w: 37
+    h: 28
+  bounding_circle:
+    x: 681.0
+    y: 2122.5
+    r: 21.914705276489258
+- label: yporroe
+  confidence: 0.9938348531723022
+  line: 10
+  bounding_rect:
+    x: 706
+    y: 2110
+    w: 30
+    h: 26
+  bounding_circle:
+    x: 720.5
+    y: 2124.0
+    r: 18.200374603271484
+- label: gorgon
+  confidence: 0.9983119964599609
+  line: 10
+  bounding_rect:
+    x: 707
+    y: 2084
+    w: 28
+    h: 21
+  bounding_circle:
+    x: 721.0
+    y: 2094.5
+    r: 16.101341247558594
+- label: antikenoma
+  confidence: 0.9884641766548157
+  line: 10
+  bounding_rect:
+    x: 746
+    y: 2146
+    w: 104
+    h: 24
+  bounding_circle:
+    x: 797.5
+    y: 2157.5
+    r: 51.90867233276367
+- label: oligon
+  confidence: 0.955072820186615
+  line: 10
+  bounding_rect:
+    x: 748
+    y: 2120
+    w: 87
+    h: 14
+  bounding_circle:
+    x: 791.0
+    y: 2125.5
+    r: 43.23492431640625
+- label: gorgon
+  confidence: 0.999553382396698
+  line: 10
+  bounding_rect:
+    x: 782
+    y: 2084
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 795.0
+    y: 2095.0
+    r: 15.811488151550293
+- label: apostrofos
+  confidence: 0.9930697083473206
+  line: 10
+  bounding_rect:
+    x: 840
+    y: 2108
+    w: 41
+    h: 29
+  bounding_circle:
+    x: 859.5
+    y: 2122.0
+    r: 23.436182022094727
+- label: ison
+  confidence: 0.7738012075424194
+  line: 10
+  bounding_rect:
+    x: 881
+    y: 2100
+    w: 95
+    h: 29
+  bounding_circle:
+    x: 928.0
+    y: 2117.0
+    r: 48.270172119140625
+- label: martyria_diatonic_ke
+  confidence: 0.3025929629802704
+  line: 10
+  bounding_rect:
+    x: 912
+    y: 2184
+    w: 13
+    h: 34
+  bounding_circle:
+    x: 918.5
+    y: 2200.5
+    r: 17.39262580871582
+- label: yporroe
+  confidence: 0.9222292900085449
+  line: 10
+  bounding_rect:
+    x: 923
+    y: 2138
+    w: 15
+    h: 11
+  bounding_circle:
+    x: 930.0
+    y: 2143.5
+    r: 8.321758270263672
+- label: yporroe
+  confidence: 0.9278103709220886
+  line: 10
+  bounding_rect:
+    x: 940
+    y: 2138
+    w: 13
+    h: 12
+  bounding_circle:
+    x: 946.0
+    y: 2144.0
+    r: 7.810349941253662
+- label: martyria_diatonic_ke
+  confidence: 0.5627982020378113
+  line: 10
+  bounding_rect:
+    x: 1327
+    y: 2166
+    w: 20
+    h: 40
+  bounding_circle:
+    x: 1335.5
+    y: 2185.5
+    r: 19.65970230102539
+- label: null
+  confidence: 0
+  line: 10
+  bounding_rect:
+    x: 1334
+    y: 2185
+    w: 1
+    h: 1
+  bounding_circle:
+    x: 1334.0
+    y: 2185.0
+    r: 9.999999747378752e-05
+- label: yporroe
+  confidence: 0.5577439665794373
+  line: 10
+  bounding_rect:
+    x: 1357
+    y: 2171
+    w: 6
+    h: 10
+  bounding_circle:
+    x: 1359.5
+    y: 2175.5
+    r: 5.147915363311768
+- label: kentima
+  confidence: 0.7438101172447205
+  line: 10
+  bounding_rect:
+    x: 1458
+    y: 2169
+    w: 6
+    h: 12
+  bounding_circle:
+    x: 1460.5
+    y: 2174.5
+    r: 6.041623115539551
+- label: gorgon
+  confidence: 0.8044362664222717
+  line: 10
+  bounding_rect:
+    x: 1704
+    y: 2141
+    w: 25
+    h: 24
+  bounding_circle:
+    x: 1716.0
+    y: 2152.89990234375
+    r: 14.940256118774414
+- label: martyria_diatonic_ke
+  confidence: 0.9986101388931274
+  line: 10
+  bounding_rect:
+    x: 1709
+    y: 2181
+    w: 20
+    h: 39
+  bounding_circle:
+    x: 1721.923095703125
+    y: 2200.0
+    r: 19.66669464111328
+- label: martyria_diatonic_di
+  confidence: 0.8572569489479065
+  line: 11
+  bounding_rect:
+    x: 278
+    y: 2311
+    w: 52
+    h: 58
+  bounding_circle:
+    x: 303.97698974609375
+    y: 2339.407958984375
+    r: 29.030006408691406
+- label: ison
+  confidence: 0.9945518374443054
+  line: 11
+  bounding_rect:
+    x: 408
+    y: 2268
+    w: 93
+    h: 33
+  bounding_circle:
+    x: 454.1288757324219
+    y: 2287.4072265625
+    r: 47.078407287597656
+- label: oligon
+  confidence: 0.9942336678504944
+  line: 11
+  bounding_rect:
+    x: 506
+    y: 2287
+    w: 112
+    h: 16
+  bounding_circle:
+    x: 561.5
+    y: 2294.5
+    r: 55.77195739746094
+- label: ison
+  confidence: 0.7485188841819763
+  line: 11
+  bounding_rect:
+    x: 517
+    y: 2314
+    w: 98
+    h: 28
+  bounding_circle:
+    x: 565.5
+    y: 2322.5
+    r: 49.076568603515625
+- label: gorgon
+  confidence: 0.5878480672836304
+  line: 11
+  bounding_rect:
+    x: 558
+    y: 2358
+    w: 17
+    h: 20
+  bounding_circle:
+    x: 566.5
+    y: 2367.0
+    r: 10.547611236572266
+- label: kentima
+  confidence: 0.9640265107154846
+  line: 11
+  bounding_rect:
+    x: 566
+    y: 2305
+    w: 18
+    h: 21
+  bounding_circle:
+    x: 575.6935424804688
+    y: 2315.693603515625
+    r: 11.242005348205566
+- label: apostrofos
+  confidence: 0.9342719316482544
+  line: 11
+  bounding_rect:
+    x: 623
+    y: 2282
+    w: 46
+    h: 26
+  bounding_circle:
+    x: 645.5
+    y: 2292.5
+    r: 24.052125930786133
+- label: apostrofos
+  confidence: 0.9863613843917847
+  line: 11
+  bounding_rect:
+    x: 674
+    y: 2283
+    w: 47
+    h: 28
+  bounding_circle:
+    x: 697.5
+    y: 2295.0
+    r: 23.880006790161133
+- label: oligon
+  confidence: 0.9882411360740662
+  line: 11
+  bounding_rect:
+    x: 730
+    y: 2292
+    w: 88
+    h: 14
+  bounding_circle:
+    x: 773.5
+    y: 2299.0
+    r: 43.78651428222656
+- label: antikenoma
+  confidence: 0.583362877368927
+  line: 11
+  bounding_rect:
+    x: 739
+    y: 2325
+    w: 92
+    h: 19
+  bounding_circle:
+    x: 784.5
+    y: 2332.0
+    r: 45.77399826049805
+- label: kentima
+  confidence: 0.8725041151046753
+  line: 11
+  bounding_rect:
+    x: 780
+    y: 2306
+    w: 22
+    h: 18
+  bounding_circle:
+    x: 791.0
+    y: 2314.5
+    r: 11.926960945129395
+- label: apostrofos
+  confidence: 0.9977741837501526
+  line: 11
+  bounding_rect:
+    x: 829
+    y: 2283
+    w: 41
+    h: 26
+  bounding_circle:
+    x: 848.5
+    y: 2294.0
+    r: 21.914705276489258
+- label: apostrofos
+  confidence: 0.9958269000053406
+  line: 11
+  bounding_rect:
+    x: 882
+    y: 2282
+    w: 41
+    h: 27
+  bounding_circle:
+    x: 901.7120971679688
+    y: 2293.10595703125
+    r: 22.15191650390625
+- label: apostrofos
+  confidence: 0.9968029260635376
+  line: 11
+  bounding_rect:
+    x: 936
+    y: 2283
+    w: 39
+    h: 26
+  bounding_circle:
+    x: 955.0
+    y: 2293.0
+    r: 21.023895263671875
+- label: kentima
+  confidence: 0.9995934367179871
+  line: 11
+  bounding_rect:
+    x: 983
+    y: 2287
+    w: 18
+    h: 20
+  bounding_circle:
+    x: 991.5
+    y: 2296.5
+    r: 12.020915031433105
+- label: kentima
+  confidence: 0.9985195994377136
+  line: 11
+  bounding_rect:
+    x: 1005
+    y: 2287
+    w: 16
+    h: 20
+  bounding_circle:
+    x: 1012.5
+    y: 2296.5
+    r: 11.335884094238281
+- label: ison
+  confidence: 0.9964126944541931
+  line: 11
+  bounding_rect:
+    x: 1011
+    y: 2257
+    w: 75
+    h: 25
+  bounding_circle:
+    x: 1048.0
+    y: 2270.0
+    r: 38.32763671875
+- label: oligon
+  confidence: 0.9906800389289856
+  line: 11
+  bounding_rect:
+    x: 1027
+    y: 2290
+    w: 111
+    h: 14
+  bounding_circle:
+    x: 1082.0
+    y: 2295.5
+    r: 55.2744140625
+- label: martyria_diatonic_ke
+  confidence: 0.8779832720756531
+  line: 11
+  bounding_rect:
+    x: 1063
+    y: 2357
+    w: 17
+    h: 35
+  bounding_circle:
+    x: 1069.0
+    y: 2374.0
+    r: 17.46434783935547
+- label: kentima
+  confidence: 0.9992669224739075
+  line: 11
+  bounding_rect:
+    x: 1090
+    y: 2261
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1099.0
+    y: 2270.5
+    r: 12.379518508911133
+- label: gorgon
+  confidence: 0.9906603693962097
+  line: 11
+  bounding_rect:
+    x: 1101
+    y: 2238
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1114.0
+    y: 2247.894775390625
+    r: 14.937202453613281
+- label: kentima
+  confidence: 0.993502676486969
+  line: 11
+  bounding_rect:
+    x: 1112
+    y: 2261
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 1121.227294921875
+    y: 2270.227294921875
+    r: 11.720821380615234
+- label: kentima
+  confidence: 0.72870272397995
+  line: 11
+  bounding_rect:
+    x: 1130
+    y: 2237
+    w: 11
+    h: 12
+  bounding_circle:
+    x: 1134.5
+    y: 2242.5
+    r: 6.041623115539551
+- label: vareia
+  confidence: 0.9855256676673889
+  line: 11
+  bounding_rect:
+    x: 1150
+    y: 2262
+    w: 44
+    h: 66
+  bounding_circle:
+    x: 1172.0
+    y: 2295.0
+    r: 38.27541732788086
+- label: ison
+  confidence: 0.9902488589286804
+  line: 11
+  bounding_rect:
+    x: 1188
+    y: 2273
+    w: 92
+    h: 28
+  bounding_circle:
+    x: 1233.5
+    y: 2288.5
+    r: 46.93090057373047
+- label: apostrofos
+  confidence: 0.9932496547698975
+  line: 11
+  bounding_rect:
+    x: 1289
+    y: 2281
+    w: 41
+    h: 26
+  bounding_circle:
+    x: 1308.448974609375
+    y: 2292.224609375
+    r: 21.97283935546875
+- label: gorgon
+  confidence: 0.9990931749343872
+  line: 11
+  bounding_rect:
+    x: 1291
+    y: 2253
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1304.0
+    y: 2263.5
+    r: 15.305328369140625
+- label: yporroe
+  confidence: 0.5488564372062683
+  line: 11
+  bounding_rect:
+    x: 1308
+    y: 2206
+    w: 5
+    h: 9
+  bounding_circle:
+    x: 1310.0
+    y: 2210.1875
+    r: 4.305347442626953
+- label: ison
+  confidence: 0.9782567024230957
+  line: 11
+  bounding_rect:
+    x: 1335
+    y: 2268
+    w: 91
+    h: 34
+  bounding_circle:
+    x: 1380.0
+    y: 2287.0
+    r: 46.84025192260742
+- label: klasma
+  confidence: 0.9974234104156494
+  line: 11
+  bounding_rect:
+    x: 1368
+    y: 2264
+    w: 33
+    h: 14
+  bounding_circle:
+    x: 1384.0
+    y: 2269.0
+    r: 16.492521286010742
+- label: gorgon
+  confidence: 0.9636250138282776
+  line: 11
+  bounding_rect:
+    x: 1464
+    y: 2314
+    w: 28
+    h: 25
+  bounding_circle:
+    x: 1478.6304931640625
+    y: 2325.63037109375
+    r: 15.676475524902344
+- label: martyria_diatonic_ke
+  confidence: 0.9966006875038147
+  line: 11
+  bounding_rect:
+    x: 1472
+    y: 2354
+    w: 21
+    h: 39
+  bounding_circle:
+    x: 1485.3116455078125
+    y: 2372.863525390625
+    r: 19.702634811401367
+- label: yporroe
+  confidence: 0.6541821360588074
+  line: 11
+  bounding_rect:
+    x: 1493
+    y: 2311
+    w: 10
+    h: 11
+  bounding_circle:
+    x: 1496.7940673828125
+    y: 2316.205810546875
+    r: 6.113893508911133
+- label: ison
+  confidence: 0.9852956533432007
+  line: 11
+  bounding_rect:
+    x: 1516
+    y: 2267
+    w: 94
+    h: 34
+  bounding_circle:
+    x: 1563.0
+    y: 2284.5
+    r: 48.2313117980957
+- label: gorgon
+  confidence: 0.8026134967803955
+  line: 11
+  bounding_rect:
+    x: 1538
+    y: 2345
+    w: 27
+    h: 32
+  bounding_circle:
+    x: 1551.0
+    y: 2360.416748046875
+    r: 19.536632537841797
+- label: gorgon
+  confidence: 0.9440895915031433
+  line: 11
+  bounding_rect:
+    x: 1558
+    y: 2312
+    w: 29
+    h: 22
+  bounding_circle:
+    x: 1571.9962158203125
+    y: 2320.80078125
+    r: 15.1577730178833
+- label: kentima
+  confidence: 0.351205050945282
+  line: 11
+  bounding_rect:
+    x: 1567
+    y: 2355
+    w: 22
+    h: 21
+  bounding_circle:
+    x: 1578.5
+    y: 2365.76318359375
+    r: 12.573728561401367
+- label: oligon
+  confidence: 0.9652747511863708
+  line: 11
+  bounding_rect:
+    x: 1615
+    y: 2286
+    w: 115
+    h: 15
+  bounding_circle:
+    x: 1672.0
+    y: 2293.0
+    r: 57.428314208984375
+- label: kentima
+  confidence: 0.9989726543426514
+  line: 11
+  bounding_rect:
+    x: 1656
+    y: 2255
+    w: 17
+    h: 20
+  bounding_circle:
+    x: 1663.5
+    y: 2265.0
+    r: 11.715475082397461
+- label: fthora_enharmonic
+  confidence: 0.9510235786437988
+  line: 11
+  bounding_rect:
+    x: 1677
+    y: 2249
+    w: 37
+    h: 36
+  bounding_circle:
+    x: 1695.0
+    y: 2266.0
+    r: 24.758935928344727
+- label: vareia
+  confidence: 0.9840102791786194
+  line: 12
+  bounding_rect:
+    x: 289
+    y: 2431
+    w: 44
+    h: 66
+  bounding_circle:
+    x: 310.5
+    y: 2464.0
+    r: 38.5520133972168
+- label: ison
+  confidence: 0.9968309998512268
+  line: 12
+  bounding_rect:
+    x: 328
+    y: 2443
+    w: 94
+    h: 31
+  bounding_circle:
+    x: 374.9658203125
+    y: 2459.615234375
+    r: 47.9406623840332
+- label: omalon
+  confidence: 0.4916933476924896
+  line: 12
+  bounding_rect:
+    x: 382
+    y: 2478
+    w: 100
+    h: 30
+  bounding_circle:
+    x: 431.5
+    y: 2488.5
+    r: 49.92504119873047
+- label: ison
+  confidence: 0.981669008731842
+  line: 12
+  bounding_rect:
+    x: 425
+    y: 2444
+    w: 92
+    h: 32
+  bounding_circle:
+    x: 470.5
+    y: 2460.0
+    r: 47.605247497558594
+- label: gorgon
+  confidence: 0.9994902610778809
+  line: 12
+  bounding_rect:
+    x: 469
+    y: 2428
+    w: 27
+    h: 22
+  bounding_circle:
+    x: 482.36834716796875
+    y: 2439.340576171875
+    r: 14.917932510375977
+- label: ison
+  confidence: 0.9989680051803589
+  line: 12
+  bounding_rect:
+    x: 519
+    y: 2444
+    w: 93
+    h: 32
+  bounding_circle:
+    x: 565.0
+    y: 2461.5
+    r: 47.41581344604492
+- label: apostrofos
+  confidence: 0.9991590976715088
+  line: 12
+  bounding_rect:
+    x: 623
+    y: 2454
+    w: 39
+    h: 25
+  bounding_circle:
+    x: 641.5
+    y: 2465.5
+    r: 20.796733856201172
+- label: martyria_diatonic_ke
+  confidence: 0.7777009010314941
+  line: 12
+  bounding_rect:
+    x: 663
+    y: 2529
+    w: 16
+    h: 42
+  bounding_circle:
+    x: 669.5
+    y: 2549.5
+    r: 20.796733856201172
+- label: vareia
+  confidence: 0.977177083492279
+  line: 12
+  bounding_rect:
+    x: 676
+    y: 2432
+    w: 41
+    h: 67
+  bounding_circle:
+    x: 696.0
+    y: 2466.0
+    r: 37.2156867980957
+- label: ison
+  confidence: 0.997071385383606
+  line: 12
+  bounding_rect:
+    x: 714
+    y: 2445
+    w: 91
+    h: 30
+  bounding_circle:
+    x: 759.5
+    y: 2460.5
+    r: 46.50278854370117
+- label: apostrofos
+  confidence: 0.9995317459106445
+  line: 12
+  bounding_rect:
+    x: 815
+    y: 2454
+    w: 42
+    h: 26
+  bounding_circle:
+    x: 835.5
+    y: 2464.5
+    r: 22.59434700012207
+- label: gorgon
+  confidence: 0.9834039807319641
+  line: 12
+  bounding_rect:
+    x: 828
+    y: 2427
+    w: 23
+    h: 20
+  bounding_circle:
+    x: 839.0
+    y: 2437.0
+    r: 13.601571083068848
+- label: kentima
+  confidence: 0.6258273124694824
+  line: 12
+  bounding_rect:
+    x: 854
+    y: 2530
+    w: 10
+    h: 24
+  bounding_circle:
+    x: 858.0
+    y: 2541.5
+    r: 11.884963989257812
+- label: yporroe
+  confidence: 0.9835031032562256
+  line: 12
+  bounding_rect:
+    x: 856
+    y: 2488
+    w: 13
+    h: 10
+  bounding_circle:
+    x: 862.0
+    y: 2493.0
+    r: 7.211202621459961
+- label: oligon
+  confidence: 0.9969674944877625
+  line: 12
+  bounding_rect:
+    x: 865
+    y: 2461
+    w: 86
+    h: 14
+  bounding_circle:
+    x: 907.5
+    y: 2467.5
+    r: 42.8545036315918
+- label: kentima
+  confidence: 0.9997199177742004
+  line: 12
+  bounding_rect:
+    x: 891
+    y: 2432
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 900.0
+    y: 2442.0
+    r: 12.041694641113281
+- label: gorgon
+  confidence: 0.9992399215698242
+  line: 12
+  bounding_rect:
+    x: 903
+    y: 2410
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 916.5
+    y: 2420.0
+    r: 15.403021812438965
+- label: kentima
+  confidence: 0.993536114692688
+  line: 12
+  bounding_rect:
+    x: 913
+    y: 2433
+    w: 19
+    h: 19
+  bounding_circle:
+    x: 922.0
+    y: 2442.0
+    r: 12.041694641113281
+- label: apostrofos
+  confidence: 0.9970247149467468
+  line: 12
+  bounding_rect:
+    x: 960
+    y: 2455
+    w: 41
+    h: 25
+  bounding_circle:
+    x: 979.7120971679688
+    y: 2466.10595703125
+    r: 22.15191650390625
+- label: martyria_diatonic_ke
+  confidence: 0.8555129170417786
+  line: 12
+  bounding_rect:
+    x: 978
+    y: 2530
+    w: 17
+    h: 37
+  bounding_circle:
+    x: 983.5
+    y: 2548.0
+    r: 18.82162857055664
+- label: oligon
+  confidence: 0.9966936111450195
+  line: 12
+  bounding_rect:
+    x: 1010
+    y: 2461
+    w: 86
+    h: 13
+  bounding_circle:
+    x: 1052.5
+    y: 2467.5
+    r: 42.8545036315918
+- label: martyria_diatonic_ke
+  confidence: 0.7049708366394043
+  line: 12
+  bounding_rect:
+    x: 1012
+    y: 2529
+    w: 24
+    h: 39
+  bounding_circle:
+    x: 1021.5
+    y: 2547.657958984375
+    r: 20.109039306640625
+- label: klasma
+  confidence: 0.9980688691139221
+  line: 12
+  bounding_rect:
+    x: 1033
+    y: 2439
+    w: 35
+    h: 14
+  bounding_circle:
+    x: 1050.0
+    y: 2443.5
+    r: 17.585603713989258
+- label: martyria_diatonic_ke
+  confidence: 0.4554050862789154
+  line: 12
+  bounding_rect:
+    x: 1092
+    y: 2523
+    w: 24
+    h: 36
+  bounding_circle:
+    x: 1105.0
+    y: 2541.0
+    r: 19.235483169555664
+- label: yporroe
+  confidence: 0.3943180441856384
+  line: 12
+  bounding_rect:
+    x: 1113
+    y: 2484
+    w: 24
+    h: 29
+  bounding_circle:
+    x: 1125.123046875
+    y: 2499.138671875
+    r: 15.627325057983398
+- label: martyria_diatonic_ke
+  confidence: 0.4870988428592682
+  line: 12
+  bounding_rect:
+    x: 1117
+    y: 2523
+    w: 24
+    h: 38
+  bounding_circle:
+    x: 1129.6455078125
+    y: 2542.009033203125
+    r: 19.080310821533203
+- label: apostrofos
+  confidence: 0.9949181079864502
+  line: 12
+  bounding_rect:
+    x: 1151
+    y: 2454
+    w: 50
+    h: 26
+  bounding_circle:
+    x: 1175.5
+    y: 2464.0
+    r: 26.100866317749023
+- label: martyria_diatonic_ke
+  confidence: 0.5678495168685913
+  line: 12
+  bounding_rect:
+    x: 1171
+    y: 2419
+    w: 20
+    h: 35
+  bounding_circle:
+    x: 1180.5
+    y: 2436.0
+    r: 17.182939529418945
+- label: oligon
+  confidence: 0.9979389309883118
+  line: 12
+  bounding_rect:
+    x: 1208
+    y: 2462
+    w: 87
+    h: 13
+  bounding_circle:
+    x: 1251.0
+    y: 2468.0
+    r: 43.41668701171875
+- label: martyria_diatonic_ke
+  confidence: 0.901889443397522
+  line: 12
+  bounding_rect:
+    x: 1232
+    y: 2527
+    w: 24
+    h: 37
+  bounding_circle:
+    x: 1241.5
+    y: 2545.0
+    r: 19.500099182128906
+- label: ison
+  confidence: 0.9526475071907043
+  line: 12
+  bounding_rect:
+    x: 1287
+    y: 2429
+    w: 75
+    h: 25
+  bounding_circle:
+    x: 1324.0
+    y: 2442.0
+    r: 38.32763671875
+- label: oligon
+  confidence: 0.9969235062599182
+  line: 12
+  bounding_rect:
+    x: 1299
+    y: 2461
+    w: 113
+    h: 14
+  bounding_circle:
+    x: 1355.0
+    y: 2467.0
+    r: 56.32061004638672
+- label: martyria_diatonic_ke
+  confidence: 0.8768940567970276
+  line: 12
+  bounding_rect:
+    x: 1328
+    y: 2528
+    w: 23
+    h: 41
+  bounding_circle:
+    x: 1340.47998046875
+    y: 2547.1201171875
+    r: 20.932600021362305
+- label: kentima
+  confidence: 0.9995788931846619
+  line: 12
+  bounding_rect:
+    x: 1367
+    y: 2432
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1376.0
+    y: 2441.0
+    r: 12.041694641113281
+- label: gorgon
+  confidence: 0.9948562383651733
+  line: 12
+  bounding_rect:
+    x: 1378
+    y: 2408
+    w: 26
+    h: 21
+  bounding_circle:
+    x: 1391.0
+    y: 2418.5
+    r: 14.705541610717773
+- label: kentima
+  confidence: 0.9997900128364563
+  line: 12
+  bounding_rect:
+    x: 1388
+    y: 2431
+    w: 19
+    h: 20
+  bounding_circle:
+    x: 1397.0
+    y: 2441.5
+    r: 12.379518508911133
+- label: yporroe
+  confidence: 0.6486842632293701
+  line: 12
+  bounding_rect:
+    x: 1407
+    y: 2407
+    w: 9
+    h: 11
+  bounding_circle:
+    x: 1411.0
+    y: 2412.0
+    r: 5.831051826477051
+- label: ison
+  confidence: 0.9731054902076721
+  line: 12
+  bounding_rect:
+    x: 1417
+    y: 2429
+    w: 76
+    h: 24
+  bounding_circle:
+    x: 1454.5
+    y: 2443.0
+    r: 38.564979553222656
+- label: oligon
+  confidence: 0.9979913234710693
+  line: 12
+  bounding_rect:
+    x: 1420
+    y: 2462
+    w: 106
+    h: 13
+  bounding_circle:
+    x: 1472.5
+    y: 2469.5
+    r: 52.692604064941406
+- label: kentima
+  confidence: 0.9994551539421082
+  line: 12
+  bounding_rect:
+    x: 1495
+    y: 2431
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 1503.5
+    y: 2440.5
+    r: 12.747649192810059
+- label: gorgon
+  confidence: 0.998946487903595
+  line: 12
+  bounding_rect:
+    x: 1506
+    y: 2407
+    w: 28
+    h: 22
+  bounding_circle:
+    x: 1519.5
+    y: 2417.27783203125
+    r: 15.835898399353027
+- label: kentima
+  confidence: 0.9968830347061157
+  line: 12
+  bounding_rect:
+    x: 1516
+    y: 2431
+    w: 20
+    h: 20
+  bounding_circle:
+    x: 1525.0
+    y: 2441.0
+    r: 12.041694641113281
+- label: elafron
+  confidence: 0.9884575009346008
+  line: 12
+  bounding_rect:
+    x: 1533
+    y: 2452
+    w: 72
+    h: 31
+  bounding_circle:
+    x: 1568.5
+    y: 2471.5
+    r: 36.09026336669922
+- label: klasma
+  confidence: 0.9970579147338867
+  line: 12
+  bounding_rect:
+    x: 1561
+    y: 2434
+    w: 33
+    h: 15
+  bounding_circle:
+    x: 1577.0
+    y: 2440.0
+    r: 16.492521286010742
+- label: martyria_diatonic_ke
+  confidence: 0.8828713893890381
+  line: 12
+  bounding_rect:
+    x: 1617
+    y: 2516
+    w: 20
+    h: 46
+  bounding_circle:
+    x: 1623.5
+    y: 2538.5
+    r: 22.94568634033203
+- label: apostrofos
+  confidence: 0.9984232187271118
+  line: 12
+  bounding_rect:
+    x: 1628
+    y: 2453
+    w: 42
+    h: 25
+  bounding_circle:
+    x: 1648.0
+    y: 2464.0
+    r: 22.36077880859375
+- label: gorgon
+  confidence: 0.9954402446746826
+  line: 12
+  bounding_rect:
+    x: 1690
+    y: 2492
+    w: 27
+    h: 20
+  bounding_circle:
+    x: 1703.5
+    y: 2502.5
+    r: 14.57748031616211
+- label: kentima
+  confidence: 0.9982632994651794
+  line: 12
+  bounding_rect:
+    x: 1691
+    y: 2458
+    w: 16
+    h: 20
+  bounding_circle:
+    x: 1698.5
+    y: 2467.5
+    r: 11.510964393615723
+- label: kentima
+  confidence: 0.7570019960403442
+  line: 12
+  bounding_rect:
+    x: 1707
+    y: 2530
+    w: 19
+    h: 21
+  bounding_circle:
+    x: 1717.0
+    y: 2539.02490234375
+    r: 12.060317993164062
+- label: kentima
+  confidence: 0.9982106685638428
+  line: 12
+  bounding_rect:
+    x: 1710
+    y: 2458
+    w: 20
+    h: 21
+  bounding_circle:
+    x: 1719.5
+    y: 2468.5
+    r: 12.747649192810059
