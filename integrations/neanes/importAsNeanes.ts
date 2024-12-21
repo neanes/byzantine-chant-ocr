@@ -1,7 +1,11 @@
 import { promises as fs } from "fs";
 import YAML from "yaml";
 import { Score } from "./neanes/models/Score";
-import { EmptyElement, NoteElement } from "./neanes/models/Element";
+import {
+  EmptyElement,
+  MartyriaElement,
+  NoteElement,
+} from "./neanes/models/Element";
 import {
   GorgonNeume,
   Neume,
@@ -22,7 +26,7 @@ const analysis: OcrAnalysis = YAML.parse(
 // Remove the empty element
 score.staff.elements.pop();
 
-const groups = groupMatches(analysis);
+const groups = groupMatches(analysis, 0, 0.95);
 
 let vareia = false;
 
@@ -30,9 +34,21 @@ for (let i = 0; i < groups.length; i++) {
   const g = groups[i];
 
   let next: NeumeGroup | null = null;
+  let nextNext: NeumeGroup | null = null;
 
   if (i + 1 < groups.length) {
     next = groups[i + 1];
+  }
+
+  if (i + 2 < groups.length) {
+    nextNext = groups[i + 2];
+  }
+
+  if (g.base.label.startsWith("martyria")) {
+    const e = new MartyriaElement();
+    e.auto = true;
+    score.staff.elements.push(e);
+    continue;
   }
 
   const e = new NoteElement();
@@ -40,11 +56,11 @@ for (let i = 0; i < groups.length; i++) {
   if (g.base.label === "ison") {
     process_ison(e, g);
   } else if (g.base.label === "petaste") {
-    e.quantitativeNeume = QuantitativeNeume.Petasti;
+    process_petaste(e, g);
   } else if (g.base.label === "oligon") {
     process_oligon(e, g);
 
-    if (next?.base.label === "kentima") {
+    if (next?.base.label === "kentima" && nextNext?.base.label !== "kentima") {
       e.quantitativeNeume = QuantitativeNeume.OligonPlusKentima;
 
       if (has_support(g, ["kentima"])) {
@@ -61,9 +77,11 @@ for (let i = 0; i < groups.length; i++) {
   } else if (g.base.label === "elafron") {
     e.quantitativeNeume = QuantitativeNeume.Elaphron;
 
-    if (g.support?.find((x) => x.label === "apostrofos")) {
+    if (has_support(g, ["apostrofos"])) {
       e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
     }
+  } else if (g.base.label === "elafron_apostrofos") {
+    e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
   } else if (g.base.label === "kentima") {
     if (next?.base.label === "kentima") {
       e.quantitativeNeume = QuantitativeNeume.Kentemata;
@@ -79,6 +97,7 @@ for (let i = 0; i < groups.length; i++) {
 
   process_antikenoma(e, g);
   process_gorgon(e, g);
+  process_digorgon(e, g);
   process_kentima(e, g);
   process_klasma(e, g);
   process_psifiston(e, g);
@@ -120,16 +139,52 @@ function process_oligon(e: NoteElement, g: NeumeGroup) {
   } else if (has_support(g, ["elafron", "apostrofos", "kentima"])) {
     e.quantitativeNeume =
       QuantitativeNeume.OligonPlusElaphronPlusApostrophosPlusKentemata;
+  } else if (has_support(g, ["elafron_apostrofos", "kentima"])) {
+    e.quantitativeNeume =
+      QuantitativeNeume.OligonPlusElaphronPlusApostrophosPlusKentemata;
   } else if (has_support(g, ["elafron", "kentima"])) {
     e.quantitativeNeume = QuantitativeNeume.OligonPlusElaphronPlusKentemata;
+  } else if (has_support(g, ["ypsili"])) {
+    const ypsiliNeumes = g.support.filter((x) => x.label === "ypsili");
+
+    if (ypsiliNeumes.length === 2) {
+      e.quantitativeNeume = QuantitativeNeume.OligonPlusDoubleHypsili;
+    } else {
+      const ypsili = ypsiliNeumes[0];
+
+      if (
+        Math.abs(ypsili.bounding_circle.x - g.base.bounding_rect.x) <
+        Math.abs(
+          ypsili.bounding_circle.x -
+            (g.base.bounding_rect.x + g.base.bounding_rect.w)
+        )
+      ) {
+        e.quantitativeNeume = QuantitativeNeume.OligonPlusHypsiliLeft;
+      } else {
+        e.quantitativeNeume = QuantitativeNeume.OligonPlusHypsiliRight;
+      }
+    }
   } else {
     e.quantitativeNeume = QuantitativeNeume.Oligon;
   }
 }
 
-function process_antikenoma(e, g: NeumeGroup) {
+function process_petaste(e: NoteElement, g: NeumeGroup) {
+  e.quantitativeNeume = QuantitativeNeume.Petasti;
+
+  if (has_support(g, ["kentima"])) {
+    e.quantitativeNeume = QuantitativeNeume.PetastiPlusKentimaAbove;
+  } else if (has_support(g, ["apostrofos"])) {
+    e.quantitativeNeume = QuantitativeNeume.PetastiPlusApostrophos;
+  }
+}
+
+function process_antikenoma(e: NoteElement, g: NeumeGroup) {
   if (g.support?.find((x) => x.label === "antikenoma")) {
-    e.vocalExpressionNeume = "Antikenoma";
+    e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
+  } else if (g.support?.find((x) => x.label === "antikenoma_apli")) {
+    e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
+    e.timeNeume = TimeNeume.Hapli;
   }
 }
 
@@ -141,6 +196,14 @@ function process_gorgon(e: NoteElement, g: NeumeGroup) {
       support.bounding_circle.y <= g.base.bounding_circle.y
         ? GorgonNeume.Gorgon_Top
         : GorgonNeume.Gorgon_Bottom;
+  }
+}
+
+function process_digorgon(e: NoteElement, g: NeumeGroup) {
+  const support = g.support?.find((x) => x.label === "digorgon");
+
+  if (support) {
+    e.gorgonNeume = GorgonNeume.Digorgon;
   }
 }
 
@@ -195,6 +258,7 @@ function is_base(neume: string) {
     "petaste",
     "apostrofos",
     "elafron",
+    "elafron_apostrofos",
     "vareia",
     "kentima",
     "yporroe",
@@ -222,7 +286,11 @@ function overlaps(
   return (right - left) / support.bounding_rect.w >= threshold;
 }
 
-function groupMatches(analysis: OcrAnalysis, confidence_threshold = 0) {
+function groupMatches(
+  analysis: OcrAnalysis,
+  confidence_threshold = 0,
+  martyria_confidence_threshold = 0
+) {
   const groups: NeumeGroup[] = [];
 
   const matches = analysis.matches
@@ -239,6 +307,7 @@ function groupMatches(analysis: OcrAnalysis, confidence_threshold = 0) {
 
     if (m.isBase) {
       const g = new NeumeGroup();
+      groups.push(g);
       g.base = m;
 
       // Find the supporting neumes
@@ -268,12 +337,23 @@ function groupMatches(analysis: OcrAnalysis, confidence_threshold = 0) {
           continue;
         }
 
-        if (overlaps(m, s, 0.6)) {
+        if (
+          (g.base.bounding_rect.x <= s.bounding_circle.x &&
+            s.bounding_circle.x <=
+              g.base.bounding_rect.x + g.base.bounding_rect.w) ||
+          overlaps(m, s, 0.6)
+        ) {
           g.support.push(s);
           s.isGrouped = true;
         }
       }
+    } else if (
+      m.label.startsWith("martyria") &&
+      m.confidence > martyria_confidence_threshold
+    ) {
+      const g = new NeumeGroup();
       groups.push(g);
+      g.base = m;
     }
   }
 
