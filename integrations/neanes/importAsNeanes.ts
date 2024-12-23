@@ -764,11 +764,18 @@ function processAnalysis(
 
   let vareia = false;
 
+  let temp = 0;
+
   for (let i = 0; i < groups.length; i++) {
     const g = groups[i];
 
+    let prev: NeumeGroup | null = null;
     let next: NeumeGroup | null = null;
     let nextNext: NeumeGroup | null = null;
+
+    if (i - 1 >= 0) {
+      prev = groups[i - 1];
+    }
 
     if (i + 1 < groups.length) {
       next = groups[i + 1];
@@ -869,6 +876,23 @@ function processAnalysis(
       const e = new MartyriaElement();
       e.auto = true;
       elements.push(e);
+
+      // If the martyria is more than 2 * oligon_width away from the previous neume,
+      // we assume it is a right aligned martyria
+      if (
+        prev != null &&
+        g.base.line === prev.base.line &&
+        g.base.bounding_rect.x -
+          (prev.base.bounding_rect.x + prev.base.bounding_rect.w) >=
+          analysis.segmentation.oligon_width * 2
+      ) {
+        e.alignRight = true;
+      } else {
+        if (temp === 3) {
+          console.log(analysis.segmentation.oligon_width);
+        }
+        temp++;
+      }
     }
   }
 

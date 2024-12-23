@@ -1,6 +1,7 @@
 model_version: null
 segmentation:
   oligon_height: 11
+  oligon_width: 101
   avg_text_height: 22
   baselines:
     - 392
