@@ -8,6 +8,7 @@ import {
   ScoreElement,
 } from "./neanes/models/Element";
 import {
+  Fthora,
   GorgonNeume,
   Neume,
   QuantitativeNeume,
@@ -28,7 +29,9 @@ const analysis: OcrAnalysis = YAML.parse(
   await fs.readFile("output.yaml", "utf8")
 );
 
-const elements = processAnalysis(analysis, 0, 0.9);
+const min_confidence_threshold = 0;
+
+const elements = processAnalysis(analysis, min_confidence_threshold, 0.9);
 
 // Remove the empty element
 score.staff.elements.pop();
@@ -47,15 +50,22 @@ function has_support(g: NeumeGroup, s: string[]) {
   return s.every((x) => g.support.some((y) => y.label === x));
 }
 
-function process_ison(e, g) {
-  if (has_support(g, ["apostrofos"])) {
-    e.quantitativeNeume = QuantitativeNeume.IsonPlusApostrophos;
-  } else {
-    e.quantitativeNeume = QuantitativeNeume.Ison;
+function processIson(g: NeumeGroup) {
+  if (has(g, "apostrofos").length) {
+    return QuantitativeNeume.IsonPlusApostrophos;
   }
+  return QuantitativeNeume.Ison;
 }
 
-function process_oligon(g: NeumeGroup) {
+function processApostrofos(g: NeumeGroup) {
+  if (has(g, "apostrofos").length) {
+    return QuantitativeNeume.DoubleApostrophos;
+  }
+
+  return QuantitativeNeume.Apostrophos;
+}
+
+function processOligon(g: NeumeGroup) {
   // Check kentima below
   const kentimaBelow = hasBelow(g, "kentima");
 
@@ -240,7 +250,7 @@ function process_oligon(g: NeumeGroup) {
   return QuantitativeNeume.Oligon;
 }
 
-function process_oligon_with_middle_kentima(g: NeumeGroup) {
+function processOligonWithMiddleKentima(g: NeumeGroup) {
   // Check kentima above
   const kentimaAbove = hasAbove(g, "kentima");
 
@@ -252,17 +262,200 @@ function process_oligon_with_middle_kentima(g: NeumeGroup) {
   return QuantitativeNeume.OligonPlusKentima;
 }
 
-function process_petaste(e: NoteElement, g: NeumeGroup) {
-  e.quantitativeNeume = QuantitativeNeume.Petasti;
+function processPetaste(g: NeumeGroup) {
+  // Check kentima above
+  const kentimaAbove = hasAbove(g, "kentima");
 
-  if (has_support(g, ["kentima"])) {
-    e.quantitativeNeume = QuantitativeNeume.PetastiPlusKentimaAbove;
-  } else if (has_support(g, ["apostrofos"])) {
-    e.quantitativeNeume = QuantitativeNeume.PetastiPlusApostrophos;
+  // Handle petaste + ypsili + kentemata
+  if (kentimaAbove.length >= 2) {
+    const ypsili = hasAbove(g, "ypsili");
+
+    if (ypsili.length === 2) {
+      return QuantitativeNeume.PetastiKentimataDoubleYpsili;
+    }
+
+    if (ypsili.length >= 3) {
+      return QuantitativeNeume.PetastiKentimataTripleYpsili;
+    }
   }
+
+  // Handle petaste with single kentima
+  if (kentimaAbove.length == 1) {
+    const ypsili = hasAbove(g, "ypsili");
+
+    if (ypsili.length === 1) {
+      if (
+        Math.abs(ypsili[0].bounding_circle.x - g.base.bounding_rect.x) <
+        Math.abs(
+          ypsili[0].bounding_circle.x -
+            (g.base.bounding_rect.x + g.base.bounding_rect.w)
+        )
+      ) {
+        return QuantitativeNeume.PetastiPlusHypsiliPlusKentimaVertical;
+      } else {
+        return QuantitativeNeume.PetastiPlusHypsiliPlusKentimaHorizontal;
+      }
+    }
+
+    if (ypsili.length === 2) {
+      if (
+        ypsili.find(
+          (x) =>
+            x.bounding_rect.x <
+            g.base.bounding_circle.x - g.base.bounding_rect.w / 4
+        )
+      ) {
+        return QuantitativeNeume.PetastiKentimaDoubleYpsiliLeft;
+      }
+
+      return QuantitativeNeume.PetastiKentimaDoubleYpsiliRight;
+    }
+
+    if (ypsili.length >= 3) {
+      return QuantitativeNeume.PetastiKentimaTripleYpsili;
+    }
+
+    return QuantitativeNeume.PetastiPlusKentimaAbove;
+  }
+
+  // Check for ypsili
+  const ypsili = hasAbove(g, "ypsili");
+
+  if (ypsili.length === 1) {
+    const neume = ypsili[0];
+
+    if (
+      Math.abs(neume.bounding_circle.x - g.base.bounding_rect.x) <
+      Math.abs(
+        neume.bounding_circle.x -
+          (g.base.bounding_rect.x + g.base.bounding_rect.w)
+      )
+    ) {
+      return QuantitativeNeume.PetastiPlusHypsiliLeft;
+    } else {
+      return QuantitativeNeume.PetastiPlusHypsiliRight;
+    }
+  }
+
+  if (ypsili.length === 2) {
+    return QuantitativeNeume.PetastiPlusDoubleHypsili;
+  }
+
+  if (ypsili.length >= 3) {
+    return QuantitativeNeume.PetastiTripleYpsili;
+  }
+
+  // Check for petaste used as support
+  if (hasAbove(g, "ison").length) {
+    return QuantitativeNeume.PetastiWithIson;
+  }
+
+  if (hasAbove(g, "oligon").length) {
+    return QuantitativeNeume.PetastiPlusOligon;
+  }
+
+  if (hasAbove(g, "yporroe").length) {
+    return QuantitativeNeume.PetastiPlusHyporoe;
+  }
+
+  const hamili = hasAbove(g, "hamili");
+
+  if (hamili.length === 1) {
+    const apostrofos = has(g, "apostrofos").length > 0;
+    const elafron = has(g, "apostrofos").length > 0;
+    const elafronApostrofos = has(g, "elafron_apostrofos").length > 0;
+
+    if (apostrofos && !elafron) {
+      return QuantitativeNeume.PetastiHamiliApostrofos;
+    }
+
+    if (!apostrofos && elafron) {
+      return QuantitativeNeume.PetastiHamiliElafron;
+    }
+
+    if ((apostrofos && elafron) || elafronApostrofos) {
+      return QuantitativeNeume.PetastiHamiliElafronApostrofos;
+    }
+
+    return QuantitativeNeume.PetastiHamili;
+  }
+
+  if (hamili.length >= 2) {
+    if (has(g, "apostrofos").length) {
+      return QuantitativeNeume.PetastiDoubleHamiliApostrofos;
+    }
+
+    return QuantitativeNeume.PetastiDoubleHamili;
+  }
+
+  const apostrofosAbove = hasAbove(g, "apostrofos").length > 0;
+  const elafronAbove = hasAbove(g, "elafron").length > 0;
+  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+
+  if (apostrofosAbove && !elafronAbove) {
+    return QuantitativeNeume.PetastiPlusApostrophos;
+  }
+
+  if (!apostrofosAbove && elafronAbove) {
+    return QuantitativeNeume.PetastiPlusElaphron;
+  }
+
+  if (elafronApostrofosAbove || (elafronAbove && apostrofosAbove)) {
+    return QuantitativeNeume.PetastiPlusElaphronPlusApostrophos;
+  }
+
+  return QuantitativeNeume.Petasti;
 }
 
-function process_antikenoma(e: NoteElement, g: NeumeGroup) {
+function processHamili(g: NeumeGroup) {
+  // Check for extra hamili
+  const hamili = has(g, "hamli");
+
+  // Handle double hamili
+  if (hamili.length === 1) {
+    const apostrofos = has(g, "apostrofos").length > 0;
+    const elafron = has(g, "apostrofos").length > 0;
+    const elafronApostrofos = has(g, "elafron_apostrofos").length > 0;
+
+    if (apostrofos && !elafron) {
+      return QuantitativeNeume.DoubleHamiliApostrofos;
+    }
+
+    if (!apostrofos && elafron) {
+      return QuantitativeNeume.DoubleHamiliElafron;
+    }
+
+    if ((apostrofos && elafron) || elafronApostrofos) {
+      return QuantitativeNeume.DoubleHamiliElafronApostrofos;
+    }
+
+    return QuantitativeNeume.DoubleHamili;
+  }
+
+  if (hamili.length >= 2) {
+    return QuantitativeNeume.TripleHamili;
+  }
+
+  const apostrofosAbove = hasAbove(g, "apostrofos").length > 0;
+  const elafronAbove = hasAbove(g, "elafron").length > 0;
+  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+
+  if (apostrofosAbove && !elafronAbove) {
+    return QuantitativeNeume.HamiliPlusApostrophos;
+  }
+
+  if (!apostrofosAbove && elafronAbove) {
+    return QuantitativeNeume.HamiliPlusElaphron;
+  }
+
+  if (elafronApostrofosAbove || (elafronAbove && apostrofosAbove)) {
+    return QuantitativeNeume.HamiliPlusElaphronPlusApostrophos;
+  }
+
+  return QuantitativeNeume.Hamili;
+}
+
+function applyAntikenoma(e: NoteElement, g: NeumeGroup) {
   if (g.support?.find((x) => x.label === "antikenoma")) {
     e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
   } else if (g.support?.find((x) => x.label === "antikenoma_apli")) {
@@ -271,46 +464,40 @@ function process_antikenoma(e: NoteElement, g: NeumeGroup) {
   }
 }
 
-function process_gorgon(e: NoteElement, g: NeumeGroup) {
-  const support = g.support?.find((x) => x.label === "gorgon");
+function applyGorgon(e: NoteElement, g: NeumeGroup) {
+  const gorgon = has(g, "gorgon", 0.5);
 
-  if (support) {
+  // TODO secondary/tertiary gorgons
+
+  if (gorgon.length) {
     e.gorgonNeume =
-      support.bounding_circle.y <= g.base.bounding_circle.y
+      gorgon[0].bounding_circle.y <= g.base.bounding_circle.y
         ? GorgonNeume.Gorgon_Top
         : GorgonNeume.Gorgon_Bottom;
   }
 }
 
-function process_digorgon(e: NoteElement, g: NeumeGroup) {
+function applyDigorgon(e: NoteElement, g: NeumeGroup) {
   const support = g.support?.find((x) => x.label === "digorgon");
+
+  // TODO secondary/tertiary gorgons
 
   if (support) {
     e.gorgonNeume = GorgonNeume.Digorgon;
   }
 }
 
-function process_kentima(e: NoteElement, g: NeumeGroup) {
-  const support = g.support?.filter((x) => x.label === "kentima");
+function applyTrigorgon(e: NoteElement, g: NeumeGroup) {
+  const support = g.support?.find((x) => x.label === "digorgon");
 
-  if (support?.length === 2) {
-    if (e.quantitativeNeume === "Oligon") {
-      e.quantitativeNeume =
-        support[0].bounding_circle.y <= g.base.bounding_circle.y
-          ? QuantitativeNeume.OligonPlusKentemata
-          : QuantitativeNeume.KentemataPlusOligon;
-    }
-  } else if (support?.length === 1) {
-    if (e.quantitativeNeume === "Oligon") {
-      e.quantitativeNeume =
-        support[0].bounding_circle.y <= g.base.bounding_circle.y
-          ? QuantitativeNeume.OligonPlusKentimaAbove
-          : QuantitativeNeume.OligonPlusKentimaBelow;
-    }
+  // TODO secondary/tertiary gorgons
+
+  if (support) {
+    e.gorgonNeume = GorgonNeume.Digorgon;
   }
 }
 
-function process_klasma(e: NoteElement, g: NeumeGroup) {
+function applyKlasma(e: NoteElement, g: NeumeGroup) {
   const support = g.support?.find((x) => x.label === "klasma");
 
   if (support) {
@@ -321,16 +508,87 @@ function process_klasma(e: NoteElement, g: NeumeGroup) {
   }
 }
 
-function process_psifiston(e: NoteElement, g: NeumeGroup) {
+function applyFthora(e: NoteElement, g: NeumeGroup) {
+  const fthora = g.support?.find((x) => x.label.startsWith("fthora"));
+
+  // TODO secondary/tertiary gorgons
+
+  if (fthora) {
+    if (fthora.bounding_rect.y < g.base.bounding_rect.y) {
+      if (fthora.label === "fthora_diatonic_di") {
+        e.fthora = Fthora.DiatonicThi_Top;
+      } else if (fthora.label === "fthora_diatonic_ke") {
+        e.fthora = Fthora.DiatonicKe_Top;
+      } else if (fthora.label === "fthora_diatonic_pa") {
+        e.fthora = Fthora.DiatonicPa_Top;
+      } else if (fthora.label === "fthora_enharmonic") {
+        e.fthora = Fthora.Enharmonic_Top;
+      } else if (fthora.label === "fthora_hard_chromatic_di") {
+        e.fthora = Fthora.HardChromaticThi_Top;
+      } else if (fthora.label === "fthora_hard_chromatic_pa") {
+        e.fthora = Fthora.HardChromaticPa_Top;
+      }
+    } else {
+      if (fthora.label === "fthora_diatonic_di") {
+        e.fthora = Fthora.DiatonicThi_Bottom;
+      } else if (fthora.label === "fthora_diatonic_ke") {
+        e.fthora = Fthora.DiatonicKe_Bottom;
+      } else if (fthora.label === "fthora_diatonic_pa") {
+        e.fthora = Fthora.DiatonicPa_Bottom;
+      } else if (fthora.label === "fthora_enharmonic") {
+        e.fthora = Fthora.Enharmonic_Bottom;
+      } else if (fthora.label === "fthora_hard_chromatic_di") {
+        e.fthora = Fthora.HardChromaticThi_Bottom;
+      } else if (fthora.label === "fthora_hard_chromatic_pa") {
+        e.fthora = Fthora.HardChromaticPa_Bottom;
+      }
+    }
+  }
+}
+
+function applyPsifiston(e: NoteElement, g: NeumeGroup) {
   if (g.support?.find((x) => x.label === "psifiston")) {
     e.vocalExpressionNeume = VocalExpressionNeume.Psifiston;
   }
 }
 
-function process_syndesmos(e: NoteElement, g: NeumeGroup) {
-  if (g.support?.find((x) => x.label === "syndesmos")) {
-    // TODO use position to decide if it's connecting
-    e.vocalExpressionNeume = VocalExpressionNeume.HeteronConnecting;
+function applyHeteron(e: NoteElement, g: NeumeGroup) {
+  const heteron = hasBelow(g, "heteron", 0);
+  if (heteron.length) {
+    if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
+      // TODO figure out if it's connecting or not
+      // Probably need to be able to detect apli before we can do this.
+      e.vocalExpressionNeume = VocalExpressionNeume.HeteronConnecting;
+    }
+  }
+}
+
+function applyHomalon(e: NoteElement, g: NeumeGroup) {
+  const heteron = hasBelow(g, "omalon", 0);
+  if (heteron.length) {
+    if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
+      if (hasAbove(g, "klasma").length) {
+        e.vocalExpressionNeume = VocalExpressionNeume.Homalon;
+      } else {
+        e.vocalExpressionNeume = VocalExpressionNeume.HomalonConnecting;
+      }
+    }
+  }
+}
+
+function applyEndofonon(e: NoteElement, g: NeumeGroup) {
+  const endofonon = hasBelow(g, "endofonon", 0);
+  if (endofonon.length) {
+    if (endofonon[0].bounding_rect.x > g.base.bounding_rect.x) {
+      e.vocalExpressionNeume = VocalExpressionNeume.Endofonon;
+    }
+  }
+}
+
+function applyStavros(e: NoteElement, g: NeumeGroup) {
+  const stavros = has(g, "stavros", 0);
+  if (stavros.length) {
+    e.vocalExpressionNeume = VocalExpressionNeume.Cross_Top;
   }
 }
 
@@ -353,14 +611,6 @@ function touches_baseline(match: ContourMatch, baseline: number) {
     match.bounding_rect.y <= baseline &&
     baseline <= match.bounding_rect.y + match.bounding_rect.h
   );
-}
-
-function above_baseline(match: ContourMatch, baseline: number) {
-  return match.bounding_rect.y + match.bounding_rect.h <= baseline;
-}
-
-function below_baseline(match: ContourMatch, baseline: number) {
-  return match.bounding_rect.y >= baseline;
 }
 
 function centerOverlaps(
@@ -404,96 +654,13 @@ function hasBelow(g: NeumeGroup, label: string, threshold = 1) {
       (centerOverlaps(g.base, x) || overlaps(g.base, x, threshold))
   );
 }
-
-// function processAnalysisOld() {
-//   const groups = groupMatches(analysis, 0, 0.95);
-
-//   let vareia = false;
-
-//   for (let i = 0; i < groups.length; i++) {
-//     const g = groups[i];
-
-//     let next: NeumeGroup | null = null;
-//     let nextNext: NeumeGroup | null = null;
-
-//     if (i + 1 < groups.length) {
-//       next = groups[i + 1];
-//     }
-
-//     if (i + 2 < groups.length) {
-//       nextNext = groups[i + 2];
-//     }
-
-//     if (g.base.label.startsWith("martyria")) {
-//       const e = new MartyriaElement();
-//       e.auto = true;
-//       score.staff.elements.push(e);
-//       continue;
-//     }
-
-//     const e = new NoteElement();
-
-//     if (g.base.label === "ison") {
-//       process_ison(e, g);
-//     } else if (g.base.label === "petaste") {
-//       process_petaste(e, g);
-//     } else if (g.base.label === "oligon") {
-//       process_oligon(e, g);
-
-//       if (
-//         next?.base.label === "kentima" &&
-//         nextNext?.base.label !== "kentima"
-//       ) {
-//         e.quantitativeNeume = QuantitativeNeume.OligonPlusKentima;
-
-//         if (has_support(g, ["kentima"])) {
-//           e.quantitativeNeume = QuantitativeNeume.OligonKentimaMiddleKentimata;
-//         }
-
-//         g.support.push(...next.support);
-//         i++;
-//       }
-//     } else if (g.base.label === "apostrofos") {
-//       e.quantitativeNeume = QuantitativeNeume.Apostrophos;
-//     } else if (g.base.label === "yporroe") {
-//       e.quantitativeNeume = QuantitativeNeume.Hyporoe;
-//     } else if (g.base.label === "elafron") {
-//       e.quantitativeNeume = QuantitativeNeume.Elaphron;
-
-//       if (has_support(g, ["apostrofos"])) {
-//         e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
-//       }
-//     } else if (g.base.label === "elafron_apostrofos") {
-//       e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
-//     } else if (g.base.label === "kentima") {
-//       if (next?.base.label === "kentima") {
-//         e.quantitativeNeume = QuantitativeNeume.Kentemata;
-//         g.support.push(...next.support);
-//         i++;
-//       }
-//     } else if (g.base.label === "vareia") {
-//       vareia = true;
-//       process_gorgon(e, g);
-//       // TODO process apli
-//       continue;
-//     }
-
-//     process_antikenoma(e, g);
-//     process_gorgon(e, g);
-//     process_digorgon(e, g);
-//     process_kentima(e, g);
-//     process_klasma(e, g);
-//     process_psifiston(e, g);
-//     process_syndesmos(e, g);
-
-//     if (vareia) {
-//       e.vareia = true;
-//       vareia = false;
-//     }
-
-//     score.staff.elements.push(e);
-//   }
-// }
+function has(g: NeumeGroup, label: string, threshold = 1) {
+  return g.support.filter(
+    (x) =>
+      x.label === label &&
+      (centerOverlaps(g.base, x) || overlaps(g.base, x, threshold))
+  );
+}
 
 function groupMatches(
   analysis: OcrAnalysis,
@@ -590,10 +757,10 @@ function processAnalysis(
     martyria_confidence_threshold
   );
 
-  const test_group = groups[19];
-  console.log(test_group);
-  console.log(process_oligon_with_middle_kentima(test_group));
-  console.log(hasAbove(test_group, "kentima"));
+  // const test_group = groups[0];
+  // console.log(test_group);
+  // console.log(processApostrofos(test_group));
+  // console.log(has(test_group, "apostrofos"));
 
   let vareia = false;
 
@@ -616,51 +783,80 @@ function processAnalysis(
 
       if (g.base.label === "oligon") {
         if (
+          next?.base.line === g.base.line &&
           next?.base.label === "kentima" &&
-          nextNext?.base.label !== "kentima"
+          (nextNext?.base.label !== "kentima" ||
+            nextNext?.base.line !== g.base.line)
         ) {
           // Combine the kentima with the oligon and skip ahead
           g.support.push(...next.support);
           i++;
-          e.quantitativeNeume = process_oligon_with_middle_kentima(g);
+          e.quantitativeNeume = processOligonWithMiddleKentima(g);
         } else {
-          e.quantitativeNeume = process_oligon(g);
+          e.quantitativeNeume = processOligon(g);
         }
       } else if (g.base.label === "ison") {
-        process_ison(e, g);
+        e.quantitativeNeume = processIson(g);
       } else if (g.base.label === "petaste") {
-        process_petaste(e, g);
+        e.quantitativeNeume = processPetaste(g);
       } else if (g.base.label === "apostrofos") {
-        e.quantitativeNeume = QuantitativeNeume.Apostrophos;
+        e.quantitativeNeume = processApostrofos(g);
       } else if (g.base.label === "yporroe") {
         e.quantitativeNeume = QuantitativeNeume.Hyporoe;
       } else if (g.base.label === "elafron") {
         e.quantitativeNeume = QuantitativeNeume.Elaphron;
 
-        if (has_support(g, ["apostrofos"])) {
+        const apostrofos = has(g, "apostrofos");
+
+        if (apostrofos.length) {
           e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
+
+          // Sometimes the apostrofos is double detected
+          if (next?.base === apostrofos[0]) {
+            g.support.push(...next.support);
+            i++;
+          }
         }
       } else if (g.base.label === "elafron_apostrofos") {
         e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
+
+        const apostrofos = has(g, "apostrofos");
+
+        // Sometimes the apostrofos is double detected
+        if (apostrofos.length) {
+          if (next?.base === apostrofos[0]) {
+            g.support.push(...next.support);
+            i++;
+          }
+        }
+      } else if (g.base.label === "hamili") {
+        e.quantitativeNeume = processHamili(g);
       } else if (g.base.label === "kentima") {
-        if (next?.base.label === "kentima") {
+        if (next?.base.line === g.base.line && next?.base.label === "kentima") {
           e.quantitativeNeume = QuantitativeNeume.Kentemata;
           g.support.push(...next.support);
           i++;
         }
       } else if (g.base.label === "vareia") {
         vareia = true;
-        process_gorgon(e, g);
+        applyGorgon(e, g);
         // TODO process apli
         continue;
+      } else if (g.base.label === "stavros") {
+        e.quantitativeNeume = QuantitativeNeume.Cross;
       }
 
-      process_antikenoma(e, g);
-      process_gorgon(e, g);
-      process_digorgon(e, g);
-      process_klasma(e, g);
-      process_psifiston(e, g);
-      process_syndesmos(e, g);
+      applyAntikenoma(e, g);
+      applyGorgon(e, g);
+      applyDigorgon(e, g);
+      applyTrigorgon(e, g);
+      applyKlasma(e, g);
+      applyFthora(e, g);
+      applyPsifiston(e, g);
+      applyHeteron(e, g);
+      applyHomalon(e, g);
+      applyEndofonon(e, g);
+      applyStavros(e, g);
 
       if (vareia) {
         e.vareia = true;
