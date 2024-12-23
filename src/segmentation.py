@@ -40,7 +40,7 @@ textlines_adj: {self.textlines_adj}
     def to_dict(self):
         return {
             "oligon_height": self.oligon_height,
-            "oligon_height": self.oligon_height,
+            "oligon_width": self.oligon_width,
             "avg_text_height": self.avg_text_height,
             "avg_baseline_gap": self.avg_baseline_gap,
             "baselines": self.baselines,
