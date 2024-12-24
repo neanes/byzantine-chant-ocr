@@ -135,7 +135,11 @@ def prepare_image(image):
 
     results.segmentation = segment(binary)
     results.image_with_text_removed = remove_text(binary, results.segmentation)
-    results.matches = prepare_matches_from_contours(results.image_with_text_removed)
+    results.matches = prepare_matches_from_contours(
+        results.image_with_text_removed,
+        max_contour_width=results.segmentation.oligon_width * 1.5,
+        max_contour_height=results.segmentation.oligon_width * 1.5,
+    )
     assign_lines_to_matches(results.matches, results.segmentation.baselines)
     sort_matches(results.matches)
 
