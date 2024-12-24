@@ -263,6 +263,8 @@ def sort_matches(matches):
 def recognize_contours(matches, model, classes):
     transform = get_transform()
 
+    model.eval()
+
     for m in matches:
         if m.test_image is None or m.test_image.size == 0:
             continue
