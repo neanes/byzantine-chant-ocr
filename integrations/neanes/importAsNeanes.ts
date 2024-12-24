@@ -29,7 +29,7 @@ const analysis: OcrAnalysis = YAML.parse(
   await fs.readFile("output.yaml", "utf8")
 );
 
-const min_confidence_threshold = 0;
+const min_confidence_threshold = 0.7;
 
 const elements = processAnalysis(analysis, min_confidence_threshold, 0.9);
 
@@ -808,6 +808,28 @@ function processAnalysis(
         e.quantitativeNeume = processPetaste(g);
       } else if (g.base.label === "apostrofos") {
         e.quantitativeNeume = processApostrofos(g);
+
+        if (
+          e.quantitativeNeume === QuantitativeNeume.Apostrophos &&
+          next?.base.line === g.base.line &&
+          next?.base.label === "elafron"
+        ) {
+          // Combine the apostrofos with the elafron
+          e.quantitativeNeume = QuantitativeNeume.RunningElaphron;
+          g.support.push(...next.support);
+          i++;
+        } else if (
+          e.quantitativeNeume === QuantitativeNeume.Apostrophos &&
+          next?.base.line === g.base.line &&
+          next?.base.label === "petaste" &&
+          hasAbove(next, "elafron").length
+        ) {
+          console.log(next);
+          // Combine the apostrofos with the petasti+elafron
+          e.quantitativeNeume = QuantitativeNeume.PetastiPlusRunningElaphron;
+          g.support.push(...next.support);
+          i++;
+        }
       } else if (g.base.label === "yporroe") {
         e.quantitativeNeume = QuantitativeNeume.Hyporoe;
       } else if (g.base.label === "elafron") {
