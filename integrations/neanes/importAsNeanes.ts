@@ -764,8 +764,6 @@ function processAnalysis(
 
   let vareia = false;
 
-  let temp = 0;
-
   for (let i = 0; i < groups.length; i++) {
     const g = groups[i];
 
@@ -824,7 +822,6 @@ function processAnalysis(
           next?.base.label === "petaste" &&
           hasAbove(next, "elafron").length
         ) {
-          console.log(next);
           // Combine the apostrofos with the petasti+elafron
           e.quantitativeNeume = QuantitativeNeume.PetastiPlusRunningElaphron;
           g.support.push(...next.support);
@@ -909,11 +906,6 @@ function processAnalysis(
           analysis.segmentation.oligon_width * 2
       ) {
         e.alignRight = true;
-      } else {
-        if (temp === 3) {
-          console.log(analysis.segmentation.oligon_width);
-        }
-        temp++;
       }
     }
   }
