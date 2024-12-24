@@ -4,14 +4,22 @@ export class AugmentedContourMatch extends ContourMatch {
   public isBase: boolean = false;
   public isGrouped: boolean = false;
 
-  constructor(match: ContourMatch) {
+  constructor(match?: ContourMatch) {
     super();
-    Object.assign(this, match);
+
+    if (match) {
+      Object.assign(this, match);
+    }
   }
 }
 
+export class ContourLineGroup {
+  public onBaseline: AugmentedContourMatch[] = [];
+  public aboveBaseline: AugmentedContourMatch[] = [];
+  public belowBaseline: AugmentedContourMatch[] = [];
+}
+
 export class NeumeGroup {
-  public base: ContourMatch = new ContourMatch();
-  public support: ContourMatch[] = [];
-  public complete: boolean = false;
+  public base: AugmentedContourMatch = new AugmentedContourMatch();
+  public support: AugmentedContourMatch[] = [];
 }
