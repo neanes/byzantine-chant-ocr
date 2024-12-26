@@ -91,25 +91,28 @@ function processOligon(g: NeumeGroup) {
       return QuantitativeNeume.OligonPlusIsonPlusKentemata;
     }
 
-    const apostrofosAbove = hasAbove(g, "apostrofos");
-    const elafronAbove = hasAbove(g, "elafron");
-    const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
+    const apostrofosAbove = findAbove(g, "apostrofos");
+    const elafronAbove = findAbove(g, "elafron");
+    const hasElafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
 
-    if (apostrofosAbove && !elafronAbove) {
+    const hasApostrofosAbove = apostrofosAbove.length > 0;
+    const hasElafronAbove = elafronAbove.length > 0;
+
+    if (hasApostrofosAbove && !hasElafronAbove) {
       return QuantitativeNeume.OligonPlusApostrophosPlusKentemata;
     }
 
-    if (!apostrofosAbove && elafronAbove) {
+    if (!hasApostrofosAbove && hasElafronAbove) {
       return QuantitativeNeume.OligonPlusElaphronPlusKentemata;
     }
 
-    if (elafronApostrofosAbove) {
+    if (hasElafronApostrofosAbove) {
       return QuantitativeNeume.OligonPlusElaphronPlusApostrophosPlusKentemata;
     }
 
     // Sometimes OCR detects elafron_apostrofos as one character,
     // sometimes as two. So this may be a running elafron.
-    if (apostrofosAbove && elafronAbove) {
+    if (hasApostrofosAbove && hasElafronAbove) {
       if (
         apostrofosAbove[0].bounding_rect.x < elafronAbove[0].bounding_rect.x
       ) {
@@ -470,11 +473,11 @@ function applyAntikenoma(e: NoteElement, g: NeumeGroup) {
 }
 
 function applyGorgon(e: NoteElement, g: NeumeGroup) {
-  const gorgon = has(g, "gorgon", 0.5);
+  const gorgon = find(g, "gorgon", 0.5);
 
   // TODO secondary/tertiary gorgons
 
-  if (gorgon) {
+  if (gorgon.length > 0) {
     e.gorgonNeume =
       gorgon[0].bounding_circle.y <= g.base.bounding_circle.y
         ? GorgonNeume.Gorgon_Top
@@ -562,8 +565,8 @@ function applyPsifiston(e: NoteElement, g: NeumeGroup) {
 }
 
 function applyHeteron(e: NoteElement, g: NeumeGroup) {
-  const heteron = hasBelow(g, "heteron", 0);
-  if (heteron) {
+  const heteron = findBelow(g, "heteron", 0);
+  if (heteron.length > 0) {
     if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
       // TODO figure out if it's connecting or not
       // Probably need to be able to detect apli before we can do this.
@@ -573,9 +576,9 @@ function applyHeteron(e: NoteElement, g: NeumeGroup) {
 }
 
 function applyHomalon(e: NoteElement, g: NeumeGroup) {
-  const heteron = hasBelow(g, "omalon", 0);
-  if (heteron) {
-    if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
+  const homalon = findBelow(g, "omalon", 0);
+  if (homalon.length > 0) {
+    if (homalon[0].bounding_rect.x > g.base.bounding_rect.x) {
       if (hasAbove(g, "klasma")) {
         e.vocalExpressionNeume = VocalExpressionNeume.Homalon;
       } else {
@@ -586,8 +589,8 @@ function applyHomalon(e: NoteElement, g: NeumeGroup) {
 }
 
 function applyEndofonon(e: NoteElement, g: NeumeGroup) {
-  const endofonon = hasBelow(g, "endofonon", 0);
-  if (endofonon) {
+  const endofonon = findBelow(g, "endofonon", 0);
+  if (endofonon.length > 0) {
     if (endofonon[0].bounding_rect.x > g.base.bounding_rect.x) {
       e.vocalExpressionNeume = VocalExpressionNeume.Endofonon;
     }

@@ -18,7 +18,12 @@ if __name__ == "__main__":
     model.eval()
 
     if filepath.endswith(".pdf"):
-        results = process_pdf(filepath, [14, 14], model, classes)
+        start = int(sys.argv[2]) - 1
+        end = int(sys.argv[3]) - 1 if len(sys.argv) >= 4 else start
+
+        results = process_pdf(filepath, [start, end + 1], model, classes)
+        # TODO
+        results = results[0]
     else:
         image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
         results = process_image(image, model, classes)
