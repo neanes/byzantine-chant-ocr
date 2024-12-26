@@ -20,7 +20,7 @@ import {
   ContourLineGroup,
   NeumeGroup,
 } from "./OcrImportCustomModels";
-import { ContourMatch, OcrAnalysis } from "./OcrAnalysis";
+import { ContourMatch, OcrAnalysis, PageAnalysis } from "./OcrAnalysis";
 import { SaveService } from "./neanes/services/SaveService";
 
 // Blank score
@@ -687,7 +687,7 @@ function has(g: NeumeGroup, label: string, threshold = 1) {
 }
 
 function groupMatches(
-  analysis: OcrAnalysis,
+  analysis: PageAnalysis,
   confidence_threshold = 0,
   martyria_confidence_threshold = 0
 ) {
@@ -770,6 +770,26 @@ function groupMatches(
 
 function processAnalysis(
   analysis: OcrAnalysis,
+  confidence_threshold = 0,
+  martyria_confidence_threshold = 0
+) {
+  const elements: ScoreElement[] = [];
+
+  for (let page of analysis.pages) {
+    for (let e of processPageAnalysis(
+      page,
+      confidence_threshold,
+      martyria_confidence_threshold
+    )) {
+      elements.push(e);
+    }
+  }
+
+  return elements;
+}
+
+function processPageAnalysis(
+  analysis: PageAnalysis,
   confidence_threshold = 0,
   martyria_confidence_threshold = 0
 ) {

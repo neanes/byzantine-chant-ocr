@@ -78,9 +78,9 @@ class NeumeGroup:
         }
 
 
-class Analysis:
+class PageAnalysis:
     def __init__(self):
-        self.model_version = None
+        self.page = 0
         self.neume_groups = []
         self.segmentation = None
         self.matches = []
@@ -88,16 +88,32 @@ class Analysis:
 
     def to_dict(self):
         return {
-            "model_version": self.model_version,
+            "page": self.page,
             "segmentation": self.segmentation.to_dict(),
             "matches": [x.to_dict() for x in self.matches],
             # "neume_groups": [x.to_dict() for x in self.neume_groups],
         }
 
 
+class Analysis:
+    def __init__(self):
+        self.model_version = None
+        self.pages = []
+
+    def to_dict(self):
+        return {
+            "model_version": self.model_version,
+            "pages": [x.to_dict() for x in self.pages],
+        }
+
+
 def process_pdf(filepath, page_range, model, classes):
+    analysis = Analysis()
+
     doc = pymupdf.open(filepath)
-    pages = []
+
+    page_index = 0
+
     for page_num in page_range:
         if page_num < 0 or page_num >= len(doc):
             print(f"Page {page_num} is out of range. Skipping.")
@@ -109,41 +125,44 @@ def process_pdf(filepath, page_range, model, classes):
         image = np.frombuffer(pix.samples, dtype=np.uint8)
         image = image.reshape((pix.height, pix.width, pix.n))
 
-        pages.append(process_image(image, model, classes))
+        page = prepare_image(image)
+        page.page = page_index
+        page_index = page_index + 1
 
-    return pages
+        recognize_contours(page.matches, model, classes)
+
+        analysis.pages.append(page)
+
+    return analysis
 
 
 def process_image(image, model, classes):
-    results = prepare_image(image)
+    analysis = Analysis()
 
-    recognize_contours(results.matches, model, classes)
+    page = prepare_image(image)
 
-    # TODO disabling grouping for now
-    # I think this should be the responsibilty of the consumer
-    # results.neume_groups = group_matches(results.matches)
+    recognize_contours(page.matches, model, classes)
 
-    # TODO store model version in the metadata and read it here
-    # results.model_version = _model_data.version
+    analysis.pages.append(page)
 
-    return results
+    return analysis
 
 
 def prepare_image(image):
-    results = Analysis()
+    page = PageAnalysis()
     binary = util.to_binary(image)
 
-    results.segmentation = segment(binary)
-    results.image_with_text_removed = remove_text(binary, results.segmentation)
-    results.matches = prepare_matches_from_contours(
-        results.image_with_text_removed,
-        max_contour_width=results.segmentation.oligon_width * 1.5,
-        max_contour_height=results.segmentation.oligon_width * 1.5,
+    page.segmentation = segment(binary)
+    page.image_with_text_removed = remove_text(binary, page.segmentation)
+    page.matches = prepare_matches_from_contours(
+        page.image_with_text_removed,
+        max_contour_width=page.segmentation.oligon_width * 1.5,
+        max_contour_height=page.segmentation.oligon_width * 1.5,
     )
-    assign_lines_to_matches(results.matches, results.segmentation.baselines)
-    sort_matches(results.matches)
+    assign_lines_to_matches(page.matches, page.segmentation.baselines)
+    sort_matches(page.matches)
 
-    return results
+    return page
 
 
 def prepare_matches_from_contours(

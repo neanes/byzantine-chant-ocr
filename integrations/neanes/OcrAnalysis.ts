@@ -1,5 +1,9 @@
 export class OcrAnalysis {
   public model_version: string = "";
+  public pages: PageAnalysis[] = [];
+}
+
+export class PageAnalysis {
   public segmentation: Segmentation = new Segmentation();
   public matches: ContourMatch[] = [];
 }
