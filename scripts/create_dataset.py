@@ -9,12 +9,32 @@ import torch
 import torch.nn as nn
 from pathlib import Path
 from PIL import Image
-from torchvision import transforms
+from torch.utils.data import DataLoader, Dataset
 
 sys.path.append("../src")
-from model import load_classes, load_model
+from model import load_classes, load_model, get_transform
 from segmentation import segment
 from text_removal import remove_text
+
+
+class ImageDataset(Dataset):
+    def __init__(self, image_folder, transform):
+        self.image_paths = [
+            os.path.join(image_folder, img_name)
+            for img_name in os.listdir(image_folder)
+        ]
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        img = cv2.imread(img_path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = Image.fromarray(img)
+        img_tensor = self.transform(img)
+        return img_tensor, img_path
 
 
 def process_pdf(pdf_path, page_range, pdf_folder, contour_folder, target_size=224):
@@ -98,41 +118,31 @@ def process_pdf(pdf_path, page_range, pdf_folder, contour_folder, target_size=22
 
 
 def predict_images(model, classes, image_folder):
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ]
-    )
+    dataset = ImageDataset(image_folder, get_transform())
+    data_loader = DataLoader(dataset, batch_size=32, shuffle=False)
 
     predictions = []
     model.eval()
 
-    files = os.listdir(image_folder)
+    with torch.no_grad():
+        for batch in data_loader:
+            tensors, img_paths = batch
+            outputs = model(tensors)
 
-    for img_name in files:
-        img_path = os.path.join(image_folder, img_name)
-        img = cv2.imread(img_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = Image.fromarray(img)
+            probabilities = nn.functional.softmax(outputs, dim=1)
+            class_ids = torch.argmax(probabilities, dim=1)
+            confidences = probabilities[range(probabilities.size(0)), class_ids]
 
-        tensor = transform(img).unsqueeze(0)
-
-        with torch.no_grad():
-            output = model(tensor)
-
-        probabilities = nn.functional.softmax(output[0], dim=0)
-        class_id = torch.argmax(probabilities).item()
-        confidence = probabilities[class_id]
-
-        predictions.append(
-            {
-                "filepath": img_path,
-                "prediction": classes[class_id],
-                "confidence": confidence,
-            }
-        )
+            for img_path, class_id, confidence in zip(
+                img_paths, class_ids, confidences
+            ):
+                predictions.append(
+                    {
+                        "filepath": img_path,
+                        "prediction": classes[class_id.item()],
+                        "confidence": confidence.item(),
+                    }
+                )
 
     return predictions
 
