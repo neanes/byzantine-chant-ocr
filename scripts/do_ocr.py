@@ -21,7 +21,9 @@ if __name__ == "__main__":
         start = int(sys.argv[2]) - 1
         end = int(sys.argv[3]) - 1 if len(sys.argv) >= 4 else start
 
-        results = process_pdf(filepath, [start, end + 1], model, classes)
+        page_range = range(start, end + 1)
+
+        results = process_pdf(filepath, page_range, model, classes)
     else:
         image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
         results = process_image(image, model, classes)

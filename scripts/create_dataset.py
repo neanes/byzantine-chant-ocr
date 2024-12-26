@@ -208,7 +208,7 @@ if __name__ == "__main__":
     start = args.start - 1
     end = args.end - 1
 
-    page_range = list(range(start, end + 1))
+    page_range = range(start, end + 1)
 
     # Run contour extraction
     print("Extracting...")
