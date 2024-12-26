@@ -56,14 +56,14 @@ function has_support(g: NeumeGroup, s: string[]) {
 }
 
 function processIson(g: NeumeGroup) {
-  if (has(g, "apostrofos").length) {
+  if (has(g, "apostrofos")) {
     return QuantitativeNeume.IsonPlusApostrophos;
   }
   return QuantitativeNeume.Ison;
 }
 
 function processApostrofos(g: NeumeGroup) {
-  if (has(g, "apostrofos").length) {
+  if (has(g, "apostrofos")) {
     return QuantitativeNeume.DoubleApostrophos;
   }
 
@@ -72,7 +72,7 @@ function processApostrofos(g: NeumeGroup) {
 
 function processOligon(g: NeumeGroup) {
   // Check kentima below
-  const kentimaBelow = hasBelow(g, "kentima");
+  const kentimaBelow = findBelow(g, "kentima");
 
   if (kentimaBelow.length === 1) {
     return QuantitativeNeume.OligonPlusKentimaBelow;
@@ -83,23 +83,23 @@ function processOligon(g: NeumeGroup) {
   }
 
   // Check kentima above
-  const kentimaAbove = hasAbove(g, "kentima");
+  const kentimaAbove = findAbove(g, "kentima");
 
   // Handle oligon + kentemata
   if (kentimaAbove.length >= 2) {
-    if (hasAbove(g, "ison").length) {
+    if (hasAbove(g, "ison")) {
       return QuantitativeNeume.OligonPlusIsonPlusKentemata;
     }
 
     const apostrofosAbove = hasAbove(g, "apostrofos");
     const elafronAbove = hasAbove(g, "elafron");
-    const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+    const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
 
-    if (apostrofosAbove.length && !elafronAbove.length) {
+    if (apostrofosAbove && !elafronAbove) {
       return QuantitativeNeume.OligonPlusApostrophosPlusKentemata;
     }
 
-    if (!apostrofosAbove.length && elafronAbove.length) {
+    if (!apostrofosAbove && elafronAbove) {
       return QuantitativeNeume.OligonPlusElaphronPlusKentemata;
     }
 
@@ -109,7 +109,7 @@ function processOligon(g: NeumeGroup) {
 
     // Sometimes OCR detects elafron_apostrofos as one character,
     // sometimes as two. So this may be a running elafron.
-    if (apostrofosAbove.length && elafronAbove.length) {
+    if (apostrofosAbove && elafronAbove) {
       if (
         apostrofosAbove[0].bounding_rect.x < elafronAbove[0].bounding_rect.x
       ) {
@@ -118,15 +118,15 @@ function processOligon(g: NeumeGroup) {
       return QuantitativeNeume.OligonPlusElaphronPlusApostrophosPlusKentemata;
     }
 
-    if (hasAbove(g, "yporroe").length) {
+    if (hasAbove(g, "yporroe")) {
       return QuantitativeNeume.OligonPlusHyporoePlusKentemata;
     }
 
-    if (hasAbove(g, "hamili").length) {
+    if (hasAbove(g, "hamili")) {
       return QuantitativeNeume.OligonPlusHamiliPlusKentemata;
     }
 
-    const ypsili = hasAbove(g, "ypsili");
+    const ypsili = findAbove(g, "ypsili");
 
     if (ypsili.length === 1) {
       if (
@@ -155,7 +155,7 @@ function processOligon(g: NeumeGroup) {
 
   // Handle oligon with single kentima
   if (kentimaAbove.length == 1) {
-    const ypsili = hasAbove(g, "ypsili");
+    const ypsili = findAbove(g, "ypsili");
 
     if (ypsili.length === 1) {
       if (
@@ -193,7 +193,7 @@ function processOligon(g: NeumeGroup) {
   }
 
   // Check for ypsili
-  const ypsili = hasAbove(g, "ypsili");
+  const ypsili = findAbove(g, "ypsili");
 
   if (ypsili.length === 1) {
     const neume = ypsili[0];
@@ -220,21 +220,21 @@ function processOligon(g: NeumeGroup) {
   }
 
   // Check for oligon used as support
-  if (hasAbove(g, "ison").length) {
+  if (hasAbove(g, "ison")) {
     return QuantitativeNeume.OligonPlusIson;
   }
 
-  if (hasAbove(g, "apostrofos").length) {
+  if (hasAbove(g, "apostrofos")) {
     return QuantitativeNeume.OligonPlusApostrophos;
   }
 
-  if (hasAbove(g, "yporroe").length) {
+  if (hasAbove(g, "yporroe")) {
     return QuantitativeNeume.OligonPlusHyporoe;
   }
 
-  const apostrofosAbove = hasAbove(g, "apostrofos").length > 0;
-  const elafronAbove = hasAbove(g, "elafron").length > 0;
-  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+  const apostrofosAbove = hasAbove(g, "apostrofos");
+  const elafronAbove = hasAbove(g, "elafron");
+  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
 
   if (apostrofosAbove && !elafronAbove) {
     return QuantitativeNeume.OligonPlusApostrophos;
@@ -248,7 +248,7 @@ function processOligon(g: NeumeGroup) {
     return QuantitativeNeume.OligonPlusElaphronPlusApostrophos;
   }
 
-  if (hasAbove(g, "hamili").length) {
+  if (hasAbove(g, "hamili")) {
     return QuantitativeNeume.OligonPlusHamili;
   }
 
@@ -257,7 +257,7 @@ function processOligon(g: NeumeGroup) {
 
 function processOligonWithMiddleKentima(g: NeumeGroup) {
   // Check kentima above
-  const kentimaAbove = hasAbove(g, "kentima");
+  const kentimaAbove = findAbove(g, "kentima");
 
   // Handle oligon + kentemata
   if (kentimaAbove.length >= 2) {
@@ -269,11 +269,11 @@ function processOligonWithMiddleKentima(g: NeumeGroup) {
 
 function processPetaste(g: NeumeGroup) {
   // Check kentima above
-  const kentimaAbove = hasAbove(g, "kentima");
+  const kentimaAbove = findAbove(g, "kentima");
 
   // Handle petaste + ypsili + kentemata
   if (kentimaAbove.length >= 2) {
-    const ypsili = hasAbove(g, "ypsili");
+    const ypsili = findAbove(g, "ypsili");
 
     if (ypsili.length === 2) {
       return QuantitativeNeume.PetastiKentimataDoubleYpsili;
@@ -286,7 +286,7 @@ function processPetaste(g: NeumeGroup) {
 
   // Handle petaste with single kentima
   if (kentimaAbove.length == 1) {
-    const ypsili = hasAbove(g, "ypsili");
+    const ypsili = findAbove(g, "ypsili");
 
     if (ypsili.length === 1) {
       if (
@@ -324,7 +324,7 @@ function processPetaste(g: NeumeGroup) {
   }
 
   // Check for ypsili
-  const ypsili = hasAbove(g, "ypsili");
+  const ypsili = findAbove(g, "ypsili");
 
   if (ypsili.length === 1) {
     const neume = ypsili[0];
@@ -351,24 +351,24 @@ function processPetaste(g: NeumeGroup) {
   }
 
   // Check for petaste used as support
-  if (hasAbove(g, "ison").length) {
+  if (hasAbove(g, "ison")) {
     return QuantitativeNeume.PetastiWithIson;
   }
 
-  if (hasAbove(g, "oligon").length) {
+  if (hasAbove(g, "oligon")) {
     return QuantitativeNeume.PetastiPlusOligon;
   }
 
-  if (hasAbove(g, "yporroe").length) {
+  if (hasAbove(g, "yporroe")) {
     return QuantitativeNeume.PetastiPlusHyporoe;
   }
 
-  const hamili = hasAbove(g, "hamili");
+  const hamili = findAbove(g, "hamili");
 
   if (hamili.length === 1) {
-    const apostrofos = has(g, "apostrofos").length > 0;
-    const elafron = has(g, "apostrofos").length > 0;
-    const elafronApostrofos = has(g, "elafron_apostrofos").length > 0;
+    const apostrofos = has(g, "apostrofos");
+    const elafron = has(g, "apostrofos");
+    const elafronApostrofos = has(g, "elafron_apostrofos");
 
     if (apostrofos && !elafron) {
       return QuantitativeNeume.PetastiHamiliApostrofos;
@@ -386,16 +386,16 @@ function processPetaste(g: NeumeGroup) {
   }
 
   if (hamili.length >= 2) {
-    if (has(g, "apostrofos").length) {
+    if (has(g, "apostrofos")) {
       return QuantitativeNeume.PetastiDoubleHamiliApostrofos;
     }
 
     return QuantitativeNeume.PetastiDoubleHamili;
   }
 
-  const apostrofosAbove = hasAbove(g, "apostrofos").length > 0;
-  const elafronAbove = hasAbove(g, "elafron").length > 0;
-  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+  const apostrofosAbove = hasAbove(g, "apostrofos");
+  const elafronAbove = hasAbove(g, "elafron");
+  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
 
   if (apostrofosAbove && !elafronAbove) {
     return QuantitativeNeume.PetastiPlusApostrophos;
@@ -414,13 +414,13 @@ function processPetaste(g: NeumeGroup) {
 
 function processHamili(g: NeumeGroup) {
   // Check for extra hamili
-  const hamili = has(g, "hamli");
+  const hamili = find(g, "hamli");
 
   // Handle double hamili
   if (hamili.length === 1) {
-    const apostrofos = has(g, "apostrofos").length > 0;
-    const elafron = has(g, "apostrofos").length > 0;
-    const elafronApostrofos = has(g, "elafron_apostrofos").length > 0;
+    const apostrofos = has(g, "apostrofos");
+    const elafron = has(g, "apostrofos");
+    const elafronApostrofos = has(g, "elafron_apostrofos");
 
     if (apostrofos && !elafron) {
       return QuantitativeNeume.DoubleHamiliApostrofos;
@@ -441,9 +441,9 @@ function processHamili(g: NeumeGroup) {
     return QuantitativeNeume.TripleHamili;
   }
 
-  const apostrofosAbove = hasAbove(g, "apostrofos").length > 0;
-  const elafronAbove = hasAbove(g, "elafron").length > 0;
-  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos").length > 0;
+  const apostrofosAbove = hasAbove(g, "apostrofos");
+  const elafronAbove = hasAbove(g, "elafron");
+  const elafronApostrofosAbove = hasAbove(g, "elafron_apostrofos");
 
   if (apostrofosAbove && !elafronAbove) {
     return QuantitativeNeume.HamiliPlusApostrophos;
@@ -474,7 +474,7 @@ function applyGorgon(e: NoteElement, g: NeumeGroup) {
 
   // TODO secondary/tertiary gorgons
 
-  if (gorgon.length) {
+  if (gorgon) {
     e.gorgonNeume =
       gorgon[0].bounding_circle.y <= g.base.bounding_circle.y
         ? GorgonNeume.Gorgon_Top
@@ -556,14 +556,14 @@ function applyFthora(e: NoteElement, g: NeumeGroup) {
 }
 
 function applyPsifiston(e: NoteElement, g: NeumeGroup) {
-  if (hasBelow(g, "psifiston", 0.75).length) {
+  if (hasBelow(g, "psifiston", 0.75)) {
     e.vocalExpressionNeume = VocalExpressionNeume.Psifiston;
   }
 }
 
 function applyHeteron(e: NoteElement, g: NeumeGroup) {
   const heteron = hasBelow(g, "heteron", 0);
-  if (heteron.length) {
+  if (heteron) {
     if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
       // TODO figure out if it's connecting or not
       // Probably need to be able to detect apli before we can do this.
@@ -574,9 +574,9 @@ function applyHeteron(e: NoteElement, g: NeumeGroup) {
 
 function applyHomalon(e: NoteElement, g: NeumeGroup) {
   const heteron = hasBelow(g, "omalon", 0);
-  if (heteron.length) {
+  if (heteron) {
     if (heteron[0].bounding_rect.x > g.base.bounding_rect.x) {
-      if (hasAbove(g, "klasma").length) {
+      if (hasAbove(g, "klasma")) {
         e.vocalExpressionNeume = VocalExpressionNeume.Homalon;
       } else {
         e.vocalExpressionNeume = VocalExpressionNeume.HomalonConnecting;
@@ -587,7 +587,7 @@ function applyHomalon(e: NoteElement, g: NeumeGroup) {
 
 function applyEndofonon(e: NoteElement, g: NeumeGroup) {
   const endofonon = hasBelow(g, "endofonon", 0);
-  if (endofonon.length) {
+  if (endofonon) {
     if (endofonon[0].bounding_rect.x > g.base.bounding_rect.x) {
       e.vocalExpressionNeume = VocalExpressionNeume.Endofonon;
     }
@@ -596,7 +596,7 @@ function applyEndofonon(e: NoteElement, g: NeumeGroup) {
 
 function applyStavros(e: NoteElement, g: NeumeGroup) {
   const stavros = has(g, "stavros", 0);
-  if (stavros.length) {
+  if (stavros) {
     e.vocalExpressionNeume = VocalExpressionNeume.Cross_Top;
   }
 }
@@ -646,7 +646,7 @@ function overlaps(
   return (right - left) / support.bounding_rect.w >= threshold;
 }
 
-function hasAbove(g: NeumeGroup, label: string, threshold = 1) {
+function findAbove(g: NeumeGroup, label: string, threshold = 1) {
   return g.support.filter(
     (x) =>
       x.bounding_rect.y < g.base.bounding_rect.y &&
@@ -655,7 +655,7 @@ function hasAbove(g: NeumeGroup, label: string, threshold = 1) {
   );
 }
 
-function hasBelow(g: NeumeGroup, label: string, threshold = 1) {
+function findBelow(g: NeumeGroup, label: string, threshold = 1) {
   return g.support.filter(
     (x) =>
       x.bounding_rect.y > g.base.bounding_rect.y &&
@@ -663,12 +663,24 @@ function hasBelow(g: NeumeGroup, label: string, threshold = 1) {
       (centerOverlaps(g.base, x) || overlaps(g.base, x, threshold))
   );
 }
-function has(g: NeumeGroup, label: string, threshold = 1) {
+function find(g: NeumeGroup, label: string, threshold = 1) {
   return g.support.filter(
     (x) =>
       x.label === label &&
       (centerOverlaps(g.base, x) || overlaps(g.base, x, threshold))
   );
+}
+
+function hasAbove(g: NeumeGroup, label: string, threshold = 1) {
+  return findAbove(g, label, threshold).length > 0;
+}
+
+function hasBelow(g: NeumeGroup, label: string, threshold = 1) {
+  return findBelow(g, label, threshold).length > 0;
+}
+
+function has(g: NeumeGroup, label: string, threshold = 1) {
+  return find(g, label, threshold).length > 0;
 }
 
 function groupMatches(
@@ -829,7 +841,7 @@ function processAnalysis(
           e.quantitativeNeume === QuantitativeNeume.Apostrophos &&
           next?.base.line === g.base.line &&
           next?.base.label === "petaste" &&
-          hasAbove(next, "elafron").length
+          hasAbove(next, "elafron")
         ) {
           // Combine the apostrofos with the petasti+elafron
           e.quantitativeNeume = QuantitativeNeume.PetastiPlusRunningElaphron;
@@ -841,9 +853,9 @@ function processAnalysis(
       } else if (g.base.label === "elafron") {
         e.quantitativeNeume = QuantitativeNeume.Elaphron;
 
-        const apostrofos = has(g, "apostrofos");
+        const apostrofos = find(g, "apostrofos");
 
-        if (apostrofos.length) {
+        if (apostrofos.length > 0) {
           e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
 
           // Sometimes the apostrofos is double detected
@@ -855,10 +867,10 @@ function processAnalysis(
       } else if (g.base.label === "elafron_apostrofos") {
         e.quantitativeNeume = QuantitativeNeume.ElaphronPlusApostrophos;
 
-        const apostrofos = has(g, "apostrofos");
+        const apostrofos = find(g, "apostrofos");
 
         // Sometimes the apostrofos is double detected
-        if (apostrofos.length) {
+        if (apostrofos.length > 0) {
           if (next?.base === apostrofos[0]) {
             g.support.push(...next.support);
             i++;
