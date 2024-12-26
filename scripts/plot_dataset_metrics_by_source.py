@@ -12,10 +12,9 @@ class_names = os.listdir(DATASET_FOLDER)
 for class_name in class_names:
     class_path = os.path.join(DATASET_FOLDER, class_name)
     if os.path.isdir(class_path):  # Ensure it's a directory
+        files_in_class_path = os.listdir(class_path)
         sources_found = [
-            re.search(r"(.*)_p\d\d\d\d.*", f).group(1)
-            for f in os.listdir(class_path)
-            if os.path.isfile(os.path.join(class_path, f))
+            re.search(r"(.*)_p\d\d\d\d.*", f).group(1) for f in files_in_class_path
         ]
 
         for source in sources_found:
@@ -23,12 +22,7 @@ for class_name in class_names:
                 sources[source] = {}
 
             sources[source][class_name] = len(
-                [
-                    f
-                    for f in os.listdir(class_path)
-                    if os.path.isfile(os.path.join(class_path, f))
-                    and f.startswith(source)
-                ]
+                [f for f in files_in_class_path if f.startswith(source)]
             )
 
 # Plot the horizontal bar graph
