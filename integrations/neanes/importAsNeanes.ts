@@ -30,8 +30,13 @@ const analysis: OcrAnalysis = YAML.parse(
 );
 
 const min_confidence_threshold = 0.7;
+const martyria_confidence_threshold = 0.8;
 
-const elements = processAnalysis(analysis, min_confidence_threshold, 0.9);
+const elements = processAnalysis(
+  analysis,
+  min_confidence_threshold,
+  martyria_confidence_threshold
+);
 
 // Remove the empty element
 score.staff.elements.pop();
@@ -527,6 +532,8 @@ function applyFthora(e: NoteElement, g: NeumeGroup) {
         e.fthora = Fthora.HardChromaticThi_Top;
       } else if (fthora.label === "fthora_hard_chromatic_pa") {
         e.fthora = Fthora.HardChromaticPa_Top;
+      } else if (fthora.label === "fthora_soft_chromatic_di") {
+        e.fthora = Fthora.SoftChromaticThi_Top;
       }
     } else {
       if (fthora.label === "fthora_diatonic_di") {
@@ -541,13 +548,15 @@ function applyFthora(e: NoteElement, g: NeumeGroup) {
         e.fthora = Fthora.HardChromaticThi_Bottom;
       } else if (fthora.label === "fthora_hard_chromatic_pa") {
         e.fthora = Fthora.HardChromaticPa_Bottom;
+      } else if (fthora.label === "fthora_soft_chromatic_di") {
+        e.fthora = Fthora.SoftChromaticThi_Bottom;
       }
     }
   }
 }
 
 function applyPsifiston(e: NoteElement, g: NeumeGroup) {
-  if (g.support?.find((x) => x.label === "psifiston")) {
+  if (hasBelow(g, "psifiston", 0.75).length) {
     e.vocalExpressionNeume = VocalExpressionNeume.Psifiston;
   }
 }
@@ -715,7 +724,7 @@ function groupMatches(
         g.support.push(s);
       }
 
-      // Find the supporting neumes to the right
+      // Find the supporting neumes to the left
       for (let j = i - 1; j >= 0; j--) {
         const s = matches[j];
 
@@ -757,10 +766,10 @@ function processAnalysis(
     martyria_confidence_threshold
   );
 
-  // const test_group = groups[0];
+  // const test_group = groups[173];
   // console.log(test_group);
-  // console.log(processApostrofos(test_group));
-  // console.log(has(test_group, "apostrofos"));
+  // console.log(processOligon(test_group));
+  // console.log(has(test_group, "ypsili"));
 
   let vareia = false;
 
