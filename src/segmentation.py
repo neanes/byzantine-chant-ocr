@@ -72,6 +72,26 @@ def segment(binary_image):
     result.oligon_width = find_oligon_width(wide_contours, result.oligon_height)
 
     find_baselines(binary_image, result)
+
+    # Re-estimate the oligon height and width using only contours that
+    # 1) touch the baseline
+    # 2) are less than 3 times the current estimated oligon width
+    def wide_contour_filter(wide_contour, baselines):
+        x, y, w, h = cv2.boundingRect(wide_contour)
+        return (
+            any(y <= line and line <= y + h for line in baselines)
+            and w <= 3 * result.oligon_width
+        )
+
+    wide_contours = [
+        wide_contour
+        for wide_contour in wide_contours
+        if wide_contour_filter(wide_contour, result.baselines)
+    ]
+
+    result.oligon_height = find_oligon_height(binary_image, wide_contours)
+    result.oligon_width = find_oligon_width(wide_contours, result.oligon_height)
+
     find_textlines(binary_image, result)
     find_adjusted_textlines(binary_image, result)
 
