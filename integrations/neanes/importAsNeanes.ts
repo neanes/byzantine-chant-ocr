@@ -20,7 +20,12 @@ import {
   ContourLineGroup,
   NeumeGroup,
 } from "./OcrImportCustomModels";
-import { ContourMatch, OcrAnalysis, PageAnalysis } from "./OcrAnalysis";
+import {
+  ContourMatch,
+  OcrAnalysis,
+  PageAnalysis,
+  Segmentation,
+} from "./OcrAnalysis";
 import { SaveService } from "./neanes/services/SaveService";
 
 // Blank score
@@ -463,6 +468,84 @@ function processHamili(g: NeumeGroup) {
   return QuantitativeNeume.Hamili;
 }
 
+function applySanityChecks(
+  e: NoteElement,
+  g: NeumeGroup,
+  segmentation: Segmentation
+) {
+  const apli = findBelow(g, "apli");
+  const klasma = find(g, "klasma");
+  const gorgon = find(g, "gorgon");
+  const psifiston = findBelow(g, "psifiston");
+
+  const apliConfidence = Math.max(...apli.map((x) => x.confidence));
+  const gorgonConfidence = Math.max(...gorgon.map((x) => x.confidence));
+  const klasmaConfidence = Math.max(...klasma.map((x) => x.confidence));
+  const psifistonConfidence = Math.max(...psifiston.map((x) => x.confidence));
+
+  // Filter out apli that are too low
+  for (const a of apli) {
+    if (
+      a.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
+      segmentation.oligon_height * 2
+    ) {
+      const index = g.support.indexOf(a);
+
+      if (index !== -1) {
+        g.support.splice(index, 1);
+      }
+    }
+  }
+
+  // If there is both a klasma and apli,
+  // use the confidence as a tie breaker
+  if (apli.length > 0 && klasma.length > 0) {
+    if (klasmaConfidence > apliConfidence) {
+      g.support = g.support.filter((x) => x.label != "apli");
+    } else {
+      g.support = g.support.filter((x) => x.label != "klasma");
+    }
+  }
+
+  // If the group has both a gorgon and klasma,
+  // this is probably wrong. So take the highest confidence only.
+  if (gorgon.length > 0 && klasma.length > 0) {
+    if (klasmaConfidence > gorgonConfidence) {
+      g.support = g.support.filter((x) => x.label != "gorgon");
+    } else {
+      g.support = g.support.filter((x) => x.label != "klasma");
+    }
+  }
+
+  // If the group has both a gorgon and apli,
+  // this is probably wrong. So take the highest confidence only.
+  if (gorgon.length > 0 && apli.length > 0) {
+    if (apliConfidence > gorgonConfidence) {
+      g.support = g.support.filter((x) => x.label != "gorgon");
+    } else {
+      g.support = g.support.filter((x) => x.label != "apli");
+    }
+  }
+
+  // If the group has both a gorgon/apli and psifiston,
+  // this is probably wrong. So take the highest confidence only.
+  if (psifiston.length > 0 && gorgon.length > 0) {
+    if (psifistonConfidence > gorgonConfidence) {
+      g.support = g.support.filter((x) => x.label != "gorgon");
+    } else {
+      g.support = g.support.filter((x) => x.label != "psifiston");
+    }
+  }
+
+  if (psifiston.length > 0 && apli.length > 0) {
+    if (psifistonConfidence > apliConfidence) {
+      g.support = g.support.filter((x) => x.label != "apli");
+    } else {
+      g.support = g.support.filter((x) => x.label != "psifiston");
+    }
+  }
+}
+
 function applyAntikenoma(e: NoteElement, g: NeumeGroup) {
   if (g.support?.find((x) => x.label === "antikenoma")) {
     e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
@@ -513,6 +596,20 @@ function applyKlasma(e: NoteElement, g: NeumeGroup) {
       support.bounding_circle.y <= g.base.bounding_circle.y
         ? TimeNeume.Klasma_Top
         : TimeNeume.Klasma_Bottom;
+  }
+}
+
+function applyApli(e: NoteElement, g: NeumeGroup) {
+  const apli = findBelow(g, "apli");
+
+  if (apli.length == 1) {
+    e.timeNeume = TimeNeume.Hapli;
+  } else if (apli.length == 2) {
+    e.timeNeume = TimeNeume.Dipli;
+  } else if (apli.length == 3) {
+    e.timeNeume = TimeNeume.Tripli;
+  } else if (apli.length >= 4) {
+    e.timeNeume = TimeNeume.Tetrapli;
   }
 }
 
@@ -916,10 +1013,13 @@ function processPageAnalysis(
         e.quantitativeNeume = QuantitativeNeume.Cross;
       }
 
+      applySanityChecks(e, g, analysis.segmentation);
+
       applyAntikenoma(e, g);
       applyGorgon(e, g);
       applyDigorgon(e, g);
       applyTrigorgon(e, g);
+      applyApli(e, g);
       applyKlasma(e, g);
       applyFthora(e, g);
       applyPsifiston(e, g);
