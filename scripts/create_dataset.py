@@ -1,6 +1,7 @@
 import argparse
 import cv2
 import datetime
+import fiftyone as fo
 import imutils
 import os
 import pymupdf
@@ -9,7 +10,6 @@ import torch
 import torch.nn as nn
 from pathlib import Path
 from PIL import Image
-from torch.utils.data import DataLoader, Dataset
 
 sys.path.append("../src")
 from model import load_classes, load_model, get_transform
@@ -17,29 +17,22 @@ from segmentation import segment
 from text_removal import remove_text
 
 
-class ImageDataset(Dataset):
-    def __init__(self, image_folder, transform):
-        self.image_paths = [
-            os.path.join(image_folder, img_name)
-            for img_name in os.listdir(image_folder)
-        ]
-        self.transform = transform
+def process_pdf(
+    pdf_path, page_range, pdf_folder, contour_folder, model, classes, target_size=224
+):
+    transform = get_transform()
 
-    def __len__(self):
-        return len(self.image_paths)
+    now = datetime.datetime.now()
+    datetime_string = now.strftime("%Y%m%d%H%M%S")
 
-    def __getitem__(self, idx):
-        img_path = self.image_paths[idx]
-        img = cv2.imread(img_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = Image.fromarray(img)
-        img_tensor = self.transform(img)
-        return img_tensor, img_path
+    dataset_name = f"predictions_{datetime_string}"
 
+    dataset = fo.Dataset(dataset_name)
+    dataset.persistent = True
+    dataset.save()
 
-def process_pdf(pdf_path, page_range, pdf_folder, contour_folder, target_size=224):
     doc = pymupdf.open(pdf_path)
-    total = 0
+
     for page_num in page_range:
         if page_num < 0 or page_num >= len(doc):
             print(f"Page {page_num} is out of range. Skipping.")
@@ -112,62 +105,24 @@ def process_pdf(pdf_path, page_range, pdf_folder, contour_folder, target_size=22
                 )
                 cv2.imwrite(img_path, padded)
 
-                total = total + 1
+                tensor = transform(
+                    Image.fromarray(cv2.cvtColor(padded, cv2.COLOR_GRAY2RGB))
+                ).unsqueeze(0)
 
-    return total
+                with torch.no_grad():
+                    output = model(tensor)
 
+                probabilities = nn.functional.softmax(output[0], dim=0)
+                class_id = torch.argmax(probabilities).item()
+                class_name = classes[class_id]
+                confidence = probabilities[class_id].item()
 
-def predict_images(model, classes, image_folder):
-    dataset = ImageDataset(image_folder, get_transform())
-    data_loader = DataLoader(dataset, batch_size=32, shuffle=False)
-
-    predictions = []
-    model.eval()
-
-    with torch.no_grad():
-        for batch in data_loader:
-            tensors, img_paths = batch
-            outputs = model(tensors)
-
-            probabilities = nn.functional.softmax(outputs, dim=1)
-            class_ids = torch.argmax(probabilities, dim=1)
-            confidences = probabilities[range(probabilities.size(0)), class_ids]
-
-            for img_path, class_id, confidence in zip(
-                img_paths, class_ids, confidences
-            ):
-                predictions.append(
-                    {
-                        "filepath": img_path,
-                        "prediction": classes[class_id.item()],
-                        "confidence": confidence.item(),
-                    }
+                sample = fo.Sample(filepath=img_path)
+                sample["prediction"] = fo.Classification(
+                    label=class_name, confidence=confidence
                 )
 
-    return predictions
-
-
-def create_fo_dataset(predictions):
-    import fiftyone as fo
-
-    samples = []
-    for pred in predictions:
-        sample = fo.Sample(filepath=pred["filepath"])
-        sample["prediction"] = fo.Classification(
-            label=pred["prediction"], confidence=pred["confidence"]
-        )
-        samples.append(sample)
-
-    # Create or load a FiftyOne dataset
-    now = datetime.datetime.now()
-    datetime_string = now.strftime("%Y%m%d%H%M%S")
-
-    dataset_name = f"predictions_{datetime_string}"
-
-    dataset = fo.Dataset(dataset_name)
-    dataset.add_samples(samples)
-    dataset.persistent = True
-    dataset.save()
+                dataset.add_sample(sample)
 
     return dataset
 
@@ -213,20 +168,13 @@ if __name__ == "__main__":
     # Run contour extraction
     print("Extracting...")
 
-    total = process_pdf(args.infile, page_range, args.pages, args.o)
-
-    print(f"Done. Extracted {total} contours")
-
     classes = load_classes(args.classes)
     model = load_model(args.model, classes)
     model.eval()
 
-    print("Making predictions...")
+    dataset = process_pdf(args.infile, page_range, args.pages, args.o, model, classes)
 
-    predictions = predict_images(model, classes, args.o)
-    print(f"{len(predictions)} predictions created for {args.o}.")
-
-    dataset = create_fo_dataset(predictions)
+    print(f"Done. Extracted {len(dataset)} contours")
 
     print(f"Created dataset {dataset.name}")
 
