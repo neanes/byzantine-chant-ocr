@@ -810,6 +810,7 @@ function groupMatches(
 
     const isMartyria =
       m.label.startsWith("martyria") &&
+      !m.label.startsWith("martyria_root") &&
       m.confidence > martyria_confidence_threshold;
 
     if (m.isBase || isMartyria) {
@@ -1034,7 +1035,10 @@ function processPageAnalysis(
       }
 
       elements.push(e);
-    } else if (g.base.label.startsWith("martyria")) {
+    } else if (
+      g.base.label.startsWith("martyria") &&
+      !g.base.label.startsWith("martyria_root")
+    ) {
       // TODO make this smarter
       const e = new MartyriaElement();
       e.auto = true;
