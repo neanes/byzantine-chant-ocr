@@ -6,12 +6,14 @@ import {
   MartyriaElement,
   NoteElement,
   ScoreElement,
+  TempoElement,
 } from "./neanes/models/Element";
 import {
   Fthora,
   GorgonNeume,
   Neume,
   QuantitativeNeume,
+  TempoSign,
   TimeNeume,
   VocalExpressionNeume,
 } from "./neanes/models/Neumes";
@@ -832,12 +834,14 @@ function groupMatches(
       is_base(m.label) &&
       touches_baseline(m, analysis.segmentation.baselines[m.line]);
 
-    const isMartyria =
+    m.isMartyria =
       m.label.startsWith("martyria") &&
       !m.label.startsWith("martyria_root") &&
       m.confidence > martyria_confidence_threshold;
 
-    if (m.isBase || isMartyria) {
+    m.isKronos = m.label === "kronos";
+
+    if (m.isBase || m.isMartyria || m.isKronos) {
       const g = new NeumeGroup();
       groups.push(g);
       g.base = m;
@@ -1059,10 +1063,7 @@ function processPageAnalysis(
       }
 
       elements.push(e);
-    } else if (
-      g.base.label.startsWith("martyria") &&
-      !g.base.label.startsWith("martyria_root")
-    ) {
+    } else if (g.base.isMartyria) {
       // TODO make this smarter
       const e = new MartyriaElement();
       e.auto = true;
@@ -1078,6 +1079,25 @@ function processPageAnalysis(
           analysis.segmentation.oligon_width * 2
       ) {
         e.alignRight = true;
+      }
+    } else if (g.base.isKronos) {
+      const e = new TempoElement();
+      elements.push(e);
+
+      if (has(g, "gorgon") && has(g, "argon")) {
+        e.neume = TempoSign.Medium;
+      } else if (has(g, "gorgon")) {
+        e.neume = TempoSign.Quick;
+      } else if (has(g, "digorgon")) {
+        e.neume = TempoSign.Quicker;
+      } else if (has(g, "trigorgon")) {
+        e.neume = TempoSign.VeryQuick;
+      } else if (has(g, "argon")) {
+        e.neume = TempoSign.Moderate;
+      } else if (has(g, "diargon")) {
+        e.neume = TempoSign.Slow;
+      } else if (has(g, "triargon")) {
+        e.neume = TempoSign.Slower;
       }
     }
   }

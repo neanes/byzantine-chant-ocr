@@ -2,6 +2,8 @@ import { ContourMatch } from "./OcrAnalysis";
 
 export class AugmentedContourMatch extends ContourMatch {
   public isBase: boolean = false;
+  public isMartyria: boolean = false;
+  public isKronos: boolean = false;
 
   constructor(match?: ContourMatch) {
     super();
