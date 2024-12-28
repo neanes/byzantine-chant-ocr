@@ -34,14 +34,21 @@ def apply_mask(image, condition):
 
 def mask_thin_contours(binary_image, cutoff):
     """
-    Returns a binary representation of the image with thin contours removed. Contours height < cutoff are removed.
+    Returns a binary representation of the image with thin contours removed. Contours height <= cutoff are removed.
     """
     return apply_mask(binary_image, lambda x, y, w, h: h <= cutoff)
 
 
+def mask_wide_contours(binary_image, cutoff):
+    """
+    Returns a binary representation of the image with thin contours removed. Contours width >= cutoff are removed.
+    """
+    return apply_mask(binary_image, lambda x, y, w, h: w >= cutoff)
+
+
 def mask_narrow_contours(binary_image, cutoff_ratio):
     """
-    Returns a binary representation of the image with narrow contours removed. Contours with width/height < cutoff_ratio are removed.
+    Returns a binary representation of the image with narrow contours removed. Contours with width/height <= cutoff_ratio are removed.
     """
     return apply_mask(binary_image, lambda x, y, w, h: w / h <= cutoff_ratio)
 

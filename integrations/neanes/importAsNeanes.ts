@@ -473,17 +473,12 @@ function applySanityChecks(
   g: NeumeGroup,
   segmentation: Segmentation
 ) {
-  const apli = findBelow(g, "apli");
-  const klasma = find(g, "klasma");
-  const gorgon = find(g, "gorgon");
-  const psifiston = findBelow(g, "psifiston");
-
-  const apliConfidence = Math.max(...apli.map((x) => x.confidence));
-  const gorgonConfidence = Math.max(...gorgon.map((x) => x.confidence));
-  const klasmaConfidence = Math.max(...klasma.map((x) => x.confidence));
-  const psifistonConfidence = Math.max(...psifiston.map((x) => x.confidence));
+  const confidence = (matches: AugmentedContourMatch[]) =>
+    Math.max(...matches.map((x) => x.confidence));
 
   // Filter out apli that are too low
+  let apli = findBelow(g, "apli");
+
   for (const a of apli) {
     if (
       a.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
@@ -499,8 +494,11 @@ function applySanityChecks(
 
   // If there is both a klasma and apli,
   // use the confidence as a tie breaker
+  apli = findBelow(g, "apli");
+  let klasma = find(g, "klasma");
+
   if (apli.length > 0 && klasma.length > 0) {
-    if (klasmaConfidence > apliConfidence) {
+    if (confidence(klasma) > confidence(apli)) {
       g.support = g.support.filter((x) => x.label != "apli");
     } else {
       g.support = g.support.filter((x) => x.label != "klasma");
@@ -509,8 +507,11 @@ function applySanityChecks(
 
   // If the group has both a gorgon and klasma,
   // this is probably wrong. So take the highest confidence only.
+  let gorgon = find(g, "gorgon");
+  klasma = find(g, "klasma");
+
   if (gorgon.length > 0 && klasma.length > 0) {
-    if (klasmaConfidence > gorgonConfidence) {
+    if (confidence(klasma) > confidence(gorgon)) {
       g.support = g.support.filter((x) => x.label != "gorgon");
     } else {
       g.support = g.support.filter((x) => x.label != "klasma");
@@ -519,8 +520,11 @@ function applySanityChecks(
 
   // If the group has both a gorgon and apli,
   // this is probably wrong. So take the highest confidence only.
+  apli = findBelow(g, "apli");
+  gorgon = find(g, "gorgon");
+
   if (gorgon.length > 0 && apli.length > 0) {
-    if (apliConfidence > gorgonConfidence) {
+    if (confidence(apli) > confidence(gorgon)) {
       g.support = g.support.filter((x) => x.label != "gorgon");
     } else {
       g.support = g.support.filter((x) => x.label != "apli");
@@ -529,16 +533,22 @@ function applySanityChecks(
 
   // If the group has both a gorgon/apli and psifiston,
   // this is probably wrong. So take the highest confidence only.
+  let psifiston = findBelow(g, "psifiston");
+  gorgon = find(g, "gorgon");
+
   if (psifiston.length > 0 && gorgon.length > 0) {
-    if (psifistonConfidence > gorgonConfidence) {
+    if (confidence(psifiston) > confidence(gorgon)) {
       g.support = g.support.filter((x) => x.label != "gorgon");
     } else {
       g.support = g.support.filter((x) => x.label != "psifiston");
     }
   }
 
+  psifiston = findBelow(g, "psifiston");
+  apli = findBelow(g, "apli");
+
   if (psifiston.length > 0 && apli.length > 0) {
-    if (psifistonConfidence > apliConfidence) {
+    if (confidence(psifiston) > confidence(apli)) {
       g.support = g.support.filter((x) => x.label != "apli");
     } else {
       g.support = g.support.filter((x) => x.label != "psifiston");

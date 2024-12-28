@@ -6,7 +6,7 @@ import util
 def find_text_contours(image, segmentation, min_contour_height=5):
     contours = util.find_contours(image)
 
-    text_contours = list()
+    text_contours = find_outlying_contours(contours, segmentation)
 
     baseline_rects = list()
 
@@ -150,6 +150,64 @@ def find_text_contours(image, segmentation, min_contour_height=5):
                 text_contours.append(c)
 
     return text_contours
+
+
+def find_outlying_contours(contours, segmentation):
+    far_away_contours = []
+
+    tolerance = segmentation.avg_baseline_gap
+
+    if len(segmentation.baselines) == 0:
+        return far_away_contours
+
+    for c in contours:
+        x, y, w, h = cv2.boundingRect(c)
+        (cx, cy), r = cv2.minEnclosingCircle(c)
+
+        done = False
+
+        # First look for a baseline that overlaps the contour
+        for i, b in enumerate(segmentation.baselines):
+            # If the baseline is inside the bounding box, then this contour is on a baseline
+            if y <= b and b <= y + h:
+                done = True
+                break
+
+        # Skip to the next contour. We only care about contours that are far away from baselines
+        if done:
+            continue
+
+        # The neume is between two base lines.
+        for i, b in enumerate(segmentation.baselines):
+            # The neume is either part of this baseline or the previous
+            if cy <= b:
+                if i == 0:
+                    if b - cy > tolerance:
+                        far_away_contours.append(c)
+                        done = True
+                    break
+
+                bp = segmentation.baselines[i - 1]
+
+                # If the contour is too far away from either baseline, it's probably in
+                # a text region between baselines, so we skip i
+                if b - cy > tolerance and cy - bp > tolerance:
+                    far_away_contours.append(c)
+                    done = True
+                    break
+
+        if done:
+            continue
+
+        # This neume must be part of the last baseline,
+        # unless it is too far away from the last baseline
+        if (
+            cy > segmentation.baselines[len(segmentation.baselines) - 1]
+            and cy - segmentation.baselines[len(segmentation.baselines) - 1] > tolerance
+        ):
+            far_away_contours.append(c)
+
+    return far_away_contours
 
 
 def remove_text(image, segmentation):

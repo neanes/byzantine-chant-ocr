@@ -221,6 +221,7 @@ def find_baselines(
 ):
     masked = util.mask_narrow_contours(binary_image, narrow_contour_cutoff)
     masked = util.mask_thin_contours(masked, min_contour_height)
+    masked = util.mask_wide_contours(masked, segmentation.oligon_width * 10)
 
     oligon_width = segmentation.oligon_width
 
@@ -312,6 +313,7 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
     # Mask thin contour so that we don't detect melismatic underscores as textlines.
     # We want the textline to run through the letters, not the melismas.
     masked = util.mask_thin_contours(binary_image, min_contour_height)
+    masked = util.mask_wide_contours(masked, segmentation.oligon_width * 10)
 
     # Find the number of pixels in each row.
     pixels_in_row = util.pixels_in_row(masked)
