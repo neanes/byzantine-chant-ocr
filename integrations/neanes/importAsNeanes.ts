@@ -492,6 +492,20 @@ function applySanityChecks(
     }
   }
 
+  // Filter out gorgons that are too high
+  for (let x of findAbove(g, "gorgon")) {
+    if (
+      g.base.bounding_rect.y - (x.bounding_rect.y + x.bounding_rect.h) >
+      0.75 * segmentation.oligon_width
+    ) {
+      const index = g.support.indexOf(x);
+
+      if (index !== -1) {
+        g.support.splice(index, 1);
+      }
+    }
+  }
+
   // If there is both a klasma and apli,
   // use the confidence as a tie breaker
   apli = findBelow(g, "apli");
