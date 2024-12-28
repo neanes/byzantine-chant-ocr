@@ -639,7 +639,7 @@ function applyApli(e: NoteElement, g: NeumeGroup) {
   }
 }
 
-function applyFthora(e: NoteElement, g: NeumeGroup) {
+function applyFthora(e: NoteElement | MartyriaElement, g: NeumeGroup) {
   const fthora = g.support?.find((x) => x.label.startsWith("fthora"));
 
   // TODO secondary/tertiary gorgons
@@ -727,7 +727,7 @@ function applyStavros(e: NoteElement, g: NeumeGroup) {
   }
 }
 
-function is_base(neume: string) {
+function is_base(label: string) {
   return [
     "ison",
     "oligon",
@@ -738,7 +738,11 @@ function is_base(neume: string) {
     "vareia",
     "kentima",
     "yporroe",
-  ].includes(neume);
+  ].includes(label);
+}
+
+function isFthoraMartyria(label: string) {
+  return ["fthora_hard_chromatic_di"].includes(label);
 }
 
 function touches_baseline(match: ContourMatch, baseline: number) {
@@ -789,6 +793,7 @@ function findBelow(g: NeumeGroup, label: string, threshold = 1) {
       (centerOverlaps(g.base, x) || overlaps(g.base, x, threshold))
   );
 }
+
 function find(g: NeumeGroup, label: string, threshold = 1) {
   return g.support.filter(
     (x) =>
@@ -807,6 +812,105 @@ function hasBelow(g: NeumeGroup, label: string, threshold = 1) {
 
 function has(g: NeumeGroup, label: string, threshold = 1) {
   return find(g, label, threshold).length > 0;
+}
+
+function findSupport(
+  g: NeumeGroup,
+  matches: AugmentedContourMatch[],
+  startIndex: number
+) {
+  const m = matches[startIndex];
+  // Find the supporting neumes to the right
+  for (let i = startIndex + 1; i < matches.length; i++) {
+    const s = matches[i];
+
+    // Stop if we are not on the same line number
+    if (s.line != m.line) {
+      break;
+    }
+
+    // Stop if the neumes are too far to the right.
+    // That is, the left edge is farther right than the right edge
+    // of the base neume
+    if (s.bounding_rect.x > m.bounding_rect.x + m.bounding_rect.w) {
+      break;
+    }
+
+    g.support.push(s);
+  }
+
+  // Find the supporting neumes to the left
+  for (let i = startIndex - 1; i >= 0; i--) {
+    const s = matches[i];
+
+    // Stop if we are not on the same line number
+    if (s.line != m.line) {
+      break;
+    }
+
+    // Stop if the neumes are too far to the right.
+    // That is, the right edge is farther left than the left edge
+    // of the base neume
+    if (s.bounding_rect.x + s.bounding_rect.w < m.bounding_rect.x) {
+      break;
+    }
+
+    // Ignore other base neumes
+    if (s.isBase) {
+      continue;
+    }
+
+    g.support.push(s);
+  }
+}
+
+function findBase(matches: AugmentedContourMatch[], startIndex: number) {
+  const m = matches[startIndex];
+  // Search for a base to the right
+  for (let i = startIndex + 1; i < matches.length; i++) {
+    const s = matches[i];
+
+    // Stop if we are not on the same line number
+    if (s.line != m.line) {
+      break;
+    }
+
+    // If we find a base, check whether it overlaps.
+    // If it doesn't, stop searching.
+    if (s.isBase || is_base(s.label)) {
+      if (
+        s.bounding_rect.x <= m.bounding_circle.x &&
+        m.bounding_circle.x <= s.bounding_rect.x + s.bounding_rect.w
+      ) {
+        return s;
+      } else {
+        break;
+      }
+    }
+  }
+
+  // Find the supporting neumes to the left
+  for (let i = startIndex - 1; i >= 0; i--) {
+    const s = matches[i];
+
+    // Stop if we are not on the same line number
+    if (s.line != m.line) {
+      break;
+    }
+
+    // If we find a base, check whether it overlaps.
+    // If it doesn't, stop searching.
+    if (s.isBase || is_base(s.label)) {
+      if (
+        s.bounding_rect.x <= m.bounding_circle.x &&
+        m.bounding_circle.x <= s.bounding_rect.x + s.bounding_rect.w
+      ) {
+        return s;
+      } else {
+        break;
+      }
+    }
+  }
 }
 
 function groupMatches(
@@ -828,7 +932,7 @@ function groupMatches(
   // Form groups. There are two types of groups:
   // 1) Base neumes that touch the baseline
   // 2) Martyria
-  // TODO Chronos groups and others (?)
+  // 3) Kronos
   for (const [i, m] of matches.entries()) {
     m.isBase =
       is_base(m.label) &&
@@ -846,47 +950,22 @@ function groupMatches(
       groups.push(g);
       g.base = m;
 
-      // Find the supporting neumes to the right
-      for (let j = i + 1; j < matches.length; j++) {
-        const s = matches[j];
+      findSupport(g, matches, i);
+    } else if (
+      isFthoraMartyria(m.label) &&
+      m.confidence > martyria_confidence_threshold
+    ) {
+      // If this match is neume that could be both a martyria
+      // or a fthora, we must check its support. If it has
+      // base in the support, then it's a fthora. Otherwise it is a
+      // martyria.
+      const g = new NeumeGroup();
+      g.base = m;
 
-        // Stop if we are not on the same line number
-        if (s.line != m.line) {
-          break;
-        }
-
-        // Stop if the neumes are too far to the right.
-        // That is, the left edge is farther right than the right edge
-        // of the base neume
-        if (s.bounding_rect.x > m.bounding_rect.x + m.bounding_rect.w) {
-          break;
-        }
-
-        g.support.push(s);
-      }
-
-      // Find the supporting neumes to the left
-      for (let j = i - 1; j >= 0; j--) {
-        const s = matches[j];
-
-        // Stop if we are not on the same line number
-        if (s.line != m.line) {
-          break;
-        }
-
-        // Stop if the neumes are too far to the right.
-        // That is, the right edge is farther left than the left edge
-        // of the base neume
-        if (s.bounding_rect.x + s.bounding_rect.w < m.bounding_rect.x) {
-          break;
-        }
-
-        // Ignore other base neumes
-        if (s.isBase) {
-          continue;
-        }
-
-        g.support.push(s);
+      if (!findBase(matches, i)) {
+        m.isMartyria = true;
+        findSupport(g, matches, i);
+        groups.push(g);
       }
     }
   }
@@ -1080,6 +1159,8 @@ function processPageAnalysis(
       ) {
         e.alignRight = true;
       }
+
+      applyFthora(e, g);
     } else if (g.base.isKronos) {
       const e = new TempoElement();
       elements.push(e);
