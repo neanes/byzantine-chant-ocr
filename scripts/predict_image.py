@@ -14,7 +14,6 @@ from model import load_classes, load_model, get_transform
 def predict_image(model, classes, img_path):
     transform = get_transform()
 
-    predictions = []
     model.eval()
 
     img = cv2.imread(img_path)

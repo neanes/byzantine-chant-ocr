@@ -27,6 +27,8 @@ class Segmentation:
         self.baselines = None
         self.textlines = None
         self.textlines_adj = None
+        self.page_height = None
+        self.page_width = None
 
     def __str__(self):
         return f"""oligon: ({self.oligon_width},{self.oligon_height})
@@ -39,8 +41,10 @@ textlines_adj: {self.textlines_adj}
 
     def to_dict(self):
         return {
-            "oligon_height": self.oligon_height,
+            "page_width": self.page_width,
+            "page_height": self.page_height,
             "oligon_width": self.oligon_width,
+            "oligon_height": self.oligon_height,
             "avg_text_height": self.avg_text_height,
             "avg_baseline_gap": self.avg_baseline_gap,
             "baselines": self.baselines,
@@ -64,6 +68,9 @@ def segment(binary_image):
         The segmentation information
     """
     result = Segmentation()
+
+    result.page_height = binary_image.shape[0]
+    result.page_width = binary_image.shape[1]
 
     wide_contours = find_wide_contours(binary_image)
 

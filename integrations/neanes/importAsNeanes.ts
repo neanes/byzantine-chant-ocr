@@ -3,6 +3,7 @@ import YAML from "yaml";
 import { Score } from "./neanes/models/Score";
 import {
   EmptyElement,
+  LineBreakType,
   MartyriaElement,
   NoteElement,
   ScoreElement,
@@ -934,6 +935,10 @@ function groupMatches(
   // 2) Martyria
   // 3) Kronos
   for (const [i, m] of matches.entries()) {
+    // TODO the condition "touches_baseline" can sometimes cause
+    // true base neumes to be filtered out if, for example, a line contains a single
+    // apostrofos followed by a hard chromatic martyria. This can cause the base line detection
+    // to mistakenly place the base line lower than it should.
     m.isBase =
       is_base(m.label) &&
       touches_baseline(m, analysis.segmentation.baselines[m.line]);
@@ -1155,16 +1160,25 @@ function processPageAnalysis(
       e.auto = true;
       elements.push(e);
 
-      // If the martyria is more than 2 * oligon_width away from the previous neume,
-      // we assume it is a right aligned martyria
-      if (
-        prev != null &&
-        g.base.line === prev.base.line &&
-        g.base.bounding_rect.x -
-          (prev.base.bounding_rect.x + prev.base.bounding_rect.w) >=
-          analysis.segmentation.oligon_width * 2
-      ) {
-        e.alignRight = true;
+      // If the martyria is the last neume group on the line...
+      if (g.base.line !== next?.base.line) {
+        // if it is more than 2 * oligon_width away from the previous neume,
+        // we assume it is a right aligned martyria.
+        if (
+          prev != null &&
+          g.base.line === prev.base.line &&
+          g.base.bounding_rect.x -
+            (prev.base.bounding_rect.x + prev.base.bounding_rect.w) >=
+            analysis.segmentation.oligon_width * 2
+        ) {
+          e.alignRight = true;
+        }
+
+        // Otherwise, put a line break on this martyria.
+        if (!e.alignRight && g.base.line !== next?.base.line) {
+          e.lineBreak = true;
+          e.lineBreakType = LineBreakType.Left;
+        }
       }
 
       applyFthora(e, g);

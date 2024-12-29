@@ -9,8 +9,10 @@ export class PageAnalysis {
 }
 
 export class Segmentation {
-  public oligon_height: number = 0;
+  public page_width: number = 0;
+  public page_height: number = 0;
   public oligon_width: number = 0;
+  public oligon_height: number = 0;
   public avg_text_height: number = 0;
   public baselines: number[] = [];
   public textlines: number[] = [];
