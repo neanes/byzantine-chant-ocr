@@ -574,9 +574,9 @@ function applySanityChecks(
 }
 
 function applyAntikenoma(e: NoteElement, g: NeumeGroup) {
-  if (g.support?.find((x) => x.label === "antikenoma")) {
+  if (hasBelow(g, "antikenoma", 0.5)) {
     e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
-  } else if (g.support?.find((x) => x.label === "antikenoma_apli")) {
+  } else if (hasBelow(g, "antikenoma_apli", 0.5)) {
     e.vocalExpressionNeume = VocalExpressionNeume.Antikenoma;
     e.timeNeume = TimeNeume.Hapli;
   }
