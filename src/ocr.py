@@ -119,11 +119,13 @@ def process_pdf(filepath, page_range, model, classes):
             print(f"Page {page_num} is out of range. Skipping.")
             continue
         page = doc.load_page(page_num)
-        pix = page.get_pixmap(dpi=300, colorspace="GRAY")  # High DPI for quality
+        pix = page.get_pixmap(dpi=300)  # High DPI for quality
 
         # convert to numpy format so opencv can understand it
         image = np.frombuffer(pix.samples, dtype=np.uint8)
         image = image.reshape((pix.height, pix.width, pix.n))
+
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
         page = prepare_image(image)
         page.page = page_index
