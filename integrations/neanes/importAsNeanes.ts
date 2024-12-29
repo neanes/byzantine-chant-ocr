@@ -945,12 +945,20 @@ function groupMatches(
 
     m.isKronos = m.label === "kronos";
 
-    if (m.isBase || m.isMartyria || m.isKronos) {
+    if (m.isBase) {
       const g = new NeumeGroup();
       groups.push(g);
       g.base = m;
 
       findSupport(g, matches, i);
+    } else if (m.isMartyria || m.isKronos) {
+      // We only trust this prediction if there is no base neume above or below it.
+      if (!findBase(matches, i)) {
+        const g = new NeumeGroup();
+        g.base = m;
+        findSupport(g, matches, i);
+        groups.push(g);
+      }
     } else if (
       isFthoraMartyria(m.label) &&
       m.confidence > martyria_confidence_threshold
@@ -959,10 +967,9 @@ function groupMatches(
       // or a fthora, we must check its support. If it has
       // base in the support, then it's a fthora. Otherwise it is a
       // martyria.
-      const g = new NeumeGroup();
-      g.base = m;
-
       if (!findBase(matches, i)) {
+        const g = new NeumeGroup();
+        g.base = m;
         m.isMartyria = true;
         findSupport(g, matches, i);
         groups.push(g);
