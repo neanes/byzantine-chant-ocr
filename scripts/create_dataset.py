@@ -25,6 +25,7 @@ def process_pdf(
     model,
     classes,
     img_transform=None,
+    contour_filter=None,
     target_size=224,
 ):
     transform = get_transform()
@@ -69,6 +70,9 @@ def process_pdf(
         )
 
         contours = imutils.grab_contours(contours)
+
+        if contour_filter != None:
+            contours, _ = contour_filter(contours, img, segmentation)
 
         for contour in contours:
             # Get the bounding box for each contour
@@ -137,7 +141,7 @@ def process_pdf(
     return dataset
 
 
-def setup(img_transform=None):
+def setup(img_transform=None, contour_filter=None):
     parser = argparse.ArgumentParser(
         description="Creates a dataset from a PDF file with page range [start, end]"
     )
@@ -183,7 +187,14 @@ def setup(img_transform=None):
     model.eval()
 
     dataset = process_pdf(
-        args.infile, page_range, args.pages, args.o, model, classes, img_transform
+        args.infile,
+        page_range,
+        args.pages,
+        args.o,
+        model,
+        classes,
+        img_transform,
+        contour_filter,
     )
 
     print(f"Done. Extracted {len(dataset)} contours")
