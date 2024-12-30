@@ -471,23 +471,31 @@ function processHamili(g: NeumeGroup) {
   return QuantitativeNeume.Hamili;
 }
 
-function applySanityChecks(
-  e: NoteElement,
-  g: NeumeGroup,
-  segmentation: Segmentation
-) {
+function applySanityChecks(g: NeumeGroup, segmentation: Segmentation) {
   const confidence = (matches: AugmentedContourMatch[]) =>
     Math.max(...matches.map((x) => x.confidence));
 
   // Filter out apli that are too low
-  let apli = findBelow(g, "apli");
-
-  for (const a of apli) {
+  for (const x of findBelow(g, "apli")) {
     if (
-      a.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
+      x.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
       segmentation.oligon_height * 2
     ) {
-      const index = g.support.indexOf(a);
+      const index = g.support.indexOf(x);
+
+      if (index !== -1) {
+        g.support.splice(index, 1);
+      }
+    }
+  }
+
+  // Filter out kentimata that are too low
+  for (const x of findBelow(g, "kentima")) {
+    if (
+      x.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
+      segmentation.oligon_height * 2
+    ) {
+      const index = g.support.indexOf(x);
 
       if (index !== -1) {
         g.support.splice(index, 1);
@@ -509,9 +517,23 @@ function applySanityChecks(
     }
   }
 
+  // Filter out gorgon that are too low
+  for (const x of findBelow(g, "gorgon")) {
+    if (
+      x.bounding_rect.y - (g.base.bounding_rect.y + g.base.bounding_rect.h) >=
+      segmentation.oligon_height * 2
+    ) {
+      const index = g.support.indexOf(x);
+
+      if (index !== -1) {
+        g.support.splice(index, 1);
+      }
+    }
+  }
+
   // If there is both a klasma and apli,
   // use the confidence as a tie breaker
-  apli = findBelow(g, "apli");
+  let apli = findBelow(g, "apli");
   let klasma = find(g, "klasma");
 
   if (apli.length > 0 && klasma.length > 0) {
@@ -1044,6 +1066,8 @@ function processPageAnalysis(
       nextNext = groups[i + 2];
     }
 
+    applySanityChecks(g, analysis.segmentation);
+
     if (g.base.isBase) {
       const e = new NoteElement();
 
@@ -1132,8 +1156,6 @@ function processPageAnalysis(
       } else if (g.base.label === "stavros") {
         e.quantitativeNeume = QuantitativeNeume.Cross;
       }
-
-      applySanityChecks(e, g, analysis.segmentation);
 
       applyAntikenoma(e, g);
       applyGorgon(e, g);
