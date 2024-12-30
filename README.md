@@ -14,11 +14,27 @@ Install [git](https://git-scm.com/downloads), and then clone the repository.
 git clone https://github.com/neanes/byzantine-ocr
 ```
 
-### Install Dependencies
+### Install dependencies
 
 1. Install [Python](https://www.python.org/downloads/). The scripts were developed and tested with Python `3.12`, but the latest version will probably work, too.
 2. If you are already familiar with Python and use it for other tasks, then it is recommended that you create a [virtual environment](https://docs.python.org/3/library/venv.html). If you do not know what this means, or do not intend to you use Python for anything other than these scripts, you may skip this step.
 3. Install the required Python libraries via `pip install -r requirements.txt`.
+
+### Train the model
+
+> [!NOTE]  
+> If you are using Windows, the command to run Python may be `py` instead of `python`.
+
+The model is not currently included in the repository. Once the model is more stable, it will be made available either as a Github release, or committed to this repo.
+
+To build the model, run the following commands.
+
+```bash
+cd scripts
+python train.py
+```
+
+This will take some time, so be patient. Once the script completes, a file called `current_model.pth` will be created. Copy this file to `models/`.
 
 ### Perform OCR on a file
 
