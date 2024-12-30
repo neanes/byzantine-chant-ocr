@@ -2,8 +2,6 @@ import cv2
 import sys
 
 sys.path.append("../src")
-from segmentation import segment
-import text_removal
 from segmentation import segment, find_wide_contours
 
 

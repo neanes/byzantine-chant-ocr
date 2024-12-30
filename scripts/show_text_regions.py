@@ -4,7 +4,6 @@ import math
 
 sys.path.append("../src")
 from segmentation import segment
-from segmentation import segment
 
 
 def show_text_regions(img_path, output_path):
