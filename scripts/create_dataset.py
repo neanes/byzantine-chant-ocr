@@ -18,7 +18,14 @@ from text_removal import remove_text
 
 
 def process_pdf(
-    pdf_path, page_range, pdf_folder, contour_folder, model, classes, target_size=224
+    pdf_path,
+    page_range,
+    pdf_folder,
+    contour_folder,
+    model,
+    classes,
+    img_transform=None,
+    target_size=224,
 ):
     transform = get_transform()
 
@@ -49,6 +56,9 @@ def process_pdf(
         img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
         segmentation = segment(img)
         img = remove_text(img, segmentation)
+
+        if img_transform != None:
+            img = img_transform(img, segmentation)
 
         blurred = cv2.GaussianBlur(img, (5, 5), 0)
 
@@ -127,7 +137,7 @@ def process_pdf(
     return dataset
 
 
-if __name__ == "__main__":
+def setup(img_transform=None):
     parser = argparse.ArgumentParser(
         description="Creates a dataset from a PDF file with page range [start, end]"
     )
@@ -172,7 +182,9 @@ if __name__ == "__main__":
     model = load_model(args.model, classes)
     model.eval()
 
-    dataset = process_pdf(args.infile, page_range, args.pages, args.o, model, classes)
+    dataset = process_pdf(
+        args.infile, page_range, args.pages, args.o, model, classes, img_transform
+    )
 
     print(f"Done. Extracted {len(dataset)} contours")
 
@@ -189,3 +201,7 @@ if __name__ == "__main__":
         )
 
         print("Done computing similiarity.")
+
+
+if __name__ == "__main__":
+    setup()
