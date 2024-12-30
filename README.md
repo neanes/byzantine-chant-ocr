@@ -1,4 +1,4 @@
-# Byzantine OCR
+# Byzantine Chant OCR
 
 This project is a collection of Python scripts that perform optical character recognition of Byzantine chant. It can process either PDFs or images.
 
@@ -21,6 +21,9 @@ git clone https://github.com/neanes/byzantine-ocr
 3. Install the required Python libraries via `pip install -r requirements.txt`.
 
 ### Perform OCR on a file
+
+> [!NOTE]  
+> If you are using Windows, the command to run Python may be `py` instead of `python`.
 
 Below are the commands that can be used to perform OCR on images and PDFs. The resulting output will be a file called `output.yaml`. This file lists the line number, coordinates, and size of each contour found in the files, as well as the model's prediction (e.g. `ison`, `oligon`, etc.).
 
@@ -71,3 +74,7 @@ npm run start
 This will convert `output.yaml` into a Neanes file called `output.byzx`.
 
 Eventually, it will be possible to import directly into Neanes by opening the YAML file within Neanes. However, the import script is still under heavy development. Once the script stabilizes, it will be moved into Neanes.
+
+## License
+
+This project is licensed under the [GNU General Public License, version 3](./LICENSE).
