@@ -2,5 +2,7 @@ imutils==0.5.4
 opencv-contrib-python==4.10.0.84
 opencv-python==4.10.0.84
 PyMuPDF==1.25.1
+PyYAML==6.0.2
+scipy==1.14.1
 torch==2.5.1
 torchvision==0.20.1
