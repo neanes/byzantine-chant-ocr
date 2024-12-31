@@ -42,27 +42,19 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci.txt') }}
           path: .venv
 
-      #   - name: Train
-      #     run: |
-      #       cd scripts
-      #       python train.py
-      #       cd ..
-
-      #   - name: Publish release
-      #     run: |
-      #       gh release delete latest -y --cleanup-tag || echo 'No release exists'
-      #       gh release create latest \
-      #         scripts/current_model.pth \
-      #         models/classes.json \
-      #         scripts/train_log.txt \
-      #         --title "Latest"
+      - name: Train
+        run: |
+          cd scripts
+          python train.py
 
       # Test release creation before wasting time training
       - name: Publish release
         run: |
           gh release delete latest -y --cleanup-tag || echo 'No release exists'
           gh release create latest \
-            models/classes.json \
+              scripts/current_model.pth \
+              models/classes.json \
+              scripts/train_log.txt \
             --title "Latest" \
             --notes "This release contains the latest model"
         env:
