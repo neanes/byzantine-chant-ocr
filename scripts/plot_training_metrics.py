@@ -48,10 +48,6 @@ def plot_metrics(file_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please specify the file path to the metrics.")
-        exit(1)
-
-    filepath = sys.argv[1]
+    filepath = sys.argv[1] if len(sys.argv) >= 2 else "train_log.txt"
 
     plot_metrics(filepath)

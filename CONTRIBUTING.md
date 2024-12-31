@@ -85,6 +85,14 @@ The above methods work well for finding the most common neumes, but it can be te
 
 - `find_ypsili.py`: This script searches for ypsili neumes.
 
+## Viewing Dataset Metrics
+
+You can view the number of images per class via the following scripts.
+
+- `plot_dataset_metrics_by_source.py`: Use this to see the distribution of images broken up by each source.
+- `plot_dataset_metrics_for_source.py`: Use this to view the total number of images in each class for a single source only.
+- `plot_dataset_metrics.py`: Use this to view the total number of images in each class.
+
 ## Training the model
 
 To train the model, run the following commands.

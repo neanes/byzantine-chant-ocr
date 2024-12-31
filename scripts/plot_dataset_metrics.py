@@ -8,13 +8,7 @@ class_counts = {}
 for class_name in os.listdir(DATASET_FOLDER):
     class_path = os.path.join(DATASET_FOLDER, class_name)
     if os.path.isdir(class_path):  # Ensure it's a directory
-        image_count = len(
-            [
-                f
-                for f in os.listdir(class_path)
-                if os.path.isfile(os.path.join(class_path, f))
-            ]
-        )
+        image_count = len(os.listdir(class_path))
         class_counts[class_name] = image_count
 
 # Sort classes by the number of images
