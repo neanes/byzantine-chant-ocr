@@ -113,8 +113,8 @@ Loss is a measure of how far off the model's predictions are from the actual val
 
 ## Q & A
 
-### Why MobileNet v2?
+### Why MobileNetV2?
 
-MobileNet v2 was chosen as a compromise between accuracy and efficiency. Most users will probably not have a fast, GPU-enabled machine to run the OCR engine. MobileNet is designed to work on less powerful machines.
+MobileNetV2 was chosen as a compromise between accuracy and efficiency. Most users will probably not have a fast, GPU-enabled machine to run the OCR engine. MobileNet is designed to work on less powerful machines.
 
 However, there is no barrier to using a different model. If anyone wants to experiment with more powerful models, such as ResNet, pull requests are welcome.

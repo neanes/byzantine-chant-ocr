@@ -1,6 +1,6 @@
 # Byzantine Chant OCR
 
-This project is a toolset for performing optical character recognition (OCR) on Byzantine chant notation. It can process both PDFs and image files. Built in Python, the toolset uses OpenCV for image processing, PyTorch for deep learning, and a MobileNet v2 convolutional neural network (CNN) model for feature extraction and classification.
+This project is a toolset for performing optical character recognition (OCR) on Byzantine chant notation. It can process both PDFs and image files. Built in Python, the toolset uses OpenCV for image processing, PyTorch for deep learning, and a MobileNetV2 convolutional neural network (CNN) model for feature extraction and classification.
 
 ## How-to
 
