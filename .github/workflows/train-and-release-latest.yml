@@ -64,3 +64,5 @@ jobs:
           gh release create latest \
             models/classes.json \
             --title "Latest"
+        env:
+          GH_TOKEN: ${{ github.token }}
