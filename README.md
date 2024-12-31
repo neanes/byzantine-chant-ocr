@@ -98,3 +98,9 @@ If the YAML output is accurate, but the Neanes file is not, then this is possibl
 ## License
 
 This project is licensed under the [GNU General Public License, version 3](./LICENSE).
+
+## Acknowledgements
+
+This project was inspired by and builds upon concepts from the following paper:
+
+C. Dalitz, G.K. Michalakis, C. Pranzas: _[Optical Recognition of Psaltic Byzantine Chant Notation](https://lionel.kr.hs-niederrhein.de/~dalitz/data/publications/ijdar-psaltiki.pdf)_. International Journal of Document Analysis and Recognition, vol. 11, no. 3, pp. 143-158 (2008)
