@@ -1,3 +1,15 @@
+"""
+Do OCR
+
+This is the main script. 
+
+Usage: python do_ocr.py infile start end
+
+infile: The PDF or image file to analyze.
+start: The first page of the PDF to process.
+end: The last page of the PDF to process.
+"""
+
 import cv2
 import sys
 import yaml

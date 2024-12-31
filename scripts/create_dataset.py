@@ -1,7 +1,23 @@
+"""
+Create Dataset
+
+This script creates a dataset by searching a PDF or image.
+
+Before extracting contours, the text is removed.
+
+If you want to find rarer neumes without wading through many common neumes, 
+consider using the "find" scripts:
+- find_circles.py
+- find_ypsili.py
+
+This file is also used as a utility method by the above "find" scripts. The scripts
+pass in image transfroms and/or contour filters to this script so that only certain
+neumes are extracted.
+"""
+
 import argparse
 import cv2
 import datetime
-import fiftyone as fo
 import imutils
 import os
 import pymupdf
@@ -34,6 +50,8 @@ def process_pdf(
     datetime_string = now.strftime("%Y%m%d%H%M%S")
 
     dataset_name = f"predictions_{datetime_string}"
+
+    import fiftyone as fo
 
     dataset = fo.Dataset(dataset_name)
     dataset.persistent = True
