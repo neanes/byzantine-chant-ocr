@@ -63,6 +63,7 @@ jobs:
           gh release delete latest -y --cleanup-tag || echo 'No release exists'
           gh release create latest \
             models/classes.json \
-            --title "Latest"
+            --title "Latest" \
+            --notes "This release contains the latest model"
         env:
           GH_TOKEN: ${{ github.token }}
