@@ -20,11 +20,13 @@ class EarlyStopper:
         self.min_delta = min_delta
         self.counter = 0
         self.min_validation_loss = float("inf")
+        self.best_model_weights = None
 
     def early_stop(self, validation_loss):
         if validation_loss < self.min_validation_loss:
             self.min_validation_loss = validation_loss
             self.counter = 0
+            self.best_model_weights = model.state_dict()
         elif validation_loss > (self.min_validation_loss + self.min_delta):
             self.counter += 1
             if self.counter >= self.patience:
@@ -237,6 +239,7 @@ try:
             if phase == "val" and early_stopper.early_stop(epoch_loss):
                 print("Stopping early.")
                 stop_early = True
+                model.load_state_dict(early_stopper.best_model_weights)
                 break
     torch.save(model.state_dict(), "current_model.pth")
 except KeyboardInterrupt:
