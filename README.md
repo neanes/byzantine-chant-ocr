@@ -89,7 +89,7 @@ If the resulting file is not sufficiently accurate, there are three possible cau
 2. There is a bug or inefficiency with the Neanes importer.
 3. The model needs more training.
 
-If the font used for the neumes is significantly different from the fonts that the model was trained with, then the results will be less accurate. If you want to help make the model better, see the [contribution guide](./CONTRIBUTING.md). The maintainers of this repository will likely priortize training the model on fonts that are the most common and that will impact the most users. But if you want to train on a more obscure font or on handwritten works, pull requests are welcome.
+If the font used for the neumes is significantly different from [the fonts that the model was trained with](./SOURCES.md), then the results will be less accurate. If you want to help make the model better, see the [contribution guide](./CONTRIBUTING.md). The maintainers of this repository will likely priortize training the model on fonts that are the most common and that will impact the most users. But if you want to train on a more obscure font or on handwritten works, pull requests are welcome.
 
 If the image contains a lot of extraneous text that is not part of the lyrics, but that is also close to the neumes, the text removal process may fail to remove this text before performing OCR. In this case, the text may be misinterpreted as neumes belonging to the closest baseline. You can manually remove the text yourself from the image and try again.
 

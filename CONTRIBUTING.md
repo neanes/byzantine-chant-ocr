@@ -29,6 +29,8 @@ heirmologion_john_p0010_x0374_y0933_w0106_h0026_cx0426_cy0945_r0053.png
 
 From this name, we can determine that this image comes from page 10 of the Heirmologion of John the Protopsaltist. The image is located within a rectangle whose top left corner is at (374, 933) and whose dimensions are 106x26. The center of the image is located at (426, 945). The radius of the bounding circle is 53.
 
+If you add new sources, use the same `snake_case` naming convention and update [SOURCES.md](./SOURCES.md).
+
 ### Extracting Images for Classification
 
 This toolset contains several scripts that extract images in the correct format and naming convention from a PDF file.
@@ -101,9 +103,9 @@ Accuracy is the percentage of neumes that are correctly predicted.
 
 Loss is a measure of how far off the model's predictions are from the actual values. It's important to note that loss is not the same as the percentage of incorrect predictions. When the model makes a prediction, it also assigns a confidence level to that prediction. If the model makes an incorrect prediction with high confidence, the loss will be larger, reflecting the severity of the error.
 
-# Q & A
+## Q & A
 
-## Why MobileNet v2?
+### Why MobileNet v2?
 
 MobileNet v2 was chosen as a compromise between accuracy and efficiency. Most users will probably not have a fast, GPU-enabled machine to run the OCR engine. MobileNet is designed to work on less powerful machines.
 
