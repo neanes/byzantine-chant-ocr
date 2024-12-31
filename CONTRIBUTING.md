@@ -101,6 +101,8 @@ To train the model, run the following commands.
 python train.py
 ```
 
+This script splits the monolithic dataset into training, validation and test datasets using a 70/15/15 percent ratio.
+
 The resulting file will be called `current_model.pth`. Copy this file into `models/` to use it with `do_ocr.py`.
 
 A log of the training process will be saved as `train_log.txt`. This log can be plotted with the following command.
