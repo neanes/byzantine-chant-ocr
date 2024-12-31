@@ -1,0 +1,66 @@
+name: Train and Release Latest
+
+on: workflow_dispatch
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  train-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - uses: actions/setup-python@v5
+        id: setup_python
+        with:
+          python-version: "3.12"
+
+      - name: Restore cached venv
+        uses: actions/cache/restore@v4
+        with:
+          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
+          path: .venv
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install -r requirements.txt
+          echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
+          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
+
+      - name: Saved cached venv
+        uses: actions/cache/save@v4
+        with:
+          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
+          path: .venv
+
+      #   - name: Train
+      #     run: |
+      #       cd scripts
+      #       python train.py
+      #       cd ..
+
+      #   - name: Publish release
+      #     run: |
+      #       gh release delete latest -y --cleanup-tag || echo 'No release exists'
+      #       gh release create latest \
+      #         scripts/current_model.pth \
+      #         models/classes.json \
+      #         scripts/train_log.txt \
+      #         --title "Latest"
+
+      # Test release creation before wasting time training
+      - name: Publish release
+        run: |
+          gh release delete latest -y --cleanup-tag || echo 'No release exists'
+          gh release create latest \
+            models/classes.json \
+            --title "Latest"
