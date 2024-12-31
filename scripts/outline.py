@@ -1,9 +1,18 @@
+"""
+Outline
+
+This script draws a rectangle on an image. It is useful when you have a contour in a dataset but 
+you are not sure exactly what it is. You can use the rectangle information encoded in the file name
+to outline the contour on the page.
+
+Usage: python outline.py image.png x y w h
+
+(x,y): the upper left corner of the rectangle
+(w,h): the width and height of the rectangle.
+"""
+
 import cv2
 import sys
-
-sys.path.append("../src")
-from segmentation import segment
-import util
 
 
 def show_all_contours(img_path, output_path, x, y, w, h):

@@ -1,3 +1,13 @@
+"""
+Show Wide Contours
+
+This script highlights the contours that are considered by the OCR engine to be "wide".
+
+It is used for evaluating and debugging the segmentation logic.
+
+Usage: python show_wide_contours.py image.png
+"""
+
 import cv2
 import sys
 

@@ -1,3 +1,13 @@
+"""
+Remove Text
+
+This script removes text from an image using the OCR engine. 
+
+It is used for evaluating and debugging the segmentation and text removal logic.
+
+Usage: python remove_text.py image.png
+"""
+
 import cv2
 import sys
 

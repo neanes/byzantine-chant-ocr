@@ -1,10 +1,17 @@
+"""
+Predict Image
+
+This script runs a single image through the model and outputs the predicted label and confidence.
+
+Usage: python predict_image.py image.png
+"""
+
 import argparse
 import cv2
 import json
 import sys
 import torch
 import torch.nn as nn
-from pathlib import Path
 from PIL import Image
 
 sys.path.append("../src")

@@ -1,3 +1,12 @@
+"""
+Update Dataset
+
+This script looks through a FiftyOne dataset and copies all tagged samples into the model's dataset
+located at data/dataset.
+
+Usage: python update_dataset.py dataset_name
+"""
+
 import os
 import shutil
 import sys

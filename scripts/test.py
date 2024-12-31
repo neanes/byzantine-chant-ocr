@@ -1,3 +1,11 @@
+"""
+Test
+
+This script test the model based on the dataset found in data/dataset.
+
+Usage: python test.py
+"""
+
 import json
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets

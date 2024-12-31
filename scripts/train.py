@@ -1,3 +1,13 @@
+"""
+Train
+
+This script trains the model based on the dataset found in data/dataset.
+
+It generates a model file called current_model.pth.
+
+Usage: python train.py
+"""
+
 import csv
 import json
 import torch

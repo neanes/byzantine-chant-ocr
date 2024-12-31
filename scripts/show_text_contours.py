@@ -1,3 +1,13 @@
+"""
+Show Text Contours
+
+This script highlights all contours that were considered to be text contours by the OCR engine.
+
+It is used for evaluating and debugging the segmentation logic.
+
+Usage: python show_text_contours.py image.png
+"""
+
 import cv2
 import sys
 
