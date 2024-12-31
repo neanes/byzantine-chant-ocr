@@ -93,7 +93,7 @@ You can view the number of images per class via the following scripts.
 - `plot_dataset_metrics_for_source.py`: Use this to view the total number of images in each class for a single source only.
 - `plot_dataset_metrics.py`: Use this to view the total number of images in each class, regardless of source.
 
-## Training the model
+## Training the Model
 
 To train the model, run the following commands.
 
