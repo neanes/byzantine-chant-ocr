@@ -8,6 +8,14 @@ Install the development dependencies via the following command.
 pip install -r requirements-dev.txt
 ```
 
+## Repo Struture
+
+- `data/`: Contains the model's dataset.
+- `integrations/`: Contains scripts that use the output of the OCR engine to integrate with other software applications.
+- `models/`: Contains the model(s) and any supporting files.
+- `scripts/`: Contains scripts that are used for building the dataset, training the model, and using the OCR engine to perform OCR on images and PDFs.
+- `src/`: Contains the OCR engine.
+
 ## Curating the Dataset
 
 ### Dataset Structure
