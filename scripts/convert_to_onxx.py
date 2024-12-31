@@ -1,3 +1,9 @@
+"""
+ONNX conversion
+
+This script converts a PTH model into the ONNX format.
+"""
+
 import argparse
 import sys
 import torch
