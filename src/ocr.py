@@ -1,9 +1,7 @@
 import cv2
 import numpy as np
 import pymupdf
-import onnxruntime as ort
 import yaml
-from PIL import Image
 
 import util
 from model import transform
