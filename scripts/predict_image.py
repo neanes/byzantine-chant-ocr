@@ -64,9 +64,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    classes = load_metadata(args.classes)
-    model = load_model(args.model, classes)
+    metadata = load_metadata(args.meta)
+    model = load_model(args.model, metadata.classes)
     model.eval()
 
-    prediction = predict_image(model, classes, args.infile)
+    prediction = predict_image(model, metadata.classes, args.infile)
     print(json.dumps(prediction, indent=2))

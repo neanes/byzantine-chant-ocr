@@ -202,8 +202,8 @@ def setup(img_transform=None, contour_filter=None):
     # Run contour extraction
     print("Extracting...")
 
-    classes = load_metadata(args.classes)
-    model = load_model(args.model, classes)
+    metadata = load_metadata(args.meta)
+    model = load_model(args.model, metadata.classes)
     model.eval()
 
     dataset = process_pdf(
@@ -212,7 +212,7 @@ def setup(img_transform=None, contour_filter=None):
         args.pages,
         args.o,
         model,
-        classes,
+        metadata.classes,
         img_transform,
         contour_filter,
     )

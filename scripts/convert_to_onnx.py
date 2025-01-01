@@ -57,7 +57,7 @@ if __name__ == "__main__":
         default="../models/metadata.json",
     )
     args = parser.parse_args()
-    classes = load_metadata(args.classes)
-    model = load_model(args.i, classes)
+    metadata = load_metadata(args.meta)
+    model = load_model(args.i, metadata.classes)
 
     convert_to_onnx(model, args.o)
