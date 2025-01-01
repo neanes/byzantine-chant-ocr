@@ -1,7 +1,9 @@
 name: Train and Release Latest
 
-on: workflow_dispatch
-
+on:
+  push:
+    tags:
+      - "v*.*.*-model"
 defaults:
   run:
     shell: bash
