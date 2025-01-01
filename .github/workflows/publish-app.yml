@@ -44,6 +44,7 @@ jobs:
 
       - name: Build
         run: |
+          source .venv/bin/activate || source .venv/scripts/activate
           cd src
           pyinstaller --noconsole app.py
 
