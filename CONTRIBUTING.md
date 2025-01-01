@@ -5,7 +5,7 @@
 Install [git](https://git-scm.com/downloads), and then clone the repository.
 
 ```bash
-git clone https://github.com/neanes/byzantine-ocr
+git clone https://github.com/neanes/byzantine-chant-ocr.git
 ```
 
 ## Install dependencies
