@@ -10,7 +10,7 @@ Download the latest app version from the [Releases page](https://github.com/nean
 
 ### Download the model
 
-Download the latest model from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Copy the files `current_model.pth` and `classes.json` to the same folder where `app.exe` is found.
+Download the latest model from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Copy the files `current_model.onnx` and `metadata.json` to the same folder where the executable is located.
 
 ### Run the app
 

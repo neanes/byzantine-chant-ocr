@@ -17,7 +17,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from model import load_classes, load_model
+from model import load_metadata, load_onnx_model
 from ocr import process_image, process_pdf, save_analysis
 
 
@@ -36,9 +36,8 @@ class OCRThread(QThread):
     def run(self):
         # Simulate OCR processing
         try:
-            classes = load_classes(self.classes_path)
-            model = load_model(self.model_path, classes)
-            model.eval()
+            classes = load_metadata(self.classes_path)
+            model = load_onnx_model(self.model_path)
 
             if self.infile_path.endswith(".pdf"):
                 analysis = process_pdf(
@@ -67,19 +66,19 @@ class MyWidget(QWidget):
 
         self.btnSelectModel = QPushButton("Select Model")
         self.btnSelectModel.clicked.connect(self.choose_model)
-        self.txtSelectModel = QLineEdit("current_model.pth")
+        self.txtSelectModel = QLineEdit("current_model.onnx")
         self.txtSelectModel.setEnabled(False)
         self.layoutSelectModel = QHBoxLayout()
         self.layoutSelectModel.addWidget(self.btnSelectModel)
         self.layoutSelectModel.addWidget(self.txtSelectModel)
 
-        self.btnSelectClasses = QPushButton("Select Classes")
-        self.btnSelectClasses.clicked.connect(self.choose_classes)
-        self.txtSelectClasses = QLineEdit("classes.json")
-        self.txtSelectClasses.setEnabled(False)
-        self.layoutSelectClasses = QHBoxLayout()
-        self.layoutSelectClasses.addWidget(self.btnSelectClasses)
-        self.layoutSelectClasses.addWidget(self.txtSelectClasses)
+        self.btnSelectMetadata = QPushButton("Select Metadata")
+        self.btnSelectMetadata.clicked.connect(self.choose_metadata)
+        self.txtSelectMetadata = QLineEdit("metadata.json")
+        self.txtSelectMetadata.setEnabled(False)
+        self.layoutSelectMetadata = QHBoxLayout()
+        self.layoutSelectMetadata.addWidget(self.btnSelectMetadata)
+        self.layoutSelectMetadata.addWidget(self.txtSelectMetadata)
 
         self.lblPages = QLabel("Pages")
         self.txtPages = QLineEdit()
@@ -99,7 +98,7 @@ class MyWidget(QWidget):
         self.layout.addLayout(self.layoutSelectInput)
         self.layout.addLayout(self.layoutPages)
         self.layout.addLayout(self.layoutSelectModel)
-        self.layout.addLayout(self.layoutSelectClasses)
+        self.layout.addLayout(self.layoutSelectMetadata)
         self.layout.addWidget(self.btnGo)
 
     def choose_input_file(self):
@@ -119,17 +118,17 @@ class MyWidget(QWidget):
                 self.txtPages.setEnabled(False)
                 self.txtPages.setText(f"N/A")
 
-    def choose_classes(self):
+    def choose_metadata(self):
         filepath, _ = QFileDialog.getOpenFileName(
             self, "Open File", filter="JSON (*.json)"
         )
 
         if len(filepath) > 0:
-            self.txtSelectClasses.setText(filepath)
+            self.txtSelectMetadata.setText(filepath)
 
     def choose_model(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", filter="PyTorch Model (*.pt *.pth)"
+            self, "Open File", filter="ONNX Model (*.onnx)"
         )
 
         if len(filepath) > 0:
@@ -164,7 +163,7 @@ class MyWidget(QWidget):
                 output_path,
                 page_range,
                 self.txtSelectModel.text(),
-                self.txtSelectClasses.text(),
+                self.txtSelectMetadata.text(),
             )
             self.thread.error.connect(self.display_error)
             self.thread.finished.connect(lambda: self.enable_ui(True))
@@ -182,7 +181,7 @@ class MyWidget(QWidget):
     def enable_ui(self, enabled):
         self.btnGo.setEnabled(enabled)
         self.btnSelectInput.setEnabled(enabled)
-        self.btnSelectClasses.setEnabled(enabled)
+        self.btnSelectMetadata.setEnabled(enabled)
         self.btnSelectModel.setEnabled(enabled)
         self.txtPages.setEnabled(enabled)
 

@@ -1,6 +1,11 @@
 export class OcrAnalysis {
-  public model_version: string = "";
+  public model_metadata: ModelMetadata = new ModelMetadata();
   public pages: PageAnalysis[] = [];
+}
+
+export class ModelMetadata {
+  public model_version: string = "";
+  public classes: string[] = [];
 }
 
 export class PageAnalysis {

@@ -7,8 +7,10 @@ import torch.nn as nn
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 
+from torch_model import load_model
+
 sys.path.append("../src")
-from model import load_classes, load_model, get_transform
+from model import load_metadata, get_transform
 from segmentation import segment
 from text_removal import remove_text
 
@@ -73,13 +75,13 @@ if __name__ == "__main__":
         "--num-workers", help="The number of workers to use", type=int, default=0
     )
     args = parser.parse_args()
-    classes = load_classes("../models/classes.json")
-    model = load_model("../models/current_model.pth", classes)
+    metadata = load_metadata("../models/metadata.json")
+    model = load_model("../models/current_model.pth", metadata)
     model.eval()
 
     print("Making predictions...")
 
     predictions = predict_images(
-        model, classes, "../data/__unclassified", num_workers=args.num_workers
+        model, metadata, "../data/__unclassified", num_workers=args.num_workers
     )
     print(f"{len(predictions)} predictions created for ../data/__unclassified.")

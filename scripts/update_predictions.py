@@ -56,14 +56,16 @@ if __name__ == "__main__":
 
     print("Loading model...")
     # Load the model
-    with open("../models/classes.json") as f:
-        classes = json.load(f)
+    with open("../models/metadata.json") as f:
+        metadata = json.load(f)
 
     model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
     num_features = model.last_channel  # Get the size of the last layer
-    model.classifier[1] = nn.Linear(num_features, len(classes))  # Replace classifier
+    model.classifier[1] = nn.Linear(
+        num_features, len(metadata.classes)
+    )  # Replace classifier
     model.load_state_dict(torch.load("../models/current_model.pth"))
 
     print("Updating dataset...")
-    update_predictions(model, classes, dataset)
+    update_predictions(model, metadata.classes, dataset)
     print("Done.")

@@ -1,4 +1,6 @@
-[
+{
+  "model_version": "0.0.2",
+  "classes": [
     "antikenoma",
     "antikenoma_apli",
     "apli",
@@ -52,4 +54,5 @@
     "vareia",
     "yporroe",
     "ypsili"
-]
+  ]
+}

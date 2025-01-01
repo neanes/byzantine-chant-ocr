@@ -15,7 +15,7 @@ import sys
 import yaml
 
 sys.path.append("../src")
-from model import load_classes, load_model
+from model import load_metadata, load_onnx_model
 from ocr import process_image, process_pdf
 
 if __name__ == "__main__":
@@ -25,9 +25,8 @@ if __name__ == "__main__":
 
     filepath = sys.argv[1]
 
-    classes = load_classes("../models/classes.json")
-    model = load_model("../models/current_model.pth", classes)
-    model.eval()
+    metadata = load_metadata("../models/metadata.json")
+    model = load_onnx_model("../models/current_model.onnx")
 
     if filepath.endswith(".pdf"):
         start = int(sys.argv[2]) - 1
@@ -35,10 +34,10 @@ if __name__ == "__main__":
 
         page_range = range(start, end + 1)
 
-        results = process_pdf(filepath, page_range, model, classes)
+        results = process_pdf(filepath, page_range, model, metadata)
     else:
         image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
-        results = process_image(image, model, classes)
+        results = process_image(image, model, metadata)
 
     with open("output.yaml", "w") as outfile:
         yaml.safe_dump(

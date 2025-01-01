@@ -1,13 +1,10 @@
 import cv2
 import numpy as np
 import pymupdf
-import torch
-import torch.nn as nn
 import yaml
-from PIL import Image
 
 import util
-from model import get_transform
+from model import transform
 from segmentation import segment
 from text_removal import remove_text
 
@@ -98,12 +95,12 @@ class PageAnalysis:
 
 class Analysis:
     def __init__(self):
-        self.model_version = None
+        self.model_metadata = None
         self.pages = []
 
     def to_dict(self):
         return {
-            "model_version": self.model_version,
+            "model_metadata": self.model_metadata.to_dict(),
             "pages": [x.to_dict() for x in self.pages],
         }
 
@@ -115,8 +112,9 @@ def save_analysis(analysis, filepath="output.yaml"):
         )
 
 
-def process_pdf(filepath, page_range, model, classes):
+def process_pdf(filepath, page_range, model, metadata):
     analysis = Analysis()
+    analysis.model_metadata = metadata
 
     doc = pymupdf.open(filepath)
 
@@ -139,19 +137,20 @@ def process_pdf(filepath, page_range, model, classes):
         page.page = page_index
         page_index = page_index + 1
 
-        recognize_contours(page.matches, model, classes)
+        recognize_contours(page.matches, model, metadata.classes)
 
         analysis.pages.append(page)
 
     return analysis
 
 
-def process_image(image, model, classes):
+def process_image(image, model, metadata):
     analysis = Analysis()
+    analysis.model_metadata = metadata
 
     page = prepare_image(image)
 
-    recognize_contours(page.matches, model, classes)
+    recognize_contours(page.matches, model, metadata.classes)
 
     analysis.pages.append(page)
 
@@ -290,27 +289,22 @@ def sort_matches(matches):
 
 
 def recognize_contours(matches, model, classes):
-    transform = get_transform()
-
-    model.eval()
-
     for m in matches:
         if m.test_image is None or m.test_image.size == 0:
             continue
 
         img = cv2.cvtColor(m.test_image, cv2.COLOR_GRAY2RGB)
-        img = Image.fromarray(img)
 
-        tensor = transform(img).unsqueeze(0)
+        img = transform(img)
 
-        with torch.no_grad():
-            output = model(tensor)
+        output = model.run(["output"], {"input": img.astype(np.float32)})
 
-        probabilities = nn.functional.softmax(output[0], dim=0)
-        class_id = torch.argmax(probabilities).item()
+        probabilities = np.exp(output[0][0]) / np.sum(np.exp(output[0][0]))  # Softmax
+        class_id = np.argmax(probabilities)
+        confidence = probabilities[class_id].item()
 
         m.label = classes[class_id]
-        m.confidence = probabilities[class_id].item()
+        m.confidence = confidence
 
         # For debugging
         # window_name = f"{m.label} ({m.confidence:0.2f})"
