@@ -1,12 +1,18 @@
 # Contributing
 
-## Install the Development Dependencies
+## Get the source
 
-Install the development dependencies via the following command.
+Install [git](https://git-scm.com/downloads), and then clone the repository.
 
 ```bash
-pip install -r requirements-dev.txt
+git clone https://github.com/neanes/byzantine-ocr
 ```
+
+## Install dependencies
+
+1. Install [Python 3.12](https://www.python.org/downloads/).
+2. If you are already familiar with Python and use it for other tasks, then it is recommended that you create a [virtual environment](https://docs.python.org/3/library/venv.html). If you do not know what this means, or do not intend to you use Python for anything other than these scripts, you may skip this step.
+3. Install the required Python libraries via `pip install -r requirements-dev.txt`.
 
 ## Repo Struture
 
@@ -120,6 +126,37 @@ The goal of training is to maximize accuracy while minimizing loss.
 Accuracy is the percentage of neumes that are correctly predicted.
 
 Loss is a measure of how far off the model's predictions are from the actual values. It's important to note that loss is not the same as the percentage of incorrect predictions. When the model makes a prediction, it also assigns a confidence level to that prediction. If the model makes an incorrect prediction with high confidence, the loss will be larger, reflecting the severity of the error.
+
+## Perform OCR on a file
+
+Below are the commands that can be used to perform OCR on images and PDFs. The resulting output will be a file called `output.yaml`. This file lists the line number, coordinates, and size of each contour found in the files, as well as the model's prediction (e.g. `ison`, `oligon`, etc.).
+
+#### Images
+
+```bash
+cd scripts
+python do_ocr.py image.png
+```
+
+#### PDFs
+
+The following command performs OCR on page 123 of `doc.pdf`.
+
+##### Single page
+
+```bash
+cd scripts
+python do_ocr.py doc.pdf 123
+```
+
+##### Multiple pages
+
+The following command performs OCR on pages 100-105 of `doc.pdf`.
+
+```bash
+cd scripts
+python do_ocr.py doc.pdf 100 105
+```
 
 ## Q & A
 

@@ -4,61 +4,17 @@ This project is a toolset for performing optical character recognition (OCR) on 
 
 ## How-to
 
-This guide assumes some familiarity with the command line.
+### Download the app
 
-### Get the source
-
-Install [git](https://git-scm.com/downloads), and then clone the repository.
-
-```bash
-git clone https://github.com/neanes/byzantine-ocr
-```
-
-### Install dependencies
-
-1. Install [Python 3.12](https://www.python.org/downloads/).
-2. If you are already familiar with Python and use it for other tasks, then it is recommended that you create a [virtual environment](https://docs.python.org/3/library/venv.html). If you do not know what this means, or do not intend to you use Python for anything other than these scripts, you may skip this step.
-3. Install the required Python libraries via `pip install -r requirements.txt`.
+Download the latest app version from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Unzip the files to any directory.
 
 ### Download the model
 
-Download the latest model from the [Releases](https://github.com/neanes/byzantine-chant-ocr/releases/tag/latest) page. The file is called `current_model.pth`. Save this file to `models/`.
+Download the latest model from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Copy the files `current_model.pth` and `classes.json` to the same folder where `app.exe` is found.
 
-### Perform OCR on a file
+### Run the app
 
-> [!NOTE]  
-> If you are using Windows, the command to run Python may be `py` instead of `python`.
-
-Below are the commands that can be used to perform OCR on images and PDFs. The resulting output will be a file called `output.yaml`. This file lists the line number, coordinates, and size of each contour found in the files, as well as the model's prediction (e.g. `ison`, `oligon`, etc.).
-
-To learn how to use this file, see the next section.
-
-#### Images
-
-```bash
-cd scripts
-python do_ocr.py image.png
-```
-
-#### PDFs
-
-The following command performs OCR on page 123 of `doc.pdf`.
-
-##### Single page
-
-```bash
-cd scripts
-python do_ocr.py doc.pdf 123
-```
-
-##### Multiple pages
-
-The following command performs OCR on pages 100-105 of `doc.pdf`.
-
-```bash
-cd scripts
-python do_ocr.py doc.pdf 100 105
-```
+Run the app and select a file to perform OCR on. For PDF files, input a page range. Then press Go and choose a location to save the file.
 
 ### Import into Neanes
 
