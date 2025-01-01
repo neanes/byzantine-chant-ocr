@@ -46,16 +46,21 @@ jobs:
         run: |
           source .venv/bin/activate || source .venv/scripts/activate
           cd src
-          pyinstaller --noconsole app.py
+          pyinstaller --noconsole --name byzantine-chant-ocr app.py
 
       - name: Archive
         shell: pwsh
         run: |
+          cd src/dist
           if ($env:RUNNER_OS -eq "Windows") {
-            7z a byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist 
+            7z a byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr 
+          }
+          else if ($env:RUNNER_OS -eq "macOS") {
+            cd app
+            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr.app 
           }
           else {
-            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist
+            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr
           }
 
       - name: Release
