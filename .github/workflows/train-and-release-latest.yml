@@ -1,4 +1,4 @@
-name: Train and Publish Model
+name: Train and Release Model
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
       - name: Train
         run: |
           cd scripts
-          python train.py
+          python train.py $(echo "${{github.ref_name}}" | tr -d 'v\-model')
           mv current_model.pth ../models/
 
       - name: Convert to ONNX
@@ -54,7 +54,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            models/classes.json
+            models/metadata.json
             models/current_model.pth
             models/current_model.onnx
           draft: true

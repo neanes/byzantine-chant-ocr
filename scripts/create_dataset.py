@@ -30,7 +30,7 @@ from PIL import Image
 from torch_model import load_model
 
 sys.path.append("../src")
-from model import load_classes, get_transform
+from model import load_metadata, get_transform
 from segmentation import segment
 from text_removal import remove_text
 
@@ -180,8 +180,8 @@ def setup(img_transform=None, contour_filter=None):
     )
     parser.add_argument(
         "--classes",
-        help="Relative path to the classes JSON file",
-        default="../models/classes.json",
+        help="Relative path to the model's metadata file",
+        default="../models/metadata.json",
     )
     parser.add_argument(
         "--model",
@@ -202,7 +202,7 @@ def setup(img_transform=None, contour_filter=None):
     # Run contour extraction
     print("Extracting...")
 
-    classes = load_classes(args.classes)
+    classes = load_metadata(args.classes)
     model = load_model(args.model, classes)
     model.eval()
 

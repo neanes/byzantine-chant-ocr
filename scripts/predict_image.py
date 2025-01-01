@@ -17,7 +17,7 @@ from PIL import Image
 from torch_model import load_model
 
 sys.path.append("../src")
-from model import load_classes, get_transform
+from model import load_metadata, get_transform
 
 
 def predict_image(model, classes, img_path):
@@ -52,9 +52,9 @@ if __name__ == "__main__":
     parser.add_argument("infile", help="Relative path to the image file")
 
     parser.add_argument(
-        "--classes",
-        help="Relative path to the classes JSON file",
-        default="../models/classes.json",
+        "--meta",
+        help="Relative path to the model's metadata file",
+        default="../models/metadata.json",
     )
     parser.add_argument(
         "--model",
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    classes = load_classes(args.classes)
+    classes = load_metadata(args.classes)
     model = load_model(args.model, classes)
     model.eval()
 

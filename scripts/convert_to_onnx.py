@@ -12,7 +12,7 @@ import torchvision.models as models
 from torch_model import load_model
 
 sys.path.append("../src")
-from model import load_classes
+from model import load_metadata
 
 
 def convert_to_onnx(model, onnx_path):
@@ -53,12 +53,12 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--classes",
-        help="Relative path to the classes.json file",
-        default="../models/classes.json",
+        "--meta",
+        help="Relative path to the model's metatdata file",
+        default="../models/metadata.json",
     )
     args = parser.parse_args()
-    classes = load_classes(args.classes)
+    classes = load_metadata(args.classes)
     model = load_model(args.i, classes)
 
     convert_to_onnx(model, args.o)

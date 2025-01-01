@@ -10,6 +10,7 @@ Usage: python train.py
 
 import csv
 import json
+import sys
 import torch
 import datetime
 from torchvision import models
@@ -21,6 +22,9 @@ import torch.nn as nn
 import torch.optim as optim
 
 from test import test_model
+
+sys.path.append("../src")
+from model import ModelMetadata
 
 
 class EarlyStopper:
@@ -126,11 +130,12 @@ data_transforms = {
 
 full_dataset = datasets.ImageFolder(data_dir, transform=data_transforms["train"])
 
+metadata = ModelMetadata()
+metadata.model_version = sys.argv[1] if len(sys.argv) > 1 else "0.0.0"
+metadata.classes = full_dataset.classes
 
-class_names = full_dataset.classes
-
-with open("../models/classes.json", "w") as f:
-    json.dump(class_names, f, indent=4)
+with open("../models/metadata.json", "w") as f:
+    json.dump(metadata.to_dict(), f, indent=4)
 
 train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
     full_dataset, [0.7, 0.15, 0.15], generator=torch.Generator().manual_seed(255247200)
@@ -150,20 +155,14 @@ dataloaders = {
     "test": DataLoader(test_dataset, batch_size=batch_size, shuffle=False),
 }
 
-# print("train classes\n")
-# for n in class_names:
-#     print(n)
-
-# print("val classes\n")
-# for n in image_datasets["val"].classes:
-#     print(n)
-
 # Load the pre-trained MobileNetV2 model
 model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
 
 # Modify the last layer to match the number of classes
 num_features = model.last_channel  # Get the size of the last layer
-model.classifier[1] = nn.Linear(num_features, len(class_names))  # Replace classifier
+model.classifier[1] = nn.Linear(
+    num_features, len(metadata.classes)
+)  # Replace classifier
 
 # Move model to device
 model = model.to(device)
