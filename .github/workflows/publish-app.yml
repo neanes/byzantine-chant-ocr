@@ -59,8 +59,6 @@ jobs:
             zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr.app 
           }
           else {
-            cd byzantine-chant-ocr/_internal
-            du -hs * | sort -h
             zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr
           }
 
