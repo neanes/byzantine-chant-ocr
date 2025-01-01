@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
 import pymupdf
-import torch
-import torch.nn as nn
+import onnxruntime as ort
 import yaml
 from PIL import Image
 
@@ -292,8 +291,6 @@ def sort_matches(matches):
 def recognize_contours(matches, model, classes):
     transform = get_transform()
 
-    model.eval()
-
     for m in matches:
         if m.test_image is None or m.test_image.size == 0:
             continue
@@ -303,14 +300,14 @@ def recognize_contours(matches, model, classes):
 
         tensor = transform(img).unsqueeze(0)
 
-        with torch.no_grad():
-            output = model(tensor)
+        output = model.run(["output"], {"input": tensor.numpy()})
 
-        probabilities = nn.functional.softmax(output[0], dim=0)
-        class_id = torch.argmax(probabilities).item()
+        probabilities = np.exp(output[0][0]) / np.sum(np.exp(output[0][0]))  # Softmax
+        class_id = np.argmax(probabilities)
+        confidence = probabilities[class_id].item()
 
         m.label = classes[class_id]
-        m.confidence = probabilities[class_id].item()
+        m.confidence = confidence
 
         # For debugging
         # window_name = f"{m.label} ({m.confidence:0.2f})"

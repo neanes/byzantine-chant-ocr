@@ -17,7 +17,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from model import load_classes, load_model
+from model import load_classes, load_onnx_model
 from ocr import process_image, process_pdf, save_analysis
 
 
@@ -37,8 +37,7 @@ class OCRThread(QThread):
         # Simulate OCR processing
         try:
             classes = load_classes(self.classes_path)
-            model = load_model(self.model_path, classes)
-            model.eval()
+            model = load_onnx_model(self.model_path)
 
             if self.infile_path.endswith(".pdf"):
                 analysis = process_pdf(

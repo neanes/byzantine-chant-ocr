@@ -7,11 +7,12 @@ This script converts a PTH model into the ONNX format.
 import argparse
 import sys
 import torch
-import torch.nn as nn
 import torchvision.models as models
 
+from torch_model import load_model
+
 sys.path.append("../src")
-from model import load_classes, load_model
+from model import load_classes
 
 
 def convert_to_onnx(model, onnx_path):

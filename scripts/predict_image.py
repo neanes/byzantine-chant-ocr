@@ -14,8 +14,10 @@ import torch
 import torch.nn as nn
 from PIL import Image
 
+from torch_model import load_model
+
 sys.path.append("../src")
-from model import load_classes, load_model, get_transform
+from model import load_classes, get_transform
 
 
 def predict_image(model, classes, img_path):

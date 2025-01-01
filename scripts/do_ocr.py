@@ -15,7 +15,7 @@ import sys
 import yaml
 
 sys.path.append("../src")
-from model import load_classes, load_model
+from model import load_classes, load_onnx_model
 from ocr import process_image, process_pdf
 
 if __name__ == "__main__":
@@ -26,8 +26,7 @@ if __name__ == "__main__":
     filepath = sys.argv[1]
 
     classes = load_classes("../models/classes.json")
-    model = load_model("../models/current_model.pth", classes)
-    model.eval()
+    model = load_onnx_model("../models/current_model.onnx")
 
     if filepath.endswith(".pdf"):
         start = int(sys.argv[2]) - 1

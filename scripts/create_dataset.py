@@ -27,8 +27,10 @@ import torch.nn as nn
 from pathlib import Path
 from PIL import Image
 
+from torch_model import load_model
+
 sys.path.append("../src")
-from model import load_classes, load_model, get_transform
+from model import load_classes, get_transform
 from segmentation import segment
 from text_removal import remove_text
 
