@@ -55,7 +55,7 @@ jobs:
           if ($env:RUNNER_OS -eq "Windows") {
             7z a byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr 
           }
-          else if ($env:RUNNER_OS -eq "macOS") {
+          elseif ($env:RUNNER_OS -eq "macOS") {
             cd app
             zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr.app 
           }
