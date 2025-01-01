@@ -66,7 +66,7 @@ class MyWidget(QWidget):
 
         self.btnSelectModel = QPushButton("Select Model")
         self.btnSelectModel.clicked.connect(self.choose_model)
-        self.txtSelectModel = QLineEdit("current_model.pth")
+        self.txtSelectModel = QLineEdit("current_model.onnx")
         self.txtSelectModel.setEnabled(False)
         self.layoutSelectModel = QHBoxLayout()
         self.layoutSelectModel.addWidget(self.btnSelectModel)
@@ -128,7 +128,7 @@ class MyWidget(QWidget):
 
     def choose_model(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", filter="PyTorch Model (*.pt *.pth)"
+            self, "Open File", filter="ONNX Model (*.onnx)"
         )
 
         if len(filepath) > 0:
