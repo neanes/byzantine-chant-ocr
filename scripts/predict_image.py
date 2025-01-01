@@ -14,8 +14,7 @@ import torch
 import torch.nn as nn
 from PIL import Image
 
-from torch_model import load_model
-from model import get_transform
+from torch_model import load_model, get_transform
 
 sys.path.append("../src")
 from model_metadata import load_metadata
