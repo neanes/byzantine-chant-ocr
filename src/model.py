@@ -1,19 +1,9 @@
-import json
 import numpy as np
 import onnxruntime as ort
-
-from model_metadata import ModelMetadata
 
 
 def load_onnx_model(model_path):
     return ort.InferenceSession(model_path)
-
-
-def load_metadata(metadata_path):
-    metadata = ModelMetadata()
-    with open(metadata_path) as f:
-        metadata.from_json(json.load(f))
-    return metadata
 
 
 def transform(img):
