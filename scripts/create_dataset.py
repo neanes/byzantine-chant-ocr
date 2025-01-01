@@ -179,7 +179,7 @@ def setup(img_transform=None, contour_filter=None):
         default="../data/__unclassified",
     )
     parser.add_argument(
-        "--classes",
+        "--meta",
         help="Relative path to the model's metadata file",
         default="../models/metadata.json",
     )

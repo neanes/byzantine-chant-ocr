@@ -42,7 +42,7 @@ jobs:
       - name: Train
         run: |
           cd scripts
-          python train.py $(echo "${{github.ref_name}}" | tr -d 'v\-model')
+          python train.py --epochs=1 --version $(echo "${{github.ref_name}}" | tr -d 'v\-model')
           mv current_model.pth ../models/
 
       - name: Convert to ONNX
