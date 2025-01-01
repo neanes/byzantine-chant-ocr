@@ -41,15 +41,18 @@ jobs:
         run: |
           cd scripts
           python train.py
+          mv current_model.pth ../models/
 
-      - name: Publish release
+      - name: Convert to ONNX
         run: |
-          gh release delete latest -y --cleanup-tag || echo 'No release exists'
-          gh release create latest \
-              scripts/current_model.pth \
-              models/classes.json \
-              scripts/train_log.txt \
-            --title "Latest" \
-            --notes "This release contains the latest model"
-        env:
-          GH_TOKEN: ${{ github.token }}
+          cd scripts
+          python convert_to_onnx.py
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            models/classes.json
+            models/current_model.pth
+            models/current_model.onnx
+          draft: true
