@@ -3,3 +3,4 @@ fiftyone==1.2.0
 jupyter==1.1.1
 onnx==1.17.0
 torch==2.5.1
+torchvision==0.20.1

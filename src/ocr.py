@@ -6,7 +6,7 @@ import yaml
 from PIL import Image
 
 import util
-from model import get_transform
+from model import transform
 from segmentation import segment
 from text_removal import remove_text
 
@@ -289,18 +289,15 @@ def sort_matches(matches):
 
 
 def recognize_contours(matches, model, classes):
-    transform = get_transform()
-
     for m in matches:
         if m.test_image is None or m.test_image.size == 0:
             continue
 
         img = cv2.cvtColor(m.test_image, cv2.COLOR_GRAY2RGB)
-        img = Image.fromarray(img)
 
-        tensor = transform(img).unsqueeze(0)
+        img = transform(img)
 
-        output = model.run(["output"], {"input": tensor.numpy()})
+        output = model.run(["output"], {"input": img.astype(np.float32)})
 
         probabilities = np.exp(output[0][0]) / np.sum(np.exp(output[0][0]))  # Softmax
         class_id = np.argmax(probabilities)
