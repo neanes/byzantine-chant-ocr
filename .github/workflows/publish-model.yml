@@ -1,4 +1,4 @@
-name: Train and Release Model
+name: Publish Model
 
 on:
   push:
