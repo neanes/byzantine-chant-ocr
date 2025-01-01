@@ -10,8 +10,9 @@ from pathlib import Path
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 
+from torch_model import get_transform
+
 sys.path.append("../src")
-from model import get_transform
 from segmentation import segment
 from text_removal import remove_text
 
