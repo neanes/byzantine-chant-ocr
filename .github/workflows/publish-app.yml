@@ -65,5 +65,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip
+          files: src/dist/byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip
           draft: true
