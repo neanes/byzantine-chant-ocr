@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 import pymupdf
 import torch
-from PIL import Image
 import torch.nn as nn
+import yaml
+from PIL import Image
 
-from model import get_transform
 import util
+from model import get_transform
 from segmentation import segment
 from text_removal import remove_text
 
@@ -105,6 +106,13 @@ class Analysis:
             "model_version": self.model_version,
             "pages": [x.to_dict() for x in self.pages],
         }
+
+
+def save_analysis(analysis, filepath="output.yaml"):
+    with open(filepath, "w") as outfile:
+        yaml.safe_dump(
+            analysis.to_dict(), outfile, sort_keys=False, default_flow_style=False
+        )
 
 
 def process_pdf(filepath, page_range, model, classes):

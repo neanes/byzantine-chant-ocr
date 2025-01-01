@@ -220,12 +220,20 @@ def find_average_text_height(image, textlines):
             heights.append(h)
 
     # Find the average height
+    if len(heights) == 0:
+        return 0
+
     return int(np.median(heights))
 
 
 def find_baselines(
     binary_image, segmentation, narrow_contour_cutoff=2.0, min_contour_height=5
 ):
+    if segmentation.oligon_width <= 1:
+        # Something has gone horribly wrong
+        segmentation.baselines = []
+        return
+
     masked = util.mask_narrow_contours(binary_image, narrow_contour_cutoff)
     masked = util.mask_thin_contours(masked, min_contour_height)
     masked = util.mask_wide_contours(masked, segmentation.oligon_width * 10)
@@ -310,6 +318,11 @@ def find_textlines(binary_image, segmentation, min_contour_height=5):
     Finds texts textlines by finding the rows with the most black pixels that appear between baselines
     """
     textlines = list()
+
+    if segmentation.oligon_width == 0:
+        # Something has gone horribly wrong
+        segmentation.textlines = []
+        return
 
     height = binary_image.shape[0]
 

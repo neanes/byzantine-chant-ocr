@@ -1,0 +1,57 @@
+name: Publish App
+
+on:
+  push:
+    tags:
+      - "v*.*.*-app"
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        id: setup_python
+        with:
+          python-version: "3.13"
+
+      - name: Restore cached venv
+        uses: actions/cache/restore@v4
+        with:
+          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-app.txt', 'requirements.txt') }}
+          path: .venv
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install -r requirements-ci-app.txt
+          echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
+          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
+
+      - name: Saved cached venv
+        uses: actions/cache/save@v4
+        with:
+          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-app.txt', 'requirements.txt') }}
+          path: .venv
+
+      - name: Build
+        run: |
+          cd src
+          pyinstaller --noconsole app.py
+
+      - name: Archive
+        run: |
+          zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip
