@@ -16,7 +16,7 @@ git clone https://github.com/neanes/byzantine-ocr
 
 ### Install dependencies
 
-1. Install [Python](https://www.python.org/downloads/). The scripts were developed and tested with Python `3.12`, but the latest version will probably work, too.
+1. Install [Python 3.12](https://www.python.org/downloads/).
 2. If you are already familiar with Python and use it for other tasks, then it is recommended that you create a [virtual environment](https://docs.python.org/3/library/venv.html). If you do not know what this means, or do not intend to you use Python for anything other than these scripts, you may skip this step.
 3. Install the required Python libraries via `pip install -r requirements.txt`.
 
