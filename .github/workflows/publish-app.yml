@@ -49,8 +49,14 @@ jobs:
           pyinstaller --noconsole app.py
 
       - name: Archive
+        shell: pwsh
         run: |
-          zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist
+          if ($env:RUNNER_OS -eq "Windows") {
+            7z a byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist 
+          }
+          else {
+            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip src/dist
+          }
 
       - name: Release
         uses: softprops/action-gh-release@v2
