@@ -12,3 +12,13 @@ def load_model(model_path, classes):
     model.load_state_dict(torch.load(model_path, weights_only=False))
     model.to(torch.device("cuda" if torch.cuda.is_available() else "cpu"))
     return model
+
+
+def get_transform():
+    return transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )

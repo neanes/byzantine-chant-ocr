@@ -7,10 +7,10 @@ import torch.nn as nn
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 
-from torch_model import load_model
+from torch_model import load_model, get_transform
 
 sys.path.append("../src")
-from model import load_metadata, get_transform
+from model_metadata import load_metadata
 from segmentation import segment
 from text_removal import remove_text
 

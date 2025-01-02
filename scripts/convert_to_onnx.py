@@ -7,12 +7,11 @@ This script converts a PTH model into the ONNX format.
 import argparse
 import sys
 import torch
-import torchvision.models as models
 
 from torch_model import load_model
 
 sys.path.append("../src")
-from model import load_metadata
+from model_metadata import load_metadata
 
 
 def convert_to_onnx(model, onnx_path):
@@ -58,7 +57,7 @@ if __name__ == "__main__":
         default="../models/metadata.json",
     )
     args = parser.parse_args()
-    classes = load_metadata(args.classes)
-    model = load_model(args.i, classes)
+    metadata = load_metadata(args.meta)
+    model = load_model(args.i, metadata.classes)
 
     convert_to_onnx(model, args.o)

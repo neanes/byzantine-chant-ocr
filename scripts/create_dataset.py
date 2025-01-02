@@ -27,10 +27,10 @@ import torch.nn as nn
 from pathlib import Path
 from PIL import Image
 
-from torch_model import load_model
+from torch_model import load_model, get_transform
 
 sys.path.append("../src")
-from model import load_metadata, get_transform
+from model_metadata import load_metadata
 from segmentation import segment
 from text_removal import remove_text
 
@@ -202,8 +202,8 @@ def setup(img_transform=None, contour_filter=None):
     # Run contour extraction
     print("Extracting...")
 
-    classes = load_metadata(args.classes)
-    model = load_model(args.model, classes)
+    metadata = load_metadata(args.meta)
+    model = load_model(args.model, metadata.classes)
     model.eval()
 
     dataset = process_pdf(
@@ -212,7 +212,7 @@ def setup(img_transform=None, contour_filter=None):
         args.pages,
         args.o,
         model,
-        classes,
+        metadata.classes,
         img_transform,
         contour_filter,
     )

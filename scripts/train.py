@@ -25,7 +25,7 @@ import torch.optim as optim
 from test import test_model
 
 sys.path.append("../src")
-from model import ModelMetadata
+from model_metadata import ModelMetadata
 
 
 class EarlyStopper:
