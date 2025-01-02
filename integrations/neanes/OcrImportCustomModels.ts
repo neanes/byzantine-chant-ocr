@@ -1,4 +1,4 @@
-import { ContourMatch } from "./OcrAnalysis";
+import { ContourMatch } from './OcrAnalysis';
 
 export class AugmentedContourMatch extends ContourMatch {
   public isBase: boolean = false;

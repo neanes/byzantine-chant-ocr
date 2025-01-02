@@ -4,7 +4,7 @@ export class OcrAnalysis {
 }
 
 export class ModelMetadata {
-  public model_version: string = "";
+  public model_version: string = '';
   public classes: string[] = [];
 }
 
@@ -27,7 +27,7 @@ export class Segmentation {
 export class ContourMatch {
   public bounding_circle: Circle = new Circle();
   public bounding_rect: Rect = new Rect();
-  public label: string = "";
+  public label: string = '';
   public confidence: number = 0;
   public line: number = 0;
 }
