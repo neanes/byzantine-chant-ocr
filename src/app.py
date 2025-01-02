@@ -17,7 +17,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from model import load_metadata, load_onnx_model
+from model_metadata import load_metadata
+from model import load_onnx_model
 from ocr import process_image, process_pdf, save_analysis
 
 
