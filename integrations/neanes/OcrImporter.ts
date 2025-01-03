@@ -401,7 +401,7 @@ export class OcrImporter {
 
   processHamili(g: NeumeGroup) {
     // Check for extra hamili
-    const hamili = this.find(g, 'hamli');
+    const hamili = this.find(g, 'hamili');
 
     // Handle double hamili
     if (hamili.length === 1) {

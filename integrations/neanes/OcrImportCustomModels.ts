@@ -1,9 +1,10 @@
-import { ContourMatch } from './OcrAnalysis';
+import { ContourMatch, OcrClass } from './OcrAnalysis';
 
 export class AugmentedContourMatch extends ContourMatch {
   public isBase: boolean = false;
   public isMartyria: boolean = false;
   public isKronos: boolean = false;
+  public label: OcrClass = 'oligon';
 
   constructor(match?: ContourMatch) {
     super();
@@ -13,13 +14,6 @@ export class AugmentedContourMatch extends ContourMatch {
     }
   }
 }
-
-export class ContourLineGroup {
-  public onBaseline: AugmentedContourMatch[] = [];
-  public aboveBaseline: AugmentedContourMatch[] = [];
-  public belowBaseline: AugmentedContourMatch[] = [];
-}
-
 export class NeumeGroup {
   public base: AugmentedContourMatch = new AugmentedContourMatch();
   public support: AugmentedContourMatch[] = [];
