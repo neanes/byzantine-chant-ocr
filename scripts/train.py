@@ -22,6 +22,7 @@ from torchvision import datasets
 import torch.nn as nn
 import torch.optim as optim
 
+from ImageFolderWithPaths import ImageFolderWithPaths
 from test import test_model
 
 sys.path.append("../src")
@@ -50,7 +51,7 @@ class EarlyStopper:
 
 class AugmentedDataset(Dataset):
     def __init__(self, root_dir, transform=None, num_augments=100):
-        self.dataset = datasets.ImageFolder(root=root_dir)
+        self.dataset = ImageFolderWithPaths(root=root_dir)
         self.transform = transform
         self.num_augments = num_augments  # How many augmentations to apply per image
 
