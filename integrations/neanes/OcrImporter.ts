@@ -1098,6 +1098,8 @@ export class OcrImporter {
             g.support.push(...next.support);
             i++;
           }
+        } else if (g.base.label === 'elafron_syndesmos') {
+          e.quantitativeNeume = QuantitativeNeume.RunningElaphron;
         } else if (g.base.label === 'yporroe') {
           e.quantitativeNeume = QuantitativeNeume.Hyporoe;
         } else if (g.base.label === 'elafron') {
