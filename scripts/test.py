@@ -104,9 +104,13 @@ if __name__ == "__main__":
             }
         )
 
-    print(json.dumps(incorrect_formatted, indent=2))
-
-    print()
-
-    print(f"Test Accuracy: {test_accuracy:.2f}%")
-    print(f"Average Test Loss: {test_loss:.4f}")
+    print(
+        json.dumps(
+            {
+                "incorrect_predictions": incorrect_formatted,
+                "acc": test_accuracy,
+                "loss": test_loss,
+            },
+            indent=2,
+        )
+    )

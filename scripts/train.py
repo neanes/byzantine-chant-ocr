@@ -131,7 +131,7 @@ def train(model_version="0.0.0", num_epochs=50):
     #     ),
     # }
 
-    full_dataset = datasets.ImageFolder(data_dir, transform=data_transforms["train"])
+    full_dataset = ImageFolderWithPaths(data_dir, transform=data_transforms["train"])
 
     metadata = ModelMetadata()
     metadata.model_version = model_version
@@ -207,7 +207,7 @@ def train(model_version="0.0.0", num_epochs=50):
                 running_loss = 0.0
                 running_corrects = 0
 
-                for inputs, labels in dataloaders[phase]:
+                for inputs, labels, _ in dataloaders[phase]:
                     inputs, labels = inputs.to(device), labels.to(device)
 
                     optimizer.zero_grad()
