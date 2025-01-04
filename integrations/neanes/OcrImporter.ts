@@ -7,6 +7,7 @@ import {
   TempoElement,
 } from './neanes/models/Element';
 import {
+  Accidental,
   Fthora,
   GorgonNeume,
   QuantitativeNeume,
@@ -649,6 +650,10 @@ export class OcrImporter {
           e.fthora = Fthora.DiatonicThi_Top;
         } else if (fthora.label === 'fthora_diatonic_ke') {
           e.fthora = Fthora.DiatonicKe_Top;
+        } else if (fthora.label === 'fthora_diatonic_ni') {
+          e.fthora = Fthora.DiatonicNiLow_Top;
+        } else if (fthora.label === 'fthora_diatonic_ni_high') {
+          e.fthora = Fthora.DiatonicNiHigh_Top;
         } else if (fthora.label === 'fthora_diatonic_pa') {
           e.fthora = Fthora.DiatonicPa_Top;
         } else if (fthora.label === 'fthora_enharmonic') {
@@ -665,6 +670,10 @@ export class OcrImporter {
           e.fthora = Fthora.DiatonicThi_Bottom;
         } else if (fthora.label === 'fthora_diatonic_ke') {
           e.fthora = Fthora.DiatonicKe_Bottom;
+        } else if (fthora.label === 'fthora_diatonic_ni') {
+          e.fthora = Fthora.DiatonicNiLow_Bottom;
+        } else if (fthora.label === 'fthora_diatonic_ni_high') {
+          e.fthora = Fthora.DiatonicNiHigh_Bottom;
         } else if (fthora.label === 'fthora_diatonic_pa') {
           e.fthora = Fthora.DiatonicPa_Bottom;
         } else if (fthora.label === 'fthora_enharmonic') {
@@ -677,6 +686,22 @@ export class OcrImporter {
           e.fthora = Fthora.SoftChromaticThi_Bottom;
         }
       }
+    }
+  }
+
+  applyAccidental(e: NoteElement, g: NeumeGroup) {
+    if (this.hasBelow(g, 'sharp_2', 0.5)) {
+      e.accidental = Accidental.Sharp_2_Left;
+    } else if (this.hasBelow(g, 'sharp_general')) {
+      e.fthora = Fthora.GeneralSharp_Bottom;
+    } else if (this.hasAbove(g, 'sharp_general')) {
+      e.fthora = Fthora.GeneralSharp_Top;
+    } else if (this.hasAbove(g, 'flat_2', 0.5)) {
+      e.accidental = Accidental.Flat_2_Right;
+    } else if (this.hasAbove(g, 'flat_4', 0.5)) {
+      e.accidental = Accidental.Flat_4_Right;
+    } else if (this.hasAbove(g, 'flat_general')) {
+      e.fthora = Fthora.GeneralFlat_Top;
     }
   }
 
@@ -1118,6 +1143,7 @@ export class OcrImporter {
         this.applyApli(e, g);
         this.applyKlasma(e, g);
         this.applyFthora(e, g);
+        this.applyAccidental(e, g);
         this.applyPsifiston(e, g);
         this.applyHeteron(e, g);
         this.applyHomalon(e, g);

@@ -34,7 +34,7 @@ def filter(contours, img, segmentation):
             continue
 
         # Filter out contours that are not very squarish
-        if w / h >= 1.2 or w / h <= 0.8:
+        if w / h >= 1 or w / h <= 0.6:
             failed.append(c)
             continue
 
