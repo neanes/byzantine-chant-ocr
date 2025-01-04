@@ -127,6 +127,18 @@ Accuracy is the percentage of neumes that are correctly predicted.
 
 Loss is a measure of how far off the model's predictions are from the actual values. It's important to note that loss is not the same as the percentage of incorrect predictions. When the model makes a prediction, it also assigns a confidence level to that prediction. If the model makes an incorrect prediction with high confidence, the loss will be larger, reflecting the severity of the error.
 
+## Converting the Model to ONNX
+
+The main OCR engine does not use PyTorch directly, but rather uses an ONNX model. The main motivation for this is that the PyTorch library is quite large and would bloat the native binaries created by PyInstaller. The ONNX runtime, on the other hand, is comparatively lightweight.
+
+To convert the model from PyTorch's format to ONNX, use the following command.
+
+```bash
+python convert_to_onnx.py
+```
+
+By default, this will convert `models/current_model.pth` into `models/current_model.onnx`.
+
 ## Perform OCR on a file
 
 Below are the commands that can be used to perform OCR on images and PDFs. The resulting output will be a file called `output.yaml`. This file lists the line number, coordinates, and size of each contour found in the files, as well as the model's prediction (e.g. `ison`, `oligon`, etc.).
