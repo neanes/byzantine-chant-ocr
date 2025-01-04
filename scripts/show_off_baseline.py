@@ -32,26 +32,6 @@ def filter(contours, img, segmentation):
             failed.append(c)
             continue
 
-        # Filter out contours that are not very squarish
-        if w / h >= 1 or w / h <= 0.6:
-            failed.append(c)
-            continue
-
-        # Filter out contours that have pixels in the center
-        moments = cv2.moments(c)
-
-        if moments["m00"] != 0:
-            # Calculate centroid
-            cX = int(moments["m10"] / moments["m00"])
-            cY = int(moments["m01"] / moments["m00"])
-
-            # Get the pixel color at the centroid
-            color = img[cY, cX]  # Note: OpenCV uses (row, column) indexing
-
-            if color != 0:
-                failed.append(c)
-                continue
-
         passed.append(c)
 
     return passed, failed

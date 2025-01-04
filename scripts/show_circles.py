@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import sys
 
 sys.path.append("../src")
@@ -58,7 +57,7 @@ def filter(contours, img, segmentation):
     return passed, failed
 
 
-def show_ypsili(img_path, output_path):
+def show(img_path, output_path):
     img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
     segmentation = segment(img)
@@ -88,4 +87,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 3:
         output_filepath = sys.argv[2]
 
-    show_ypsili(filepath, output_filepath)
+    show(filepath, output_filepath)
