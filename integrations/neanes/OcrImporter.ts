@@ -95,6 +95,10 @@ export class OcrImporter {
         return QuantitativeNeume.OligonPlusElaphronPlusApostrophosPlusKentemata;
       }
 
+      if (this.hasAbove(g, 'elafron_syndesmos', 0.8)) {
+        return QuantitativeNeume.OligonPlusRunningElaphronPlusKentemata;
+      }
+
       // Sometimes OCR detects elafron_apostrofos as one character,
       // sometimes as two. So this may be a running elafron.
       if (hasApostrofosAbove && hasElafronAbove) {
