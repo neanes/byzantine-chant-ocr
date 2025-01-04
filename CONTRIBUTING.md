@@ -139,6 +139,16 @@ python convert_to_onnx.py
 
 By default, this will convert `models/current_model.pth` into `models/current_model.onnx`.
 
+## Testing the Model
+
+To test the model against a portion of the dataset, use the following command.
+
+```bash
+python test.py
+```
+
+This command will show you the accuracy and loss for the test, as well as a JSON formatted list of incorrect predictions.
+
 ## Perform OCR on a file
 
 Below are the commands that can be used to perform OCR on images and PDFs. The resulting output will be a file called `output.yaml`. This file lists the line number, coordinates, and size of each contour found in the files, as well as the model's prediction (e.g. `ison`, `oligon`, etc.).

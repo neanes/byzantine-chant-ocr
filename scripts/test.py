@@ -7,11 +7,42 @@ Usage: python test.py
 """
 
 import json
+import sys
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
-import torchvision.models as models
 import torch
 from torch import nn
+import torch.nn.functional as F
+
+from torch_model import get_transform, load_model
+
+sys.path.append("../src")
+from model_metadata import load_metadata
+
+
+class IncorrectPrediction:
+
+    def __init__(self, filepath, actual, predicted, confidence):
+        self.filepath = filepath
+        self.actual = actual
+        self.predicted = predicted
+        self.confidence = confidence
+
+
+class ImageFolderWithPaths(datasets.ImageFolder):
+    """Custom dataset that includes image file paths. Extends
+    torchvision.datasets.ImageFolder
+    """
+
+    # override the __getitem__ method. this is the method that dataloader calls
+    def __getitem__(self, index):
+        # this is what ImageFolder normally returns
+        original_tuple = super(ImageFolderWithPaths, self).__getitem__(index)
+        # the image file path
+        path = self.imgs[index][0]
+        # make a new tuple that includes original and the path
+        tuple_with_path = original_tuple + (path,)
+        return tuple_with_path
 
 
 def test_model(model, test_loader, device):
@@ -20,13 +51,16 @@ def test_model(model, test_loader, device):
     total = 0
     criterion = nn.CrossEntropyLoss()
 
+    incorrect_predictions = []
+
     test_loss = 0.0
     with torch.no_grad():  # No gradients needed for testing
-        for images, labels in test_loader:
+        for images, labels, paths in test_loader:
             images, labels = images.to(device), labels.to(device)
 
             # Forward pass
             outputs = model(images)
+            probabilities = F.softmax(outputs, dim=1)
             loss = criterion(outputs, labels)
             test_loss += loss.item()
 
@@ -35,25 +69,28 @@ def test_model(model, test_loader, device):
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
+            incorrect_indices = (predicted != labels).nonzero(as_tuple=True)[0]
+            for idx in incorrect_indices:
+                incorrect_predictions.append(
+                    IncorrectPrediction(
+                        paths[idx],
+                        labels[idx].item(),
+                        predicted[idx].item(),
+                        probabilities[idx, predicted[idx]].item(),
+                    )
+                )
+
     accuracy = 100 * correct / total
     average_loss = test_loss / len(test_loader)
 
-    print(f"Test Accuracy: {accuracy:.2f}%")
-    print(f"Average Test Loss: {average_loss:.4f}")
-    return accuracy, average_loss
+    return accuracy, average_loss, incorrect_predictions
 
 
 if __name__ == "__main__":
-    transform = transforms.Compose(
-        [
-            # transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ]
-    )
+    metadata = load_metadata("../models/metadata.json")
 
     # Load test dataset
-    full_dataset = datasets.ImageFolder("../data/dataset", transform=transform)
+    full_dataset = ImageFolderWithPaths("../data/dataset", transform=get_transform())
 
     train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
         full_dataset,
@@ -64,18 +101,28 @@ if __name__ == "__main__":
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    with open("../models/metadata.json") as f:
-        metadata = json.load(f)
-
-    model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
-    num_features = model.last_channel  # Get the size of the last layer
-    model.classifier[1] = nn.Linear(
-        num_features, len(metadata.classes)
-    )  # Replace classifier
-
-    model.load_state_dict(torch.load("../models/current_model.pth"))
+    model = load_model("../models/current_model.pth", metadata.classes)
 
     model.to(device)
 
     # Test the model
-    test_accuracy, test_loss = test_model(model, test_loader, device)
+    test_accuracy, test_loss, incorrect = test_model(model, test_loader, device)
+
+    incorrect_formatted = []
+
+    for p in incorrect:
+        incorrect_formatted.append(
+            {
+                "filepath": p.filepath,
+                "actual": metadata.classes[p.actual],
+                "predicted": metadata.classes[p.predicted],
+                "confidence": p.confidence,
+            }
+        )
+
+    print(json.dumps(incorrect_formatted, indent=2))
+
+    print()
+
+    print(f"Test Accuracy: {test_accuracy:.2f}%")
+    print(f"Average Test Loss: {test_loss:.4f}")

@@ -1,12 +1,13 @@
-import json
 import sys
 import cv2
-from torch.utils.data import DataLoader
-from torchvision import transforms, datasets
+from torchvision import transforms
 import torchvision.models as models
 import torch
 from torch import nn
 from PIL import Image
+
+sys.path.append("../src")
+from model_metadata import load_metadata
 
 
 def update_predictions(model, classes, dataset):
@@ -56,8 +57,7 @@ if __name__ == "__main__":
 
     print("Loading model...")
     # Load the model
-    with open("../models/metadata.json") as f:
-        metadata = json.load(f)
+    metadata = load_metadata("../models/metadata.json")
 
     model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
     num_features = model.last_channel  # Get the size of the last layer

@@ -261,7 +261,10 @@ def train(model_version="0.0.0", num_epochs=50):
         )
 
     print("\n\nTesting Model\n\n")
-    test_model(model, dataloaders["test"], device)
+    accuracy, average_loss, _ = test_model(model, dataloaders["test"], device)
+
+    print(f"Test Accuracy: {accuracy:.2f}%")
+    print(f"Average Test Loss: {average_loss:.4f}")
 
 
 if __name__ == "__main__":

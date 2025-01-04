@@ -13,3 +13,5 @@ src/dist/
 output.yaml
 output.byzx
 output.png
+metadata.json
+train_log.txt
