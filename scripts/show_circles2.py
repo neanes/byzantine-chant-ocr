@@ -12,7 +12,6 @@ def transform(img, segmentation):
 
     _, contours = filter(contours, img, segmentation)
 
-    # Find contours that are slanted up to the right
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 0), cv2.FILLED)
