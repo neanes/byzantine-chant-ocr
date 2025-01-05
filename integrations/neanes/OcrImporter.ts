@@ -599,31 +599,27 @@ export class OcrImporter {
   }
 
   applyDigorgon(e: NoteElement, g: NeumeGroup) {
-    const support = g.support?.find((x) => x.label === 'digorgon');
-
     // TODO secondary/tertiary gorgons
 
-    if (support) {
+    if (this.hasAbove(g, 'digorgon', 0.8)) {
       e.gorgonNeume = GorgonNeume.Digorgon;
     }
   }
 
   applyTrigorgon(e: NoteElement, g: NeumeGroup) {
-    const support = g.support?.find((x) => x.label === 'digorgon');
-
     // TODO secondary/tertiary gorgons
 
-    if (support) {
+    if (this.hasAbove(g, 'trigorgon', 0.8)) {
       e.gorgonNeume = GorgonNeume.Digorgon;
     }
   }
 
   applyKlasma(e: NoteElement, g: NeumeGroup) {
-    const support = g.support?.find((x) => x.label === 'klasma');
+    const klasma = this.find(g, 'klasma', 0.8);
 
-    if (support) {
+    if (klasma.length > 0) {
       e.timeNeume =
-        support.bounding_circle.y <= g.base.bounding_circle.y
+        klasma[0].bounding_circle.y <= g.base.bounding_circle.y
           ? TimeNeume.Klasma_Top
           : TimeNeume.Klasma_Bottom;
     }
@@ -644,11 +640,23 @@ export class OcrImporter {
   }
 
   applyFthora(e: NoteElement | MartyriaElement, g: NeumeGroup) {
-    const fthora = g.support?.find((x) => x.label.startsWith('fthora'));
+    const fthoras = g.support.filter((x) => x.label.startsWith('fthora'));
 
+    let fthora: AugmentedContourMatch | null = null;
+
+    // Find the fthora with the highest confidence
+    for (const f of fthoras) {
+      if (fthora == null || f.confidence > fthora.confidence) {
+        fthora = f;
+      }
+    }
     // TODO secondary/tertiary gorgons
 
-    if (fthora) {
+    if (
+      fthora &&
+      (this.overlaps(g.base, fthora, 0.8) ||
+        this.centerOverlaps(g.base, fthora))
+    ) {
       if (fthora.bounding_rect.y < g.base.bounding_rect.y) {
         if (fthora.label === 'fthora_diatonic_di') {
           e.fthora = Fthora.DiatonicThi_Top;
