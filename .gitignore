@@ -15,3 +15,4 @@ output.byzx
 output.png
 metadata.json
 train_log.txt
+OcrImporter.report.json

@@ -180,6 +180,32 @@ cd scripts
 python do_ocr.py doc.pdf 100 105
 ```
 
+## End-to-End (E2E) Testing
+
+To run the E2E tests, make sure you are in your Python virtual environment (if you are using one), and go to the `e2e` directory. Before running the tests the first time, you must first run
+
+```bash
+npm install
+```
+
+After that, run the tests with the following command.
+
+```bash
+npm test
+```
+
+In addition to the standard jest report, these tests will also generate a file called `OcrImporter.report.json`, which contain more detailed results.
+
+### What do the tests do?
+
+The `e2e/data` folder contains images of pages from Byzantine chant publications, as well as a Neanes file that matches the image. The tests loop over these pages and does the following for each page.
+
+1. Runs the OCR engine on the page.
+2. Generates a Neanes file from the OCR output.
+3. Compare the generated Neanes file with the expected Neanes file found in the `e2e/data` folder.
+
+Comparison uses the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) as metric of correctness. This currently only takes into account the similarity in the sequence of quantitative neumes. It does not consider gorgons, fthores, qualitative neumes, etc. The threshold to pass is set at 90% similarity, as of the writing of this document.
+
 ## Q & A
 
 ### Why MobileNetV2?
