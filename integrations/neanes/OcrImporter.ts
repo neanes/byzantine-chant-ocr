@@ -574,6 +574,37 @@ export class OcrImporter {
         g.support = g.support.filter((x) => x.label != 'psifiston');
       }
     }
+
+    // Filter out sharps that are too low
+    for (const x of this.findBelow(g, 'sharp_2')) {
+      if (this.touchesAnyTextline(x, segmentation.textlines_adj)) {
+        const index = g.support.indexOf(x);
+
+        if (index !== -1) {
+          g.support.splice(index, 1);
+        }
+      }
+    }
+
+    for (const x of this.findBelow(g, 'sharp_4')) {
+      if (this.touchesAnyTextline(x, segmentation.textlines_adj)) {
+        const index = g.support.indexOf(x);
+
+        if (index !== -1) {
+          g.support.splice(index, 1);
+        }
+      }
+    }
+
+    for (const x of this.findBelow(g, 'general_sharp')) {
+      if (this.touchesAnyTextline(x, segmentation.textlines_adj)) {
+        const index = g.support.indexOf(x);
+
+        if (index !== -1) {
+          g.support.splice(index, 1);
+        }
+      }
+    }
   }
 
   applyAntikenoma(e: NoteElement, g: NeumeGroup) {
@@ -586,7 +617,11 @@ export class OcrImporter {
   }
 
   applyGorgon(e: NoteElement, g: NeumeGroup) {
-    const gorgon = this.find(g, 'gorgon', 0.5);
+    const gorgon = g.support.filter(
+      (x) =>
+        x.label === 'gorgon' &&
+        (this.leftOverlaps(g.base, x) || this.overlaps(g.base, x, 0.9)),
+    );
 
     // TODO secondary/tertiary gorgons
 
@@ -798,10 +833,25 @@ export class OcrImporter {
     );
   }
 
+  touchesAnyTextline(match: ContourMatch, textlines: number[]) {
+    return textlines.some(
+      (y) =>
+        match.bounding_rect.y <= y &&
+        y <= match.bounding_rect.y + match.bounding_rect.h,
+    );
+  }
+
   centerOverlaps(base: AugmentedContourMatch, support: AugmentedContourMatch) {
     return (
       base.bounding_rect.x <= support.bounding_circle.x &&
       support.bounding_circle.x <= base.bounding_rect.x + base.bounding_rect.w
+    );
+  }
+
+  leftOverlaps(base: AugmentedContourMatch, support: AugmentedContourMatch) {
+    return (
+      base.bounding_rect.x <= support.bounding_rect.x &&
+      support.bounding_rect.x <= base.bounding_rect.x + base.bounding_rect.w
     );
   }
 
@@ -827,7 +877,7 @@ export class OcrImporter {
   findBelow(g: NeumeGroup, label: string, threshold = 1) {
     return g.support.filter(
       (x) =>
-        x.bounding_rect.y > g.base.bounding_rect.y &&
+        x.bounding_rect.y > g.base.bounding_rect.y + g.base.bounding_rect.h &&
         x.label === label &&
         (this.centerOverlaps(g.base, x) || this.overlaps(g.base, x, threshold)),
     );
