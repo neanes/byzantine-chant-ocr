@@ -11,22 +11,34 @@ import {
 export class ElementWithIssues {
   public actualIndex: Number;
   public expectedIndex: Number;
-  public base: QuantitativeNeume;
+  public expectedBase: QuantitativeNeume;
   public issues: Issue[] = [];
 
   constructor(expected: NoteElement, actual: NoteElement, issues: Issue[]) {
     this.actualIndex = actual.index;
     this.expectedIndex = expected.index;
-    this.base = expected.quantitativeNeume;
+    this.expectedBase = expected.quantitativeNeume;
     this.issues = issues;
   }
 }
 
+export enum IssueType {
+  Accidental = 'accidental',
+  BaseSubstitution = 'base_substitution',
+  Fthora = 'fthora',
+  Gorgon = 'gorgon',
+  Quality = 'quality',
+  Time = 'time',
+  Vareia = 'vareia',
+}
+
 export class Issue {
+  public type: IssueType;
   public expected: Neume;
   public actual: Neume;
 
-  constructor(expected, actual) {
+  constructor(type, expected, actual) {
+    this.type = type;
     this.actual = actual;
     this.expected = expected;
   }
@@ -61,7 +73,9 @@ function score(
   if (expected.gorgonNeume !== actual.gorgonNeume) {
     penalties.gorgon += 1;
 
-    issues.push(new Issue(expected.gorgonNeume, actual.gorgonNeume));
+    issues.push(
+      new Issue(IssueType.Gorgon, expected.gorgonNeume, actual.gorgonNeume),
+    );
   }
 
   // Vocal Expression (Quality)
@@ -75,7 +89,11 @@ function score(
   if (expected.vocalExpressionNeume !== actual.vocalExpressionNeume) {
     penalties.quality += 1;
     issues.push(
-      new Issue(expected.vocalExpressionNeume, actual.vocalExpressionNeume),
+      new Issue(
+        IssueType.Quality,
+        expected.vocalExpressionNeume,
+        actual.vocalExpressionNeume,
+      ),
     );
   }
 
@@ -86,7 +104,9 @@ function score(
 
   if (expected.timeNeume !== actual.timeNeume) {
     penalties.time += 1;
-    issues.push(new Issue(expected.timeNeume, actual.timeNeume));
+    issues.push(
+      new Issue(IssueType.Time, expected.timeNeume, actual.timeNeume),
+    );
   }
 
   // Accidentals
@@ -96,7 +116,9 @@ function score(
 
   if (expected.accidental !== actual.accidental) {
     penalties.accidental += 1;
-    issues.push(new Issue(expected.accidental, actual.accidental));
+    issues.push(
+      new Issue(IssueType.Accidental, expected.accidental, actual.accidental),
+    );
   }
 
   // Fthora
@@ -106,7 +128,7 @@ function score(
 
   if (expected.fthora !== actual.fthora) {
     penalties.fthora += 1;
-    issues.push(new Issue(expected.fthora, actual.fthora));
+    issues.push(new Issue(IssueType.Fthora, expected.fthora, actual.fthora));
   }
 
   // Vareia
@@ -116,7 +138,7 @@ function score(
 
   if (expected.vareia !== actual.vareia) {
     penalties.vareia += 1;
-    issues.push(new Issue(expected.vareia, actual.vareia));
+    issues.push(new Issue(IssueType.Vareia, expected.vareia, actual.vareia));
   }
 
   return issues;
@@ -152,7 +174,11 @@ export function calculateScorecard(
     // TODO log deletion/insertions, too?
     if (expected.quantitativeNeume !== actual.quantitativeNeume) {
       issues.push(
-        new Issue(expected.quantitativeNeume, actual.quantitativeNeume),
+        new Issue(
+          IssueType.BaseSubstitution,
+          expected.quantitativeNeume,
+          actual.quantitativeNeume,
+        ),
       );
     }
 
