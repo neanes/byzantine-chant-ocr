@@ -17,7 +17,7 @@ export class ElementWithIssues {
   constructor(expected: NoteElement, actual: NoteElement, issues: Issue[]) {
     this.actualIndex = actual.index;
     this.expectedIndex = expected.index;
-    this.base = actual.quantitativeNeume;
+    this.base = expected.quantitativeNeume;
     this.issues = issues;
   }
 }
@@ -147,6 +147,14 @@ export function calculateScorecard(
       penalties,
       totals,
     );
+
+    // Log substitutions
+    // TODO log deletion/insertions, too?
+    if (expected.quantitativeNeume !== actual.quantitativeNeume) {
+      issues.push(
+        new Issue(expected.quantitativeNeume, actual.quantitativeNeume),
+      );
+    }
 
     if (issues.length > 0) {
       elementsWithIssues.push(
