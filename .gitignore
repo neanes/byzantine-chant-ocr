@@ -16,3 +16,4 @@ output.png
 metadata.json
 train_log.txt
 OcrImporter.report.json
+e2e/data/*.actual.yaml
