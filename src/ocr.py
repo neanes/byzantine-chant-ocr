@@ -43,6 +43,7 @@ class Circle:
 
 class ContourMatch:
     def __init__(self):
+        self.id = -1
         self.bounding_circle = None
         self.bounding_rect = None
         self.test_image = None
@@ -53,6 +54,7 @@ class ContourMatch:
 
     def to_dict(self):
         return {
+            "id": self.id,
             "label": self.label,
             "confidence": self.confidence,
             "line": self.line,
@@ -170,6 +172,9 @@ def prepare_image(image):
     )
     assign_lines_to_matches(page.matches, page.segmentation.baselines)
     sort_matches(page.matches)
+
+    for i, m in enumerate(page.matches):
+        m.id = i
 
     return page
 

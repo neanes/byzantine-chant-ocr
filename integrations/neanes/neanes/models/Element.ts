@@ -14,10 +14,10 @@ import {
   Tie,
   TimeNeume,
   VocalExpressionNeume,
-} from "./Neumes";
-import { Unit } from "../utils/Unit";
+} from './Neumes';
+import { Unit } from '../utils/Unit';
 
-import { ModeKeyTemplate } from "./ModeKeys";
+import { ModeKeyTemplate } from './ModeKeys';
 import {
   getFthoraReplacements,
   getGorgonReplacements,
@@ -29,25 +29,26 @@ import {
   measureBarLeftToAbove,
   takesSecondaryNeumes,
   takesTertiaryNeumes,
-} from "./NeumeReplacements";
-import { Scale, ScaleNote } from "./Scales";
+} from './NeumeReplacements';
+import { Scale, ScaleNote } from './Scales';
+import { NeumeGroup } from '../../OcrImportCustomModels';
 
 export enum ElementType {
-  Note = "Note",
-  Martyria = "Martyria",
-  Tempo = "Tempo",
-  Empty = "Empty",
-  TextBox = "TextBox",
-  RichTextBox = "RichTextBox",
-  DropCap = "DropCap",
-  ModeKey = "ModeKey",
-  ImageBox = "ImageBox",
+  Note = 'Note',
+  Martyria = 'Martyria',
+  Tempo = 'Tempo',
+  Empty = 'Empty',
+  TextBox = 'TextBox',
+  RichTextBox = 'RichTextBox',
+  DropCap = 'DropCap',
+  ModeKey = 'ModeKey',
+  ImageBox = 'ImageBox',
 }
 
 export enum LineBreakType {
-  Justify = "Justify",
-  Center = "Center",
-  Left = "Left",
+  Justify = 'Justify',
+  Center = 'Center',
+  Left = 'Left',
 }
 
 export interface ElementCloneArgs {
@@ -82,19 +83,21 @@ export abstract class ScoreElement {
   public line: number = 0;
   public page: number = 0;
 
+  public ocrNeumeGroup: NeumeGroup | null = null;
+
   public static isShort(measureBar: MeasureBar): boolean {
     return (
-      measureBar.startsWith("MeasureBarTop") ||
-      measureBar.startsWith("MeasureBarShort")
+      measureBar.startsWith('MeasureBarTop') ||
+      measureBar.startsWith('MeasureBarShort')
     );
   }
 }
 
 export enum AcceptsLyricsOption {
-  Default = "Default",
-  Yes = "Yes",
-  No = "No",
-  MelismaOnly = "MelismaOnly",
+  Default = 'Default',
+  Yes = 'Yes',
+  No = 'No',
+  MelismaOnly = 'MelismaOnly',
 }
 
 export class NoteElement extends ScoreElement {
@@ -106,15 +109,15 @@ export class NoteElement extends ScoreElement {
   public vareia: boolean = false;
   public koronis: boolean = false;
   public stavros: boolean = false;
-  public lyrics: string = "";
-  public lyricsColor: string = "black";
-  public lyricsFontFamily: string = "Source Serif";
+  public lyrics: string = '';
+  public lyricsColor: string = 'black';
+  public lyricsFontFamily: string = 'Source Serif';
   public lyricsFontSize: number = Unit.fromPt(12);
   public lyricsStrokeWidth: number = 0;
   public lyricsUseDefaultStyle: boolean = true;
-  public lyricsFontStyle: string = "normal";
-  public lyricsFontWeight: string = "400";
-  public lyricsTextDecoration: string = "none";
+  public lyricsFontStyle: string = 'normal';
+  public lyricsFontWeight: string = '400';
+  public lyricsTextDecoration: string = 'none';
   public acceptsLyrics: AcceptsLyricsOption = AcceptsLyricsOption.Default;
   public isMelisma: boolean = false;
   public isMelismaStart: boolean = false;
@@ -186,7 +189,7 @@ export class NoteElement extends ScoreElement {
 
     Object.assign(
       clone,
-      this.getClipboardProperties(args?.includeLyrics ?? true)
+      this.getClipboardProperties(args?.includeLyrics ?? true),
     );
 
     return clone;
@@ -392,7 +395,7 @@ export class NoteElement extends ScoreElement {
   }
 
   // Used for display
-  public melismaText: string = "";
+  public melismaText: string = '';
   public melismaOffsetTop: number = 0;
   public lyricsFontHeight: number = 0;
   public hyphenOffsets: number[] = [];
@@ -440,12 +443,12 @@ export class NoteElement extends ScoreElement {
         const replacement =
           replacements.find(
             (x) =>
-              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume)
+              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume),
           ) ||
           replacements.find(
             (x) =>
               x.isNotPairedWith &&
-              !x.isNotPairedWith.includes(this.quantitativeNeume)
+              !x.isNotPairedWith.includes(this.quantitativeNeume),
           );
 
         if (replacement) {
@@ -463,12 +466,12 @@ export class NoteElement extends ScoreElement {
         const replacement =
           replacements.find(
             (x) =>
-              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume)
+              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume),
           ) ||
           replacements.find(
             (x) =>
               x.isNotPairedWith &&
-              !x.isNotPairedWith.includes(this.quantitativeNeume)
+              !x.isNotPairedWith.includes(this.quantitativeNeume),
           );
 
         if (replacement) {
@@ -486,12 +489,12 @@ export class NoteElement extends ScoreElement {
         const replacement =
           replacements.find(
             (x) =>
-              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume)
+              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume),
           ) ||
           replacements.find(
             (x) =>
               x.isNotPairedWith &&
-              !x.isNotPairedWith.includes(this.quantitativeNeume)
+              !x.isNotPairedWith.includes(this.quantitativeNeume),
           );
 
         if (replacement) {
@@ -504,19 +507,19 @@ export class NoteElement extends ScoreElement {
   private replaceVocalExpressions() {
     if (this.vocalExpressionNeume) {
       const replacements = getVocalExpressionReplacements(
-        this.vocalExpressionNeume
+        this.vocalExpressionNeume,
       );
 
       if (replacements) {
         const replacement =
           replacements.find(
             (x) =>
-              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume)
+              x.isPairedWith && x.isPairedWith.includes(this.quantitativeNeume),
           ) ||
           replacements.find(
             (x) =>
               x.isNotPairedWith &&
-              !x.isNotPairedWith.includes(this.quantitativeNeume)
+              !x.isNotPairedWith.includes(this.quantitativeNeume),
           );
 
         if (replacement) {
@@ -535,14 +538,16 @@ export class NoteElement extends ScoreElement {
           replacements.find(
             (x) =>
               x.isPairedWithVocalExpression &&
-              x.isPairedWithVocalExpression.includes(this.vocalExpressionNeume!)
+              x.isPairedWithVocalExpression.includes(
+                this.vocalExpressionNeume!,
+              ),
           ) ||
           replacements.find(
             (x) =>
               x.isNotPairedWithVocalExpression &&
               !x.isNotPairedWithVocalExpression.includes(
-                this.vocalExpressionNeume!
-              )
+                this.vocalExpressionNeume!,
+              ),
           );
 
         if (replacement) {
@@ -720,21 +725,21 @@ export class EmptyElement extends ScoreElement {
 }
 
 export enum TextBoxAlignment {
-  Center = "center",
-  Left = "left",
-  Right = "right",
+  Center = 'center',
+  Left = 'left',
+  Right = 'right',
 }
 
 export class TextBoxElement extends ScoreElement {
   public readonly elementType: ElementType = ElementType.TextBox;
   public alignment: TextBoxAlignment = TextBoxAlignment.Left;
-  public color: string = "#000000";
-  public content: string = "";
-  public contentLeft: string = "";
-  public contentCenter: string = "";
-  public contentRight: string = "";
+  public color: string = '#000000';
+  public content: string = '';
+  public contentLeft: string = '';
+  public contentCenter: string = '';
+  public contentRight: string = '';
   public fontSize: number = 16;
-  public fontFamily: string = "Source Serif";
+  public fontFamily: string = 'Source Serif';
   public strokeWidth: number = 0;
   public multipanel: boolean = false;
   public inline: boolean = false;
@@ -750,21 +755,21 @@ export class TextBoxElement extends ScoreElement {
   public marginBottom: number = 0;
 
   // Values computed by the layout service
-  public computedFontFamily: string = "";
+  public computedFontFamily: string = '';
   public computedFontSize: number = Unit.fromPt(20);
-  public computedFontWeight: string = "400";
-  public computedFontStyle: string = "normal";
-  public computedColor: string = "#000000";
+  public computedFontWeight: string = '400';
+  public computedFontStyle: string = 'normal';
+  public computedColor: string = '#000000';
   public computedStrokeWidth: number = 0;
   public computedLineHeight: number | null = null;
 
   // Re-render helpers
   public heightPrevious: number = 0;
-  public computedFontFamilyPrevious: string = "";
+  public computedFontFamilyPrevious: string = '';
   public computedFontSizePrevious: number = Unit.fromPt(20);
-  public computedFontWeightPrevious: string = "400";
-  public computedFontStylePrevious: string = "normal";
-  public computedColorPrevious: string = "#000000";
+  public computedFontWeightPrevious: string = '400';
+  public computedFontStylePrevious: string = 'normal';
+  public computedColorPrevious: string = '#000000';
   public computedStrokeWidthPrevious: number = 0;
   public computedLineHeightPrevious: number | null = null;
 
@@ -811,10 +816,10 @@ export class TextBoxElement extends ScoreElement {
 
 export class RichTextBoxElement extends ScoreElement {
   public readonly elementType: ElementType = ElementType.RichTextBox;
-  public content: string = "";
-  public contentLeft: string = "";
-  public contentRight: string = "";
-  public contentCenter: string = "";
+  public content: string = '';
+  public contentLeft: string = '';
+  public contentRight: string = '';
+  public contentCenter: string = '';
   public multipanel: boolean = false;
   public rtl: boolean = false;
 
@@ -846,7 +851,7 @@ export class ModeKeyElement extends ScoreElement {
   public scale: Scale = Scale.Diatonic;
   public scaleNote: ScaleNote = ScaleNote.Pa;
   public fthora: Fthora | null = null;
-  public description: string = "";
+  public description: string = '';
   public tempo: TempoSign | null = null;
   public tempoAlignRight: boolean = false;
   public martyria: ModeSign = ModeSign.Alpha;
@@ -858,7 +863,7 @@ export class ModeKeyElement extends ScoreElement {
   public quantitativeNeumeRight: QuantitativeNeume | null = null;
   public quantitativeNeumeAboveNote: ModeSign | null = null;
   public quantitativeNeumeAboveNote2: ModeSign | null = null;
-  public color: string = "#000000";
+  public color: string = '#000000';
   public fontSize: number = Unit.fromPt(20);
   public strokeWidth: number = 0;
   public heightAdjustment: number = 0;
@@ -876,16 +881,16 @@ export class ModeKeyElement extends ScoreElement {
   public marginBottom: number = 0;
 
   // Values computed by the layout service
-  public computedFontFamily: string = "";
+  public computedFontFamily: string = '';
   public computedFontSize: number = Unit.fromPt(20);
-  public computedColor: string = "#000000";
+  public computedColor: string = '#000000';
   public computedStrokeWidth: number = 0;
   public computedHeightAdjustment: number = 0;
 
   // Re-render helpers
-  public computedFontFamilyPrevious: string = "";
+  public computedFontFamilyPrevious: string = '';
   public computedFontSizePrevious: number = Unit.fromPt(20);
-  public computedColorPrevious: string = "#000000";
+  public computedColorPrevious: string = '#000000';
   public computedStrokeWidthPrevious: number = 0;
   public computedHeightAdjustmentPrevious: number = 0;
 
@@ -899,7 +904,7 @@ export class ModeKeyElement extends ScoreElement {
 
   public static createFromTemplate(
     template: ModeKeyTemplate,
-    alignment?: TextBoxAlignment
+    alignment?: TextBoxAlignment,
   ) {
     const element = new ModeKeyElement();
 
@@ -967,32 +972,32 @@ export class ModeKeyElement extends ScoreElement {
 
 export class DropCapElement extends ScoreElement {
   public readonly elementType: ElementType = ElementType.DropCap;
-  public content: string = "A";
-  public fontFamily: string = "Source Serif";
+  public content: string = 'A';
+  public fontFamily: string = 'Source Serif';
   public fontSize: number = Unit.fromPt(60);
-  public fontWeight: string = "400";
-  public fontStyle: string = "normal";
+  public fontWeight: string = '400';
+  public fontStyle: string = 'normal';
   public lineHeight: number | null = null;
   public strokeWidth: number = 0;
-  public color: string = "#000000";
+  public color: string = '#000000';
   public useDefaultStyle: boolean = true;
   public customWidth: number | null = null;
 
   // Values computed by the layout service
-  public computedFontFamily: string = "";
+  public computedFontFamily: string = '';
   public computedFontSize: number = Unit.fromPt(60);
-  public computedFontWeight: string = "400";
-  public computedFontStyle: string = "normal";
-  public computedColor: string = "#000000";
+  public computedFontWeight: string = '400';
+  public computedFontStyle: string = 'normal';
+  public computedColor: string = '#000000';
   public computedStrokeWidth: number = 0;
   public computedLineHeight: number | null = null;
 
   // Re-render helpers
-  public computedFontFamilyPrevious: string = "";
+  public computedFontFamilyPrevious: string = '';
   public computedFontSizePrevious: number = Unit.fromPt(60);
-  public computedFontWeightPrevious: string = "400";
-  public computedFontStylePrevious: string = "normal";
-  public computedColorPrevious: string = "#000000";
+  public computedFontWeightPrevious: string = '400';
+  public computedFontStylePrevious: string = 'normal';
+  public computedColorPrevious: string = '#000000';
   public computedStrokeWidthPrevious: number = 0;
   public computedLineHeightPrevious: number | null = null;
 
@@ -1027,7 +1032,7 @@ export class DropCapElement extends ScoreElement {
 export class ImageBoxElement extends ScoreElement {
   public readonly elementType: ElementType = ElementType.ImageBox;
 
-  public data: string = "";
+  public data: string = '';
 
   public imageHeight: number = 100;
   public imageWidth: number = 100;

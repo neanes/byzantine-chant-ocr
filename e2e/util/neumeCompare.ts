@@ -7,11 +7,13 @@ import {
   Neume,
   QuantitativeNeume,
 } from '../../integrations/neanes/neanes/models/Neumes';
+import { NeumeGroup } from '../../integrations/neanes/OcrImportCustomModels';
 
 export class ElementWithIssues {
   public actualIndex: Number;
   public expectedIndex: Number;
   public expectedBase: QuantitativeNeume;
+  public ocrNeumeGroup: NeumeGroup | null;
   public issues: Issue[] = [];
 
   constructor(expected: NoteElement, actual: NoteElement, issues: Issue[]) {
@@ -19,6 +21,7 @@ export class ElementWithIssues {
     this.expectedIndex = expected.index;
     this.expectedBase = expected.quantitativeNeume;
     this.issues = issues;
+    this.ocrNeumeGroup = actual.ocrNeumeGroup;
   }
 }
 

@@ -1,7 +1,10 @@
 import { promises as fs } from 'fs';
 import { afterAll, expect, test } from '@jest/globals';
 
-import { OcrImporter } from '../integrations/neanes/OcrImporter';
+import {
+  OcrImporter,
+  OcrImporterOptions,
+} from '../integrations/neanes/OcrImporter';
 import { extractQuantitativeNeumes } from './util/extractQuantitativeNeumes';
 import { launchOcr } from './util/launchOcr';
 import { backtrackAlignment, levenshteinDistance } from './util/levenshtein';
@@ -20,22 +23,14 @@ const skipOcr = process.env.SKIP_OCR === 'true';
 const levenshteinDistanceThreshold = 0.9;
 const timeoutInMs = 120 * 1000;
 const reportFilePath = 'OcrImporter.report.json';
-const report: Array<{
-  testName: string;
-  page: string;
-  levenshteinDistance: number;
-  similarity: number;
-  scorecard: {
-    penalties: Scores;
-    totals: Scores;
-    similarities: Scores;
-    similarity: number;
-  };
-}> = [];
+const reportFullFilePath = 'OcrImporter.report.full.json';
+const report: any[] = [];
+const reportFull: any[] = [];
 
 // Write the report after all tests have completed
 afterAll(async () => {
   await fs.writeFile(reportFilePath, JSON.stringify(report, null, 2));
+  await fs.writeFile(reportFullFilePath, JSON.stringify(reportFull, null, 2));
 });
 
 const table = [
@@ -45,6 +40,9 @@ const table = [
   {
     page: 'heirmologion_john_p0120',
   },
+  {
+    page: 'liturgica_karamanis_1990_p0257',
+  },
 ];
 
 test.each(table)(
@@ -52,6 +50,9 @@ test.each(table)(
   async ({ page }) => {
     // Arrange
     const importer = new OcrImporter();
+
+    const options = new OcrImporterOptions();
+    options.debugMode = true;
 
     const imagePath = `data/${page}.png`;
     const byzxPath = `data/${page}.byzx`;
@@ -73,10 +74,14 @@ test.each(table)(
     }
 
     // Act
-    if (!skipOcr || !fileExists(outputPathYaml))
+    if (!(await fileExists(outputPathYaml)) || !skipOcr) {
       await launchOcr('../scripts/do_ocr.py', imagePath, outputPathYaml);
+    }
 
-    const elements = importer.import(await fs.readFile(outputPathYaml, 'utf8'));
+    const elements = importer.import(
+      await fs.readFile(outputPathYaml, 'utf8'),
+      options,
+    );
 
     for (let i = 0; i < elements.length; i++) {
       elements[i].index = i;
@@ -86,7 +91,7 @@ test.each(table)(
 
     const distance = levenshteinDistance(expected, actual);
 
-    const similarity =
+    const levenShteinSimilarity =
       1 - distance.distance / Math.max(expected.length, actual.length);
 
     const actualNoteElements = elements.filter(
@@ -104,17 +109,29 @@ test.each(table)(
       alignment.alignedB,
     );
 
+    const { penalties, totals, similarities, similarity } = scorecard;
+
     // Log for reporting
     report.push({
       testName: expect.getState().currentTestName!,
       page,
-      similarity,
+      similarity: levenShteinSimilarity,
+      levenshteinDistance: distance.distance,
+      scorecard: { penalties, similarities, similarity },
+    });
+
+    reportFull.push({
+      testName: expect.getState().currentTestName!,
+      page,
+      similarity: levenShteinSimilarity,
       levenshteinDistance: distance.distance,
       scorecard,
     });
 
     // Assert
-    expect(similarity).toBeGreaterThanOrEqual(levenshteinDistanceThreshold);
+    expect(levenShteinSimilarity).toBeGreaterThanOrEqual(
+      levenshteinDistanceThreshold,
+    );
   },
   timeoutInMs,
 );

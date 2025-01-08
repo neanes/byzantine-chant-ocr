@@ -26,6 +26,8 @@ import {
 export class OcrImporterOptions {
   min_confidence_threshold: number = 0.7;
   martyria_confidence_threshold: number = 0.8;
+
+  debugMode = false;
 }
 
 export class OcrImporter {
@@ -57,7 +59,7 @@ export class OcrImporter {
 
   processOligon(g: NeumeGroup) {
     // Check kentima below
-    const kentimaBelow = this.findBelow(g, 'kentima');
+    const kentimaBelow = this.findBelow(g, 'kentima', 0.9);
 
     if (kentimaBelow.length === 1) {
       return QuantitativeNeume.OligonPlusKentimaBelow;
@@ -71,7 +73,9 @@ export class OcrImporter {
     const kentimaAbove = this.findAbove(g, 'kentima');
 
     // Handle oligon + kentemata
-    if (kentimaAbove.length >= 2) {
+    // If at least one kentima was found and we find ison, apostrofos, elafron, etc.
+    // Then we assume that there is a second kentima, even if it wasn't detected.
+    if (kentimaAbove.length >= 1) {
       if (this.hasAbove(g, 'ison')) {
         return QuantitativeNeume.OligonPlusIsonPlusKentemata;
       }
@@ -117,7 +121,9 @@ export class OcrImporter {
       if (this.hasAbove(g, 'hamili')) {
         return QuantitativeNeume.OligonPlusHamiliPlusKentemata;
       }
+    }
 
+    if (kentimaAbove.length >= 2) {
       const ypsili = this.findAbove(g, 'ypsili');
 
       if (ypsili.length === 1) {
@@ -486,6 +492,20 @@ export class OcrImporter {
 
     // Filter out gorgons that are too high
     for (let x of this.findAbove(g, 'gorgon')) {
+      if (
+        g.base.bounding_rect.y - (x.bounding_rect.y + x.bounding_rect.h) >
+        0.75 * segmentation.oligon_width
+      ) {
+        const index = g.support.indexOf(x);
+
+        if (index !== -1) {
+          g.support.splice(index, 1);
+        }
+      }
+    }
+
+    // Filter out kentima that are too high
+    for (let x of this.findAbove(g, 'kentima')) {
       if (
         g.base.bounding_rect.y - (x.bounding_rect.y + x.bounding_rect.h) >
         0.75 * segmentation.oligon_width
@@ -868,7 +888,7 @@ export class OcrImporter {
   findAbove(g: NeumeGroup, label: string, threshold = 1) {
     return g.support.filter(
       (x) =>
-        x.bounding_rect.y < g.base.bounding_rect.y &&
+        x.bounding_circle.y < g.base.bounding_circle.y &&
         x.label === label &&
         (this.centerOverlaps(g.base, x) || this.overlaps(g.base, x, threshold)),
     );
@@ -877,7 +897,7 @@ export class OcrImporter {
   findBelow(g: NeumeGroup, label: string, threshold = 1) {
     return g.support.filter(
       (x) =>
-        x.bounding_rect.y > g.base.bounding_rect.y + g.base.bounding_rect.h &&
+        x.bounding_circle.y > g.base.bounding_circle.y &&
         x.label === label &&
         (this.centerOverlaps(g.base, x) || this.overlaps(g.base, x, threshold)),
     );
@@ -1020,6 +1040,7 @@ export class OcrImporter {
     // 1) Base neumes that touch the baseline
     // 2) Martyria
     // 3) Kronos
+
     for (const [i, m] of matches.entries()) {
       // TODO the condition "touches_baseline" can sometimes cause
       // true base neumes to be filtered out if, for example, a line contains a single
@@ -1028,6 +1049,22 @@ export class OcrImporter {
       m.isBase =
         this.is_base(m.label) &&
         this.touches_baseline(m, analysis.segmentation.baselines[m.line]);
+
+      if (
+        !m.isBase &&
+        m.label === 'apostrofos' &&
+        groups.length > 0 &&
+        groups[groups.length - 1].base.label === 'apostrofos' &&
+        !groups[groups.length - 1].support.includes(m) &&
+        Math.abs(
+          m.bounding_rect.y -
+            (groups[groups.length - 1].base.bounding_rect.y +
+              groups[groups.length - 1].base.bounding_rect.h),
+        ) < analysis.segmentation.oligon_height
+      ) {
+        // This is probably a double apostrofos
+        m.isBase = true;
+      }
 
       m.isMartyria =
         m.label.startsWith('martyria') &&
@@ -1119,6 +1156,8 @@ export class OcrImporter {
       if (g.base.isBase) {
         const e = new NoteElement();
 
+        e.ocrNeumeGroup = g;
+
         if (g.base.label === 'oligon') {
           if (
             next?.base.line === g.base.line &&
@@ -1143,7 +1182,10 @@ export class OcrImporter {
           if (
             e.quantitativeNeume === QuantitativeNeume.Apostrophos &&
             next?.base.line === g.base.line &&
-            next?.base.label === 'elafron'
+            next?.base.label === 'elafron' &&
+            !this.has(next, 'gorgon') &&
+            next?.base.bounding_rect.x - g.base.bounding_rect.x <=
+              analysis.segmentation.oligon_width
           ) {
             // Combine the apostrofos with the elafron
             e.quantitativeNeume = QuantitativeNeume.RunningElaphron;
@@ -1157,6 +1199,20 @@ export class OcrImporter {
           ) {
             // Combine the apostrofos with the petasti+elafron
             e.quantitativeNeume = QuantitativeNeume.PetastiPlusRunningElaphron;
+            g.support.push(...next.support);
+            i++;
+          } else if (
+            e.quantitativeNeume === QuantitativeNeume.Apostrophos &&
+            next?.base.line === g.base.line &&
+            next?.base.label === 'apostrofos' &&
+            Math.abs(
+              next?.base.bounding_rect.y -
+                (g.base.bounding_rect.y + g.base.bounding_rect.h),
+            ) < analysis.segmentation.oligon_height
+          ) {
+            // Combine into a double apostrofos when the top of the next apostrofos is
+            // very close to the bottom of the previous apostrofos
+            e.quantitativeNeume = QuantitativeNeume.DoubleApostrophos;
             g.support.push(...next.support);
             i++;
           }
@@ -1208,6 +1264,8 @@ export class OcrImporter {
           continue;
         } else if (g.base.label === 'stavros') {
           e.quantitativeNeume = QuantitativeNeume.Cross;
+        } else if (g.base.label === 'breath') {
+          e.quantitativeNeume = QuantitativeNeume.Breath;
         }
 
         this.applyAntikenoma(e, g);
@@ -1233,6 +1291,7 @@ export class OcrImporter {
       } else if (g.base.isMartyria) {
         // TODO make this smarter
         const e = new MartyriaElement();
+        e.ocrNeumeGroup = g;
         e.auto = true;
         elements.push(e);
 
@@ -1260,6 +1319,7 @@ export class OcrImporter {
         this.applyFthora(e, g);
       } else if (g.base.isKronos) {
         const e = new TempoElement();
+        e.ocrNeumeGroup = g;
         elements.push(e);
 
         if (this.has(g, 'gorgon') && this.has(g, 'argon')) {

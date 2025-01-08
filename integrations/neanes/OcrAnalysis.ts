@@ -25,6 +25,7 @@ export class Segmentation {
 }
 
 export class ContourMatch {
+  public id: number = 0;
   public bounding_circle: Circle = new Circle();
   public bounding_rect: Rect = new Rect();
   public label: OcrClass | null = null;
@@ -51,6 +52,7 @@ export type OcrClass =
   | 'apli'
   | 'apostrofos'
   | 'argon'
+  | 'breath'
   | 'digorgon'
   | 'elafron'
   | 'elafron_apostrofos'
