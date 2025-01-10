@@ -41,7 +41,7 @@ It is generally expected that the OCR result will be at least 90% accurate for m
 
 If the resulting file is not sufficiently accurate, there are three possible causes.
 
-1. The image or PDF file is not clear, or is tilted. Eventually the OCR engine will be updated to correct misaligned images.
+1. The image or PDF file is not clear, or contains a severe tilt or non-linear distortions (e.g. a picture of a curved page).
 2. There is a bug or inefficiency with the Neanes importer.
 3. The model needs more training.
 

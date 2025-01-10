@@ -192,7 +192,7 @@ def process_image(image, model, metadata, split_lr=False):
         page.id = i
 
         if len(page_areas) > 0:
-            page.sub_page_area = page_areas[i]
+            page.page_area = page_areas[i]
 
         recognize_contours(page.matches, model, metadata.classes)
 

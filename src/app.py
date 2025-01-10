@@ -7,6 +7,7 @@ import traceback
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
+    QCheckBox,
     QFileDialog,
     QHBoxLayout,
     QLabel,
@@ -26,13 +27,22 @@ class OCRThread(QThread):
     error = Signal(str)
     finished = Signal()
 
-    def __init__(self, infile_path, output_path, page_range, model_path, classes_path):
+    def __init__(
+        self,
+        infile_path,
+        output_path,
+        page_range,
+        model_path,
+        classes_path,
+        splitLeftRight,
+    ):
         super().__init__()
         self.infile_path = infile_path
         self.output_path = output_path
         self.page_range = page_range
         self.model_path = model_path
         self.classes_path = classes_path
+        self.splitLeftRight = splitLeftRight
 
     def run(self):
         # Simulate OCR processing
@@ -42,11 +52,17 @@ class OCRThread(QThread):
 
             if self.infile_path.endswith(".pdf"):
                 analysis = process_pdf(
-                    self.infile_path, self.page_range, model, classes
+                    self.infile_path,
+                    self.page_range,
+                    model,
+                    classes,
+                    split_lr=self.splitLeftRight,
                 )
             else:
                 image = cv2.imread(self.infile_path, cv2.IMREAD_GRAYSCALE)
-                analysis = process_image(image, model, classes)
+                analysis = process_image(
+                    image, model, classes, split_lr=self.splitLeftRight
+                )
 
             save_analysis(analysis, self.output_path)
             self.finished.emit()
@@ -89,6 +105,8 @@ class MyWidget(QWidget):
         self.layoutPages.addWidget(self.lblPages)
         self.layoutPages.addWidget(self.txtPages)
 
+        self.chkTwoPageSpread = QCheckBox("Two-Page Spread", self)
+
         self.btnGo = QPushButton("Go!", self)
         self.btnGo.setEnabled(False)
         # self.btnGo.setGeometry(150, 100, 100, 30)
@@ -98,6 +116,7 @@ class MyWidget(QWidget):
         # self.layout.addWidget(self.text)
         self.layout.addLayout(self.layoutSelectInput)
         self.layout.addLayout(self.layoutPages)
+        self.layout.addWidget(self.chkTwoPageSpread)
         self.layout.addLayout(self.layoutSelectModel)
         self.layout.addLayout(self.layoutSelectMetadata)
         self.layout.addWidget(self.btnGo)
@@ -136,6 +155,8 @@ class MyWidget(QWidget):
             self.txtSelectModel.setText(filepath)
 
     def go(self):
+        page_range = []
+
         if self.infile_path.endswith(".pdf"):
             try:
                 page_range = self.parse_page_range(self.txtPages.text())
@@ -149,26 +170,27 @@ class MyWidget(QWidget):
                 )
                 return
 
-            output_path, _ = QFileDialog.getSaveFileName(
-                self, "Save File", dir="output.yaml"
-            )
+        output_path, _ = QFileDialog.getSaveFileName(
+            self, "Save File", dir="output.yaml"
+        )
 
-            if len(output_path) == 0:
-                return
+        if len(output_path) == 0:
+            return
 
-            self.enable_ui(False)
+        self.enable_ui(False)
 
-            # Start OCR in a separate thread
-            self.thread = OCRThread(
-                self.infile_path,
-                output_path,
-                page_range,
-                self.txtSelectModel.text(),
-                self.txtSelectMetadata.text(),
-            )
-            self.thread.error.connect(self.display_error)
-            self.thread.finished.connect(lambda: self.enable_ui(True))
-            self.thread.start()
+        # Start OCR in a separate thread
+        self.thread = OCRThread(
+            self.infile_path,
+            output_path,
+            page_range,
+            self.txtSelectModel.text(),
+            self.txtSelectMetadata.text(),
+            self.chkTwoPageSpread.isChecked(),
+        )
+        self.thread.error.connect(self.display_error)
+        self.thread.finished.connect(lambda: self.enable_ui(True))
+        self.thread.start()
 
     def display_error(self, msg):
         QMessageBox.critical(
@@ -184,7 +206,9 @@ class MyWidget(QWidget):
         self.btnSelectInput.setEnabled(enabled)
         self.btnSelectMetadata.setEnabled(enabled)
         self.btnSelectModel.setEnabled(enabled)
-        self.txtPages.setEnabled(enabled)
+        if self.infile_path.endswith(".pdf"):
+            self.txtPages.setEnabled(enabled)
+        self.chkTwoPageSpread.setEnabled(enabled)
 
     def parse_page_range(self, page_range):
         """

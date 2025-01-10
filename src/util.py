@@ -89,7 +89,7 @@ def pixels_in_row(binary_image):
     return pixels_in_row
 
 
-def find_skew_angles(binary_image, lower_limit, upper_limit, delta):
+def find_skew_angles(binary_image, limit, delta):
     def determine_score(arr, angle):
         data = inter.rotate(arr, angle, reshape=False, order=0)
         histogram = np.sum(data, axis=1, dtype=float)
@@ -97,7 +97,7 @@ def find_skew_angles(binary_image, lower_limit, upper_limit, delta):
         return score
 
     scores = []
-    angles = np.arange(-lower_limit, upper_limit + delta, delta)
+    angles = np.arange(-limit, limit + delta, delta)
     for angle in angles:
         score = determine_score(binary_image, angle)
         scores.append(score)
@@ -127,7 +127,7 @@ def gss_max(f, a, b, tolerance=1e-5):
 def deskew(img, limit, delta):
     binary_image = to_binary(img)
 
-    sorted_angles = find_skew_angles(binary_image, limit, limit, delta)
+    sorted_angles = find_skew_angles(binary_image, limit, delta)
 
     upper_limit = max(sorted_angles[:3])
     lower_limit = min(sorted_angles[:3])
