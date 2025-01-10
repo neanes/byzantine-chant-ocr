@@ -349,11 +349,11 @@ export class OcrImporter {
     }
 
     // Check for petaste used as support
-    if (this.hasAbove(g, 'ison')) {
+    if (this.hasAbove(g, 'ison', 0.9)) {
       return QuantitativeNeume.PetastiWithIson;
     }
 
-    if (this.hasAbove(g, 'oligon')) {
+    if (this.hasAbove(g, 'oligon', 0.9)) {
       return QuantitativeNeume.PetastiPlusOligon;
     }
 
@@ -640,7 +640,9 @@ export class OcrImporter {
     const gorgon = g.support.filter(
       (x) =>
         x.label === 'gorgon' &&
-        (this.leftOverlaps(g.base, x) || this.overlaps(g.base, x, 0.9)),
+        (this.leftOverlaps(g.base, x) ||
+          this.overlaps(g.base, x, 0.9) ||
+          this.centerOverlaps(g.base, x)),
     );
 
     // TODO secondary/tertiary gorgons
@@ -839,6 +841,7 @@ export class OcrImporter {
       'vareia',
       'kentima',
       'yporroe',
+      'stavros',
     ].includes(label);
   }
 
@@ -1066,6 +1069,10 @@ export class OcrImporter {
         m.isBase = true;
       }
 
+      if (!m.isBase && m.label === 'breath' && !this.findBase(matches, i)) {
+        m.isBase = true;
+      }
+
       m.isMartyria =
         m.label.startsWith('martyria') &&
         !m.label.startsWith('martyria_root') &&
@@ -1184,6 +1191,7 @@ export class OcrImporter {
             next?.base.line === g.base.line &&
             next?.base.label === 'elafron' &&
             !this.has(next, 'gorgon') &&
+            !this.has(next, 'klasma') &&
             next?.base.bounding_rect.x - g.base.bounding_rect.x <=
               analysis.segmentation.oligon_width
           ) {
@@ -1264,8 +1272,12 @@ export class OcrImporter {
           continue;
         } else if (g.base.label === 'stavros') {
           e.quantitativeNeume = QuantitativeNeume.Cross;
+          elements.push(e);
+          continue;
         } else if (g.base.label === 'breath') {
           e.quantitativeNeume = QuantitativeNeume.Breath;
+          elements.push(e);
+          continue;
         }
 
         this.applyAntikenoma(e, g);

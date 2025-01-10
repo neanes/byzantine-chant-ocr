@@ -9,6 +9,10 @@ export class ModelMetadata {
 }
 
 export class PageAnalysis {
+  public id: number = 0;
+  public original_page_num?: number;
+  public page_area?: 'left' | 'right';
+
   public segmentation: Segmentation = new Segmentation();
   public matches: ContourMatch[] = [];
 }

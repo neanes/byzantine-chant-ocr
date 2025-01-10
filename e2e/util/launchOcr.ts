@@ -4,8 +4,15 @@ export async function launchOcr(
   scriptPath: string,
   imagePath: string,
   outputPath: string,
+  splitLeftRight: boolean = false,
 ) {
-  const process = spawn('python', [scriptPath, imagePath, '-o', outputPath]);
+  const args = [scriptPath, imagePath, '-o', outputPath];
+
+  if (splitLeftRight) {
+    args.push('--split-lr');
+  }
+
+  const process = spawn('python', args);
 
   //let output = '';
   //let error = '';
@@ -14,9 +21,10 @@ export async function launchOcr(
   //   output += data;
   // });
 
-  //   process.stderr.on('data', function (data) {
-  //     error += data;
-  //   });
+  process.stderr.on('data', function (data) {
+    //error += data;
+    console.log(data.toString());
+  });
 
   await new Promise((resolve) => {
     process.on('close', resolve);

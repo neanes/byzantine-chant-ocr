@@ -39,6 +39,12 @@ if __name__ == "__main__":
         action="store_true",
     )
 
+    parser.add_argument(
+        "--split-lr",
+        help="Use this flag if each PDF page contains two side-by-side pages",
+        action="store_true",
+    )
+
     args = parser.parse_args()
 
     metadata = load_metadata("../models/metadata.json")
@@ -54,12 +60,10 @@ if __name__ == "__main__":
 
         page_range = range(start, end + 1)
 
-        print(page_range)
-
-        results = process_pdf(args.filepath, page_range, model, metadata)
+        results = process_pdf(args.filepath, page_range, model, metadata, args.split_lr)
     else:
         image = cv2.imread(args.filepath, cv2.IMREAD_GRAYSCALE)
-        results = process_image(image, model, metadata)
+        results = process_image(image, model, metadata, args.split_lr)
 
     if args.stdout:
         stream = yaml.safe_dump(

@@ -80,19 +80,30 @@ class NeumeGroup:
 
 class PageAnalysis:
     def __init__(self):
-        self.page = 0
+        self.id = 0
+        self.original_page_num = None
+        self.page_area = None
         self.neume_groups = []
         self.segmentation = None
         self.matches = []
         self.image_with_text_removed = None
 
     def to_dict(self):
-        return {
-            "page": self.page,
-            "segmentation": self.segmentation.to_dict(),
-            "matches": [x.to_dict() for x in self.matches],
-            # "neume_groups": [x.to_dict() for x in self.neume_groups],
+        result = {
+            "id": self.id,
         }
+
+        if self.original_page_num is not None:
+            result["original_page_num"] = self.original_page_num
+
+        if self.page_area is not None:
+            result["page_area"] = self.page_area
+
+        result["segmentation"] = self.segmentation.to_dict()
+        result["matches"] = [x.to_dict() for x in self.matches]
+        # "neume_groups": [x.to_dict() for x in self.neume_groups],
+
+        return result
 
 
 class Analysis:
@@ -114,7 +125,7 @@ def save_analysis(analysis, filepath="output.yaml"):
         )
 
 
-def process_pdf(filepath, page_range, model, metadata):
+def process_pdf(filepath, page_range, model, metadata, split_lr=False):
     analysis = Analysis()
     analysis.model_metadata = metadata
 
@@ -135,9 +146,53 @@ def process_pdf(filepath, page_range, model, metadata):
 
         image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
-        page = prepare_image(image)
-        page.page = page_index
-        page_index = page_index + 1
+        inner_pages = [image]
+        page_areas = []
+
+        if split_lr:
+            width = image.shape[1]
+            left = image[:, : width // 2]
+            right = image[:, width // 2 :]
+            inner_pages = [left, right]
+            page_areas = ["left", "right"]
+
+        for i, img in enumerate(inner_pages):
+            page = prepare_image(img)
+            page.id = page_index
+            page.original_page_num = page_num + 1
+
+            if len(page_areas) > 0:
+                page.page_area = page_areas[i]
+
+            page_index = page_index + 1
+
+            recognize_contours(page.matches, model, metadata.classes)
+
+            analysis.pages.append(page)
+
+    return analysis
+
+
+def process_image(image, model, metadata, split_lr=False):
+    analysis = Analysis()
+    analysis.model_metadata = metadata
+
+    inner_pages = [image]
+    page_areas = []
+
+    if split_lr:
+        width = image.shape[1]
+        left = image[:, : width // 2]
+        right = image[:, width // 2 :]
+        inner_pages = [left, right]
+        page_areas = ["left", "right"]
+
+    for i, img in enumerate(inner_pages):
+        page = prepare_image(img)
+        page.id = i
+
+        if len(page_areas) > 0:
+            page.sub_page_area = page_areas[i]
 
         recognize_contours(page.matches, model, metadata.classes)
 
@@ -146,22 +201,12 @@ def process_pdf(filepath, page_range, model, metadata):
     return analysis
 
 
-def process_image(image, model, metadata):
-    analysis = Analysis()
-    analysis.model_metadata = metadata
-
-    page = prepare_image(image)
-
-    recognize_contours(page.matches, model, metadata.classes)
-
-    analysis.pages.append(page)
-
-    return analysis
-
-
 def prepare_image(image):
     page = PageAnalysis()
-    binary = util.to_binary(image)
+
+    angle, corrected = util.deskew(image, limit=5, delta=1)
+
+    binary = util.to_binary(corrected)
 
     page.segmentation = segment(binary)
     page.image_with_text_removed = remove_text(binary, page.segmentation)

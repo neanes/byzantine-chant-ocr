@@ -43,11 +43,15 @@ const table = [
   {
     page: 'liturgica_karamanis_1990_p0257',
   },
+  {
+    page: 'heirmologion_pandektis_1955_p0160',
+    splitLeftRight: true,
+  },
 ];
 
 test.each(table)(
   'OCR $page',
-  async ({ page }) => {
+  async ({ page, splitLeftRight }) => {
     // Arrange
     const importer = new OcrImporter();
 
@@ -75,7 +79,12 @@ test.each(table)(
 
     // Act
     if (!(await fileExists(outputPathYaml)) || !skipOcr) {
-      await launchOcr('../scripts/do_ocr.py', imagePath, outputPathYaml);
+      await launchOcr(
+        '../scripts/do_ocr.py',
+        imagePath,
+        outputPathYaml,
+        splitLeftRight,
+      );
     }
 
     const elements = importer.import(
