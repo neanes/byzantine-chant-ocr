@@ -250,7 +250,7 @@ def launch_normal():
 def launch_headless(args):
     if args.input is None:
         print("Please specify an input file with -i or --input.")
-        exit()
+        sys.exit(1)
 
     metadata = load_metadata(args.meta)
     model = load_onnx_model(args.model)
@@ -258,7 +258,7 @@ def launch_headless(args):
     if args.input.endswith(".pdf"):
         if args.start_page == -1:
             print("Please provide a page number with --start-page.")
-            exit()
+            sys.exit(1)
 
         start = args.start_page - 1
         end = args.end_page - 1 if args.end_page != -1 else start
