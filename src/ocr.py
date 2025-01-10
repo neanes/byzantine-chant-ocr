@@ -125,6 +125,14 @@ def save_analysis(analysis, filepath="output.yaml"):
         )
 
 
+def write_analysis_to_stream(analysis):
+    stream = yaml.safe_dump(
+        analysis.to_dict(), sort_keys=False, default_flow_style=False
+    )
+
+    return stream
+
+
 def process_pdf(filepath, page_range, model, metadata, split_lr=False):
     analysis = Analysis()
     analysis.model_metadata = metadata

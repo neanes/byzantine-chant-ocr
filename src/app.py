@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import os
 import pymupdf
@@ -20,7 +21,7 @@ from PySide6.QtWidgets import (
 
 from model_metadata import load_metadata
 from model import load_onnx_model
-from ocr import process_image, process_pdf, save_analysis
+from ocr import process_image, process_pdf, save_analysis, write_analysis_to_stream
 
 
 class OCRThread(QThread):
@@ -45,7 +46,6 @@ class OCRThread(QThread):
         self.splitLeftRight = splitLeftRight
 
     def run(self):
-        # Simulate OCR processing
         try:
             classes = load_metadata(self.classes_path)
             model = load_onnx_model(self.model_path)
@@ -236,7 +236,7 @@ class MyWidget(QWidget):
         return sorted(indexes)  # Sort the final list
 
 
-if __name__ == "__main__":
+def launch_normal():
     app = QApplication([])
 
     widget = MyWidget()
@@ -245,3 +245,100 @@ if __name__ == "__main__":
     widget.show()
 
     sys.exit(app.exec())
+
+
+def launch_headless(args):
+    if args.input is None:
+        print("Please specify an input file with -i or --input.")
+        exit()
+
+    metadata = load_metadata(args.meta)
+    model = load_onnx_model(args.model)
+
+    if args.input.endswith(".pdf"):
+        if args.start_page == -1:
+            print("Please provide a page number with --start-page.")
+            exit()
+
+        start = args.start_page - 1
+        end = args.end_page - 1 if args.end_page != -1 else start
+
+        page_range = range(start, end + 1)
+
+        results = process_pdf(args.input, page_range, model, metadata, args.split_lr)
+    else:
+        image = cv2.imread(args.input, cv2.IMREAD_GRAYSCALE)
+        results = process_image(image, model, metadata, args.split_lr)
+
+    if args.stdout:
+        print(
+            write_analysis_to_stream(results),
+            flush=True,
+        )
+    else:
+        save_analysis(results, args.output)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Performs OCR on an image or PDF")
+
+    parser.add_argument(
+        "--headless",
+        help="Launch the app without a window",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "-s",
+        "--start-page",
+        help="The first page to process. Required for PDFs.",
+        type=int,
+        default=-1,
+    )
+    parser.add_argument(
+        "-e",
+        "--end-page",
+        help="The last page to process. If omitted, only the start page will be processed.",
+        type=int,
+        default=-1,
+    )
+
+    parser.add_argument("-i", "--input", help="Relative path to the input file")
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Relative path to the output file",
+        default="output.yaml",
+    )
+
+    parser.add_argument(
+        "--model",
+        help="Relative path to the model",
+        default="current_model.onnx",
+    )
+
+    parser.add_argument(
+        "--meta",
+        help="Relative path to model metadata",
+        default="metadata.json",
+    )
+
+    parser.add_argument(
+        "--stdout",
+        help="Print to stdout instead of to a file",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--split-lr",
+        help="Use this flag if each PDF page contains two side-by-side pages",
+        action="store_true",
+    )
+
+    args = parser.parse_args()
+
+    if args.headless:
+        launch_headless(args)
+    else:
+        launch_normal()
