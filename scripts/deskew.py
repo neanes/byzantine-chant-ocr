@@ -4,11 +4,13 @@ import sys
 from show_baselines_and_textlines import show_baselines_and_textlines
 
 sys.path.append("../src")
-from util import to_binary, deskew
+from util import downsize, deskew
 
 
 def correct_skew(img_path, output_path):
     img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+
+    img = downsize(img)
 
     import time
 

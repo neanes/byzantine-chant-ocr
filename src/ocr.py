@@ -212,7 +212,9 @@ def process_image(image, model, metadata, split_lr=False):
 def prepare_image(image):
     page = PageAnalysis()
 
-    angle, corrected = util.deskew(image, limit=5, delta=1)
+    resized = util.downsize(image)
+
+    angle, corrected = util.deskew(resized, limit=5, delta=1)
 
     binary = util.to_binary(corrected)
 

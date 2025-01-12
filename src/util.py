@@ -116,6 +116,7 @@ def gss_max(f, a, b, tolerance=1e-5):
     while b - a > tolerance:
         c = b - (b - a) * invphi
         d = a + (b - a) * invphi
+
         if f(c) > f(d):
             b = d
         else:
@@ -140,7 +141,7 @@ def deskew(img, limit, delta):
 
     best_angle = gss_max(determine_score, lower_limit, upper_limit, 0.1)
 
-    (h, w) = binary_image.shape[:2]
+    (h, w) = img.shape[:2]
     center = (w // 2, h // 2)
     M = cv2.getRotationMatrix2D(center, best_angle, 1.0)
     corrected = cv2.warpAffine(
@@ -148,3 +149,12 @@ def deskew(img, limit, delta):
     )
 
     return best_angle, corrected
+
+
+def downsize(image, max_width=2550, max_height=3300):
+    h, w = image.shape[:2]
+    if w > max_width or h > max_height:
+        scaling_factor = min(max_width / w, max_height / h)
+        new_dimensions = (int(w * scaling_factor), int(h * scaling_factor))
+        image = cv2.resize(image, new_dimensions, interpolation=cv2.INTER_AREA)
+    return image
