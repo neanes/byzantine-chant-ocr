@@ -9,19 +9,27 @@ from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
     QCheckBox,
+    QComboBox,
     QFileDialog,
     QHBoxLayout,
     QLabel,
+    QLineEdit,
     QMessageBox,
     QPushButton,
-    QLineEdit,
+    QSpinBox,
     QVBoxLayout,
     QWidget,
 )
 
 from model_metadata import load_metadata
 from model import load_onnx_model
-from ocr import process_image, process_pdf, save_analysis, write_analysis_to_stream
+from ocr import (
+    PreprocessOptions,
+    process_image,
+    process_pdf,
+    save_analysis,
+    write_analysis_to_stream,
+)
 
 
 class OCRThread(QThread):
@@ -107,6 +115,34 @@ class MyWidget(QWidget):
 
         self.chkTwoPageSpread = QCheckBox("Two-Page Spread", self)
 
+        self.layoutDeskew = QHBoxLayout()
+        self.chkDeskew = QCheckBox("Deskew", self)
+        self.layoutDeskew.addWidget(self.chkDeskew)
+
+        self.layoutDespeckle = QHBoxLayout()
+        self.chkDespeckle = QCheckBox("Despeckle", self)
+        self.lblDespeckle = QLabel("k-size")
+        self.cmbDespeckle = QComboBox(self)
+        self.cmbDespeckle.setMinimumWidth(50)
+        self.cmbDespeckle.addItems(["3", "5", "7", "9"])
+        self.cmbDespeckle.setCurrentText("3")
+        self.layoutDespeckle.addWidget(self.chkDespeckle)
+        self.layoutDespeckle.addStretch()
+        self.layoutDespeckle.addWidget(self.lblDespeckle)
+        self.layoutDespeckle.addWidget(self.cmbDespeckle)
+
+        self.layoutClose = QHBoxLayout()
+        self.chkClose = QCheckBox("Close Holes", self)
+        self.lblClose = QLabel("k-size")
+        self.spnClose = QSpinBox(self)
+        self.spnClose.setMinimumWidth(50)
+        self.spnClose.setValue(2)
+        self.spnClose.setMinimum(2)
+        self.layoutClose.addWidget(self.chkClose)
+        self.layoutClose.addStretch()
+        self.layoutClose.addWidget(self.lblClose)
+        self.layoutClose.addWidget(self.spnClose)
+
         self.btnGo = QPushButton("Go!", self)
         self.btnGo.setEnabled(False)
         # self.btnGo.setGeometry(150, 100, 100, 30)
@@ -117,6 +153,9 @@ class MyWidget(QWidget):
         self.layout.addLayout(self.layoutSelectInput)
         self.layout.addLayout(self.layoutPages)
         self.layout.addWidget(self.chkTwoPageSpread)
+        self.layout.addLayout(self.layoutDeskew)
+        self.layout.addLayout(self.layoutDespeckle)
+        self.layout.addLayout(self.layoutClose)
         self.layout.addLayout(self.layoutSelectModel)
         self.layout.addLayout(self.layoutSelectMetadata)
         self.layout.addWidget(self.btnGo)
@@ -255,6 +294,21 @@ def launch_headless(args):
     metadata = load_metadata(args.meta)
     model = load_onnx_model(args.model)
 
+    preprocess_options = PreprocessOptions()
+
+    preprocess_options.deskew = args.deskew
+    preprocess_options.despeckle = args.despeckle
+    preprocess_options.close = args.close
+
+    if args.despeckle_ksize:
+        preprocess_options.despeckle_kernel_size = args.despeckle_ksize
+
+    if args.close_ksize:
+        preprocess_options.close_kernel_size = args.close_ksize
+
+    if args.deskew_max_angle:
+        preprocess_options.deskew_max_angle = args.deskew_max_angle
+
     if args.input.endswith(".pdf"):
         if args.start_page == -1:
             print("Please provide a page number with --start-page.")
@@ -265,10 +319,23 @@ def launch_headless(args):
 
         page_range = range(start, end + 1)
 
-        results = process_pdf(args.input, page_range, model, metadata, args.split_lr)
+        results = process_pdf(
+            args.input,
+            page_range,
+            model,
+            metadata,
+            preprocess_options=preprocess_options,
+            split_lr=args.split_lr,
+        )
     else:
         image = cv2.imread(args.input, cv2.IMREAD_GRAYSCALE)
-        results = process_image(image, model, metadata, args.split_lr)
+        results = process_image(
+            image,
+            model,
+            metadata,
+            preprocess_options=preprocess_options,
+            split_lr=args.split_lr,
+        )
 
     if args.stdout:
         print(
@@ -334,6 +401,42 @@ if __name__ == "__main__":
         "--split-lr",
         help="Use this flag if each PDF page contains two side-by-side pages",
         action="store_true",
+    )
+
+    parser.add_argument(
+        "--deskew",
+        help="Use this flag if the image is significantly skewed",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--deskew-max-angle",
+        help="The maximum tilt angle to consider when attempting to deskew. The larger this angle, the slower the deskewing process will be.",
+        type=int,
+    )
+
+    parser.add_argument(
+        "--despeckle",
+        help="Use this flag if the image contains a lot of salt-and-pepper noise. Performs a median blur.",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--despeckle-ksize",
+        help="The kernel size for despeckling. E.g. 3 indicates a 3x3 kernel.",
+        type=int,
+    )
+
+    parser.add_argument(
+        "--close",
+        help="Use this flag if the neumes contain a lot of small gaps. Performs a morphological closing transformation.",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--close-ksize",
+        help="The kernel size for morphological closing. E.g. 3 indicates a 3x3 kernel.",
+        type=int,
     )
 
     args = parser.parse_args()

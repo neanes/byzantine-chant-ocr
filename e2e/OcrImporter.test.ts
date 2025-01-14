@@ -36,22 +36,43 @@ afterAll(async () => {
 const table = [
   {
     page: 'anastasimatarion_john_p0011',
+    deskew: true,
+    despeckle: false,
+    close: false,
   },
   {
     page: 'heirmologion_john_p0120',
+    deskew: true,
+    despeckle: false,
+    close: false,
   },
   {
     page: 'liturgica_karamanis_1990_p0257',
+    deskew: true,
+    despeckle: true,
+    close: false,
   },
   {
     page: 'heirmologion_pandektis_1955_p0160',
+    deskew: true,
+    despeckle: true,
+    close: true,
     splitLeftRight: true,
+  },
+  {
+    page: 'doxastarion_pringos_p0141',
+    deskew: true,
+    despeckle: true,
+    close: true,
+  },
+  {
+    page: 'vespers_sam_p0411',
   },
 ];
 
 test.each(table)(
   'OCR $page',
-  async ({ page, splitLeftRight }) => {
+  async ({ page, splitLeftRight, deskew, despeckle, close }) => {
     // Arrange
     const importer = new OcrImporter();
 
@@ -79,12 +100,12 @@ test.each(table)(
 
     // Act
     if (!(await fileExists(outputPathYaml)) || !skipOcr) {
-      await launchOcr(
-        '../scripts/do_ocr.py',
-        imagePath,
-        outputPathYaml,
+      await launchOcr('../scripts/do_ocr.py', imagePath, outputPathYaml, {
+        deskew,
+        despeckle,
+        close,
         splitLeftRight,
-      );
+      });
     }
 
     const elements = importer.import(
@@ -100,7 +121,7 @@ test.each(table)(
 
     const distance = levenshteinDistance(expected, actual);
 
-    const levenShteinSimilarity =
+    const levenshteinSimilarity =
       1 - distance.distance / Math.max(expected.length, actual.length);
 
     const actualNoteElements = elements.filter(
@@ -124,7 +145,7 @@ test.each(table)(
     report.push({
       testName: expect.getState().currentTestName!,
       page,
-      similarity: levenShteinSimilarity,
+      levenshteinSimilarity,
       levenshteinDistance: distance.distance,
       scorecard: { penalties, similarities, similarity },
     });
@@ -132,13 +153,13 @@ test.each(table)(
     reportFull.push({
       testName: expect.getState().currentTestName!,
       page,
-      similarity: levenShteinSimilarity,
+      levenshteinSimilarity,
       levenshteinDistance: distance.distance,
       scorecard,
     });
 
     // Assert
-    expect(levenShteinSimilarity).toBeGreaterThanOrEqual(
+    expect(levenshteinSimilarity).toBeGreaterThanOrEqual(
       levenshteinDistanceThreshold,
     );
   },

@@ -1,15 +1,34 @@
 import { spawn } from 'child_process';
 
+export interface OcrLaunchOptions {
+  deskew?: boolean;
+  despeckle?: boolean;
+  close?: boolean;
+  splitLeftRight?: boolean;
+}
+
 export async function launchOcr(
   scriptPath: string,
   imagePath: string,
   outputPath: string,
-  splitLeftRight: boolean = false,
+  options: OcrLaunchOptions,
 ) {
   const args = [scriptPath, imagePath, '-o', outputPath];
 
-  if (splitLeftRight) {
+  if (options.splitLeftRight) {
     args.push('--split-lr');
+  }
+
+  if (options.deskew) {
+    args.push('--deskew');
+  }
+
+  if (options.despeckle) {
+    args.push('--despeckle');
+  }
+
+  if (options.close) {
+    args.push('--close');
   }
 
   const process = spawn('python', args);

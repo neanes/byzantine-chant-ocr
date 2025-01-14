@@ -70,7 +70,7 @@ export class OcrImporter {
     }
 
     // Check kentima above
-    const kentimaAbove = this.findAbove(g, 'kentima');
+    const kentimaAbove = this.findAbove(g, 'kentima', 0.1);
 
     // Handle oligon + kentemata
     // If at least one kentima was found and we find ison, apostrofos, elafron, etc.
@@ -80,7 +80,7 @@ export class OcrImporter {
         return QuantitativeNeume.OligonPlusIsonPlusKentemata;
       }
 
-      const apostrofosAbove = this.findAbove(g, 'apostrofos');
+      const apostrofosAbove = this.findAbove(g, 'apostrofos', 0.1);
       const elafronAbove = this.findAbove(g, 'elafron');
       const hasElafronApostrofosAbove = this.hasAbove(g, 'elafron_apostrofos');
 
@@ -220,10 +220,6 @@ export class OcrImporter {
     // Check for oligon used as support
     if (this.hasAbove(g, 'ison')) {
       return QuantitativeNeume.OligonPlusIson;
-    }
-
-    if (this.hasAbove(g, 'apostrofos')) {
-      return QuantitativeNeume.OligonPlusApostrophos;
     }
 
     if (this.hasAbove(g, 'yporroe')) {
@@ -558,10 +554,10 @@ export class OcrImporter {
       }
     }
 
-    // If the group has both a gorgon and apli,
+    // If the group has both a gorgon and apli below the neume,
     // this is probably wrong. So take the highest confidence only.
     apli = this.findBelow(g, 'apli');
-    gorgon = this.find(g, 'gorgon');
+    gorgon = this.findBelow(g, 'gorgon');
 
     if (gorgon.length > 0 && apli.length > 0) {
       if (confidence(apli) > confidence(gorgon)) {
@@ -637,7 +633,7 @@ export class OcrImporter {
   }
 
   applyGorgon(e: NoteElement, g: NeumeGroup) {
-    const gorgon = g.support.filter(
+    const gorgons = g.support.filter(
       (x) =>
         x.label === 'gorgon' &&
         (this.leftOverlaps(g.base, x) ||
@@ -647,11 +643,35 @@ export class OcrImporter {
 
     // TODO secondary/tertiary gorgons
 
-    if (gorgon.length > 0) {
-      e.gorgonNeume =
-        gorgon[0].bounding_circle.y <= g.base.bounding_circle.y
-          ? GorgonNeume.Gorgon_Top
-          : GorgonNeume.Gorgon_Bottom;
+    for (const gorgon of gorgons) {
+      // TODO this parentheses logic needs to be more precise
+      const paren_left = this.findAbove(g, 'paren_left');
+      const paren_right = this.findAbove(g, 'paren_right');
+
+      const above = gorgon.bounding_circle.y <= g.base.bounding_circle.y;
+
+      if (
+        above &&
+        paren_left.length > 0 &&
+        paren_left[0].bounding_circle.x < gorgon.bounding_circle.x
+      ) {
+        return;
+      }
+
+      if (
+        above &&
+        paren_right.length > 0 &&
+        paren_right[0].bounding_circle.x > gorgon.bounding_circle.x
+      ) {
+        return;
+      }
+
+      e.gorgonNeume = above
+        ? GorgonNeume.Gorgon_Top
+        : GorgonNeume.Gorgon_Bottom;
+
+      // Take the first gorgon we find that is not actually an ison indicator
+      break;
     }
   }
 
@@ -838,6 +858,7 @@ export class OcrImporter {
       'apostrofos',
       'elafron',
       'elafron_apostrofos',
+      'hamili',
       'vareia',
       'kentima',
       'yporroe',
@@ -1191,8 +1212,8 @@ export class OcrImporter {
             next?.base.line === g.base.line &&
             next?.base.label === 'elafron' &&
             !this.has(next, 'gorgon') &&
-            !this.has(next, 'klasma') &&
-            next?.base.bounding_rect.x - g.base.bounding_rect.x <=
+            next?.base.bounding_rect.x -
+              (g.base.bounding_rect.x + g.base.bounding_rect.w) <=
               analysis.segmentation.oligon_width
           ) {
             // Combine the apostrofos with the elafron
@@ -1266,9 +1287,15 @@ export class OcrImporter {
             i++;
           }
         } else if (g.base.label === 'vareia') {
+          // TODO detect additional apli
+          // if (this.has(g, 'apli', 0.1)) {
+          //   e.quantitativeNeume = QuantitativeNeume.VareiaDotted;
+          //   this.applyGorgon(e, g);
+          //   elements.push(e);
+          //   continue;
+          // }
+
           vareia = true;
-          this.applyGorgon(e, g);
-          // TODO process apli
           continue;
         } else if (g.base.label === 'stavros') {
           e.quantitativeNeume = QuantitativeNeume.Cross;

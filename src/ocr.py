@@ -118,6 +118,17 @@ class Analysis:
         }
 
 
+class PreprocessOptions:
+    def __init__(self):
+        self.deskew = True
+        self.deskew_max_angle = 5
+        self.deskew_initial_delta = 1
+        self.despeckle = True
+        self.despeckle_kernel_size = 3
+        self.close = True
+        self.close_kernel_size = 2
+
+
 def save_analysis(analysis, filepath="output.yaml"):
     with open(filepath, "w") as outfile:
         yaml.safe_dump(
@@ -133,7 +144,14 @@ def write_analysis_to_stream(analysis):
     return stream
 
 
-def process_pdf(filepath, page_range, model, metadata, split_lr=False):
+def process_pdf(
+    filepath,
+    page_range,
+    model,
+    metadata,
+    preprocess_options=PreprocessOptions(),
+    split_lr=False,
+):
     analysis = Analysis()
     analysis.model_metadata = metadata
 
@@ -165,7 +183,7 @@ def process_pdf(filepath, page_range, model, metadata, split_lr=False):
             page_areas = ["left", "right"]
 
         for i, img in enumerate(inner_pages):
-            page = prepare_image(img)
+            page = prepare_image(img, preprocess_options)
             page.id = page_index
             page.original_page_num = page_num + 1
 
@@ -181,7 +199,9 @@ def process_pdf(filepath, page_range, model, metadata, split_lr=False):
     return analysis
 
 
-def process_image(image, model, metadata, split_lr=False):
+def process_image(
+    image, model, metadata, preprocess_options=PreprocessOptions(), split_lr=False
+):
     analysis = Analysis()
     analysis.model_metadata = metadata
 
@@ -196,7 +216,7 @@ def process_image(image, model, metadata, split_lr=False):
         page_areas = ["left", "right"]
 
     for i, img in enumerate(inner_pages):
-        page = prepare_image(img)
+        page = prepare_image(img, preprocess_options)
         page.id = i
 
         if len(page_areas) > 0:
@@ -209,14 +229,38 @@ def process_image(image, model, metadata, split_lr=False):
     return analysis
 
 
-def prepare_image(image):
-    page = PageAnalysis()
-
+def preprocess_image(image, preprocess_options=PreprocessOptions()):
     resized = util.downsize(image)
 
-    angle, corrected = util.deskew(resized, limit=5, delta=1)
+    if preprocess_options.deskew:
+        angle, resized = util.deskew(
+            resized,
+            limit=preprocess_options.deskew_max_angle,
+            delta=preprocess_options.deskew_initial_delta,
+        )
 
-    binary = util.to_binary(corrected)
+    binary = util.to_binary(resized)
+
+    if preprocess_options.despeckle:
+        binary = cv2.medianBlur(binary, preprocess_options.despeckle_kernel_size)
+
+    if preprocess_options.close:
+        kernel = np.ones(
+            (
+                preprocess_options.close_kernel_size,
+                preprocess_options.close_kernel_size,
+            ),
+            np.uint8,
+        )
+        binary = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
+
+    return binary
+
+
+def prepare_image(image, preprocess_options):
+    page = PageAnalysis()
+
+    binary = preprocess_image(image, preprocess_options)
 
     page.segmentation = segment(binary)
     page.image_with_text_removed = remove_text(binary, page.segmentation)
