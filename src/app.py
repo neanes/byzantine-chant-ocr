@@ -43,6 +43,7 @@ class OCRThread(QThread):
         page_range,
         model_path,
         classes_path,
+        preprocess_options,
         splitLeftRight,
     ):
         super().__init__()
@@ -51,6 +52,7 @@ class OCRThread(QThread):
         self.page_range = page_range
         self.model_path = model_path
         self.classes_path = classes_path
+        self.preprocess_options = preprocess_options
         self.splitLeftRight = splitLeftRight
 
     def run(self):
@@ -64,12 +66,17 @@ class OCRThread(QThread):
                     self.page_range,
                     model,
                     classes,
+                    preprocess_options=self.preprocess_options,
                     split_lr=self.splitLeftRight,
                 )
             else:
                 image = cv2.imread(self.infile_path, cv2.IMREAD_GRAYSCALE)
                 analysis = process_image(
-                    image, model, classes, split_lr=self.splitLeftRight
+                    image,
+                    model,
+                    classes,
+                    preprocess_options=self.preprocess_options,
+                    split_lr=self.splitLeftRight,
                 )
 
             save_analysis(analysis, self.output_path)
@@ -117,7 +124,16 @@ class MyWidget(QWidget):
 
         self.layoutDeskew = QHBoxLayout()
         self.chkDeskew = QCheckBox("Deskew", self)
+        self.lblDeskew = QLabel("max deg")
+        self.spnDeskew = QSpinBox(self)
+        self.spnDeskew.setMinimumWidth(50)
+        self.spnDeskew.setValue(5)
+        self.spnDeskew.setMinimum(1)
+        self.spnDeskew.setMaximum(90)
         self.layoutDeskew.addWidget(self.chkDeskew)
+        self.layoutDeskew.addStretch()
+        self.layoutDeskew.addWidget(self.lblDeskew)
+        self.layoutDeskew.addWidget(self.spnDeskew)
 
         self.layoutDespeckle = QHBoxLayout()
         self.chkDespeckle = QCheckBox("Despeckle", self)
@@ -218,6 +234,15 @@ class MyWidget(QWidget):
 
         self.enable_ui(False)
 
+        preprocess_options = PreprocessOptions()
+
+        preprocess_options.deskew = self.chkDeskew.isChecked()
+        preprocess_options.despeckle = self.chkDespeckle.isChecked()
+        preprocess_options.close = self.chkClose.isChecked()
+        preprocess_options.despeckle_kernel_size = int(self.cmbDespeckle.currentText())
+        preprocess_options.close_kernel_size = self.spnClose.value()
+        preprocess_options.deskew_max_angle = self.spnDeskew.value()
+
         # Start OCR in a separate thread
         self.thread = OCRThread(
             self.infile_path,
@@ -225,6 +250,7 @@ class MyWidget(QWidget):
             page_range,
             self.txtSelectModel.text(),
             self.txtSelectMetadata.text(),
+            preprocess_options,
             self.chkTwoPageSpread.isChecked(),
         )
         self.thread.error.connect(self.display_error)
@@ -248,6 +274,12 @@ class MyWidget(QWidget):
         if self.infile_path.endswith(".pdf"):
             self.txtPages.setEnabled(enabled)
         self.chkTwoPageSpread.setEnabled(enabled)
+        self.chkDeskew.setEnabled(enabled)
+        self.chkDespeckle.setEnabled(enabled)
+        self.chkClose.setEnabled(enabled)
+        self.spnDeskew.setEnabled(enabled)
+        self.cmbDespeckle.setEnabled(enabled)
+        self.spnClose.setEnabled(enabled)
 
     def parse_page_range(self, page_range):
         """
