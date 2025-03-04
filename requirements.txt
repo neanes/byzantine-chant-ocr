@@ -5,4 +5,4 @@ opencv-python==4.11.0.86
 PyMuPDF==1.25.3
 PyYAML==6.0.2
 scipy==1.15.2
-PySide6==6.8.2
+PySide6==6.8.2.1
