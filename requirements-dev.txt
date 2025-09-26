@@ -1,5 +1,5 @@
 -r requirements.txt
-fiftyone==1.8.0
+fiftyone==1.8.1
 jupyter==1.1.1
 onnx==1.19.0
 torch==2.8.0
