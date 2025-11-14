@@ -3,119 +3,13 @@ import numpy as np
 import pymupdf
 import yaml
 
+from analysis_models import Analysis, Circle, ContourMatch, PageAnalysis, Rect
+from interpretation import interpret_page_analysis
+from interpretation_options import InterpretationOptions
 import util
 from model import transform
 from segmentation import segment
 from text_removal import remove_text
-
-
-class Rect:
-    def __init__(self, rect):
-        x, y, w, h = rect
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-
-    def to_dict(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "w": self.w,
-            "h": self.h,
-        }
-
-
-class Circle:
-    def __init__(self, circle):
-        (x, y), r = circle
-        self.x = x
-        self.y = y
-        self.r = r
-
-    def to_dict(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "r": self.r,
-        }
-
-
-class ContourMatch:
-    def __init__(self):
-        self.id = -1
-        self.bounding_circle = None
-        self.bounding_rect = None
-        self.test_image = None
-        self.label = None
-        self.confidence = 0
-        self.line = -1
-        self.grouped = False
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "label": self.label,
-            "confidence": self.confidence,
-            "line": self.line,
-            "bounding_rect": self.bounding_rect.to_dict(),
-            "bounding_circle": self.bounding_circle.to_dict(),
-            # "grouped": self.grouped,
-        }
-
-
-class NeumeGroup:
-    def __init__(self):
-        self.line = None
-        self.base = None
-        self.support = []
-
-    def to_dict(self):
-        return {
-            "line": self.line,
-            "base": self.base.to_dict(),
-            "support": [x.to_dict() for x in self.support],
-        }
-
-
-class PageAnalysis:
-    def __init__(self):
-        self.id = 0
-        self.original_page_num = None
-        self.page_area = None
-        self.neume_groups = []
-        self.segmentation = None
-        self.matches = []
-        self.image_with_text_removed = None
-
-    def to_dict(self):
-        result = {
-            "id": self.id,
-        }
-
-        if self.original_page_num is not None:
-            result["original_page_num"] = self.original_page_num
-
-        if self.page_area is not None:
-            result["page_area"] = self.page_area
-
-        result["segmentation"] = self.segmentation.to_dict()
-        result["matches"] = [x.to_dict() for x in self.matches]
-        # "neume_groups": [x.to_dict() for x in self.neume_groups],
-
-        return result
-
-
-class Analysis:
-    def __init__(self):
-        self.model_metadata = None
-        self.pages = []
-
-    def to_dict(self):
-        return {
-            "model_metadata": self.model_metadata.to_dict(),
-            "pages": [x.to_dict() for x in self.pages],
-        }
 
 
 class PreprocessOptions:
@@ -152,6 +46,8 @@ def process_pdf(
     preprocess_options=PreprocessOptions(),
     split_lr=False,
 ):
+    interpretation_options = InterpretationOptions()
+
     analysis = Analysis()
     analysis.model_metadata = metadata
 
@@ -194,6 +90,8 @@ def process_pdf(
 
             recognize_contours(page.matches, model, metadata.classes)
 
+            interpret_page_analysis(page, interpretation_options)
+
             analysis.pages.append(page)
 
     return analysis
@@ -202,6 +100,8 @@ def process_pdf(
 def process_image(
     image, model, metadata, preprocess_options=PreprocessOptions(), split_lr=False
 ):
+    interpretation_options = InterpretationOptions()
+
     analysis = Analysis()
     analysis.model_metadata = metadata
 
@@ -223,6 +123,7 @@ def process_image(
             page.page_area = page_areas[i]
 
         recognize_contours(page.matches, model, metadata.classes)
+        interpret_page_analysis(page, interpretation_options)
 
         analysis.pages.append(page)
 
@@ -416,57 +317,3 @@ def recognize_contours(matches, model, classes):
         # cv2.imshow(window_name, m.test_image)
         # cv2.waitKey()
         # cv2.destroyAllWindows()
-
-
-def group_matches(matches, confidence_threshold=0):
-    groups = []
-
-    for m in matches:
-        if m.label is None or m.grouped or m.confidence < confidence_threshold:
-            continue
-
-        # TODO maybe be more careful about multipe bases (e.g. ison + petaste)
-        if is_base(m.label):
-            g = NeumeGroup()
-            g.line = m.line
-            g.base = m
-            m.grouped = True
-
-            # Find the supporting neumes
-            for s in matches:
-                # Skip neumes that are too high or that have a low confidence
-                # Also skip neumes that were already classified as a base.
-                if (
-                    s.line < m.line
-                    or s.label is None
-                    or s.confidence < confidence_threshold
-                    or s.grouped
-                ):
-                    continue
-
-                # Stop if we have reached neumes that are too low
-                if s.line > m.line:
-                    break
-
-                if (
-                    m.bounding_rect.x <= s.bounding_circle.x
-                    and s.bounding_circle.x <= (m.bounding_rect.x + m.bounding_rect.w)
-                ):
-                    g.support.append(s)
-                    s.grouped = True
-
-            groups.append(g)
-
-    return groups
-
-
-def is_base(neume):
-    return neume in [
-        "ison",
-        "oligon",
-        "petaste",
-        "apostrofos",
-        "elafron",
-        "vareia",
-        "kentima",
-    ]

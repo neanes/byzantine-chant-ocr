@@ -15,13 +15,13 @@ import {
   TimeNeume,
   VocalExpressionNeume,
 } from './neanes/models/Neumes';
-import { AugmentedContourMatch, NeumeGroup } from './OcrImportCustomModels';
 import {
   ContourMatch,
   OcrAnalysis,
   PageAnalysis,
   Segmentation,
 } from './OcrAnalysis';
+import { AugmentedContourMatch, NeumeGroup } from './OcrImportCustomModels';
 
 export class OcrImporterOptions {
   min_confidence_threshold: number = 0.7;
@@ -361,7 +361,7 @@ export class OcrImporter {
 
     if (hamili.length === 1) {
       const apostrofos = this.has(g, 'apostrofos');
-      const elafron = this.has(g, 'apostrofos');
+      const elafron = this.has(g, 'elafron');
       const elafronApostrofos = this.has(g, 'elafron_apostrofos');
 
       if (apostrofos && !elafron) {
@@ -413,7 +413,7 @@ export class OcrImporter {
     // Handle double hamili
     if (hamili.length === 1) {
       const apostrofos = this.has(g, 'apostrofos');
-      const elafron = this.has(g, 'apostrofos');
+      const elafron = this.has(g, 'elafron');
       const elafronApostrofos = this.has(g, 'elafron_apostrofos');
 
       if (apostrofos && !elafron) {
@@ -687,7 +687,7 @@ export class OcrImporter {
     // TODO secondary/tertiary gorgons
 
     if (this.hasAbove(g, 'trigorgon', 0.8)) {
-      e.gorgonNeume = GorgonNeume.Digorgon;
+      e.gorgonNeume = GorgonNeume.Trigorgon;
     }
   }
 
