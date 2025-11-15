@@ -11,6 +11,7 @@ __sources/
 node_modules/
 src/build/
 src/dist/
+output.byzocr
 output.yaml
 output.byzx
 output.png

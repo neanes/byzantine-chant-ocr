@@ -38,16 +38,16 @@ class InterpretedNeumeGroup:
 class NoteGroup(InterpretedNeumeGroup):
     def __init__(self):
         super().__init__()
-        self.quantitative_neume: QuantitativeNeume | None = None
+        self.base: QuantitativeNeume | None = None
         self.accidental: Accidental | None = None
         self.fthora: Fthora | None = None
-        self.gorgon_neume: GorgonNeume | None = None
-        self.time_neume: TimeNeume | None = None
-        self.vocal_expression_neume: VocalExpressionNeume | None = None
+        self.gorgon: GorgonNeume | None = None
+        self.time: TimeNeume | None = None
+        self.vocal_expression: VocalExpressionNeume | None = None
         self.vareia: bool = False
 
     def to_dict(self):
-        if self.quantitative_neume is None:
+        if self.base is None:
             print(self.ocr_neume_group.base.to_dict())
             for x in self.ocr_neume_group.support:
                 print(x.to_dict())
@@ -55,15 +55,13 @@ class NoteGroup(InterpretedNeumeGroup):
         d = {
             **super().to_dict(),
             "type": "note",
-            "neume": self.quantitative_neume.value,
+            "neume": self.base.value,
             "accidental": self.accidental.value if self.accidental else None,
             "fthora": self.fthora.value if self.fthora else None,
-            "gorgon": self.gorgon_neume.value if self.gorgon_neume else None,
-            "time": self.time_neume.value if self.time_neume else None,
+            "gorgon": self.gorgon.value if self.gorgon else None,
+            "time": self.time.value if self.time else None,
             "vocal_expression": (
-                self.vocal_expression_neume.value
-                if self.vocal_expression_neume
-                else None
+                self.vocal_expression.value if self.vocal_expression else None
             ),
         }
 
@@ -135,21 +133,21 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                     # Combine the kentima with the oligon and skip ahead
                     g.support.extend(next.support)
                     i += 1
-                    e.quantitative_neume = process_oligon_with_middle_kentima(g)
+                    e.base = process_oligon_with_middle_kentima(g)
                 else:
-                    e.quantitative_neume = process_oligon(g)
+                    e.base = process_oligon(g)
 
             elif g.base.label == "ison":
-                e.quantitative_neume = process_ison(g)
+                e.base = process_ison(g)
 
             elif g.base.label == "petaste":
-                e.quantitative_neume = process_petaste(g)
+                e.base = process_petaste(g)
 
             elif g.base.label == "apostrofos":
-                e.quantitative_neume = process_apostrofos(g)
+                e.base = process_apostrofos(g)
 
                 if (
-                    e.quantitative_neume == QuantitativeNeume.Apostrophos
+                    e.base == QuantitativeNeume.Apostrophos
                     and next is not None
                     and next.base.line == g.base.line
                     and next.base.label == "elafron"
@@ -161,24 +159,24 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                     <= analysis.segmentation.oligon_width
                 ):
                     # Combine the apostrofos with the elafron
-                    e.quantitative_neume = QuantitativeNeume.RunningElaphron
+                    e.base = QuantitativeNeume.RunningElaphron
                     g.support.extend(next.support)
                     i += 1
 
                 elif (
-                    e.quantitative_neume == QuantitativeNeume.Apostrophos
+                    e.base == QuantitativeNeume.Apostrophos
                     and next is not None
                     and next.base.line == g.base.line
                     and next.base.label == "petaste"
                     and has_above(next, "elafron")
                 ):
                     # Combine apostrofos + petasti+elafron
-                    e.quantitative_neume = QuantitativeNeume.PetastiPlusRunningElaphron
+                    e.base = QuantitativeNeume.PetastiPlusRunningElaphron
                     g.support.extend(next.support)
                     i += 1
 
                 elif (
-                    e.quantitative_neume == QuantitativeNeume.Apostrophos
+                    e.base == QuantitativeNeume.Apostrophos
                     and next is not None
                     and next.base.line == g.base.line
                     and next.base.label == "apostrofos"
@@ -191,29 +189,29 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                     # Double apostrofos
                     # Combine into a double apostrofos when the top of the next apostrofos is
                     # very close to the bottom of the previous apostrofos
-                    e.quantitative_neume = QuantitativeNeume.DoubleApostrophos
+                    e.base = QuantitativeNeume.DoubleApostrophos
                     g.support.extend(next.support)
                     i += 1
 
             elif g.base.label == "elafron_syndesmos":
-                e.quantitative_neume = QuantitativeNeume.RunningElaphron
+                e.base = QuantitativeNeume.RunningElaphron
 
             elif g.base.label == "yporroe":
-                e.quantitative_neume = QuantitativeNeume.Hyporoe
+                e.base = QuantitativeNeume.Hyporoe
 
             elif g.base.label == "elafron":
-                e.quantitative_neume = QuantitativeNeume.Elaphron
+                e.base = QuantitativeNeume.Elaphron
 
                 apostrofos = find(g, "apostrofos")
                 if apostrofos:
-                    e.quantitative_neume = QuantitativeNeume.ElaphronPlusApostrophos
+                    e.base = QuantitativeNeume.ElaphronPlusApostrophos
                     # Sometimes the apostrofos is double detected
                     if next is not None and next.base == apostrofos[0]:
                         g.support.extend(next.support)
                         i += 1
 
             elif g.base.label == "elafron_apostrofos":
-                e.quantitative_neume = QuantitativeNeume.ElaphronPlusApostrophos
+                e.base = QuantitativeNeume.ElaphronPlusApostrophos
                 apostrofos = find(g, "apostrofos")
 
                 # Sometimes the apostrofos is double detected
@@ -222,7 +220,7 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                     i += 1
 
             elif g.base.label == "hamili":
-                e.quantitative_neume = process_hamili(g)
+                e.base = process_hamili(g)
 
             elif g.base.label == "kentima":
                 if (
@@ -230,7 +228,7 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                     and next.base.line == g.base.line
                     and next.base.label == "kentima"
                 ):
-                    e.quantitative_neume = QuantitativeNeume.Kentemata
+                    e.base = QuantitativeNeume.Kentemata
                     g.support.extend(next.support)
                     i += 1
 
@@ -246,12 +244,12 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 continue
 
             elif g.base.label == "stavros":
-                e.quantitative_neume = QuantitativeNeume.Cross
+                e.base = QuantitativeNeume.Cross
                 elements.append(e)
                 continue
 
             elif g.base.label == "breath":
-                e.quantitative_neume = QuantitativeNeume.Breath
+                e.base = QuantitativeNeume.Breath
                 elements.append(e)
                 continue
 
@@ -274,7 +272,7 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 e.vareia = True
                 vareia = False
 
-            if e.quantitative_neume is not None:
+            if e.base is not None:
                 elements.append(e)
 
         elif g.base.is_martyria:
@@ -500,10 +498,10 @@ def apply_sanity_checks(g: NeumeGroup, segmentation: Segmentation):
 
 def apply_antikenoma(e: NoteGroup, g: NeumeGroup):
     if has_below(g, "antikenoma", 0.5):
-        e.vocal_expression_neume = VocalExpressionNeume.Antikenoma
+        e.vocal_expression = VocalExpressionNeume.Antikenoma
     elif has_below(g, "antikenoma_apli", 0.5):
-        e.vocal_expression_neume = VocalExpressionNeume.Antikenoma
-        e.time_neume = TimeNeume.Hapli
+        e.vocal_expression = VocalExpressionNeume.Antikenoma
+        e.time = TimeNeume.Hapli
 
 
 def apply_gorgon(e: NoteGroup, g: NeumeGroup):
@@ -541,7 +539,7 @@ def apply_gorgon(e: NoteGroup, g: NeumeGroup):
         ):
             return
 
-        e.gorgon_neume = GorgonNeume.Gorgon_Top if above else GorgonNeume.Gorgon_Bottom
+        e.gorgon = GorgonNeume.Gorgon_Top if above else GorgonNeume.Gorgon_Bottom
 
         # Take the first gorgon we find that is not actually an ison indicator
         break
@@ -550,19 +548,19 @@ def apply_gorgon(e: NoteGroup, g: NeumeGroup):
 def apply_digorgon(e: NoteGroup, g: NeumeGroup):
     # TODO secondary/tertiary gorgons
     if has_above(g, "digorgon", 0.8):
-        e.gorgon_neume = GorgonNeume.Digorgon
+        e.gorgon = GorgonNeume.Digorgon
 
 
 def apply_trigorgon(e: NoteGroup, g: NeumeGroup):
     # TODO secondary/tertiary gorgons
     if has_above(g, "trigorgon", 0.8):
-        e.gorgon_neume = GorgonNeume.Trigorgon
+        e.gorgon = GorgonNeume.Trigorgon
 
 
 def apply_klasma(e: NoteGroup, g: NeumeGroup):
     klasma = find(g, "klasma", 0.8)
     if klasma:
-        e.time_neume = (
+        e.time = (
             TimeNeume.Klasma_Top
             if klasma[0].bounding_circle.y <= g.base.bounding_circle.y
             else TimeNeume.Klasma_Bottom
@@ -572,13 +570,13 @@ def apply_klasma(e: NoteGroup, g: NeumeGroup):
 def apply_apli(e: NoteGroup, g: NeumeGroup):
     apli = find_below(g, "apli")
     if len(apli) == 1:
-        e.time_neume = TimeNeume.Hapli
+        e.time = TimeNeume.Hapli
     elif len(apli) == 2:
-        e.time_neume = TimeNeume.Dipli
+        e.time = TimeNeume.Dipli
     elif len(apli) == 3:
-        e.time_neume = TimeNeume.Tripli
+        e.time = TimeNeume.Tripli
     elif len(apli) >= 4:
-        e.time_neume = TimeNeume.Tetrapli
+        e.time = TimeNeume.Tetrapli
 
 
 def apply_fthora(e: NoteGroup | MartyriaGroup, g: NeumeGroup):
@@ -644,7 +642,7 @@ def apply_accidental(e: NoteGroup, g: NeumeGroup):
 
 def apply_psifiston(e: NoteGroup, g: NeumeGroup):
     if has_below(g, "psifiston", 0.75):
-        e.vocal_expression_neume = VocalExpressionNeume.Psifiston
+        e.vocal_expression = VocalExpressionNeume.Psifiston
 
 
 def apply_heteron(e: NoteGroup, g: NeumeGroup):
@@ -652,27 +650,27 @@ def apply_heteron(e: NoteGroup, g: NeumeGroup):
     if heteron and heteron[0].bounding_rect.x > g.base.bounding_rect.x:
         # TODO figure out if it's connecting or not
         # Probably need to be able to detect apli before we can do this.
-        e.vocal_expression_neume = VocalExpressionNeume.HeteronConnecting
+        e.vocal_expression = VocalExpressionNeume.HeteronConnecting
 
 
 def apply_homalon(e: NoteGroup, g: NeumeGroup):
     homalon = find_below(g, "omalon", 0)
     if homalon and homalon[0].bounding_rect.x > g.base.bounding_rect.x:
         if has_above(g, "klasma"):
-            e.vocal_expression_neume = VocalExpressionNeume.Homalon
+            e.vocal_expression = VocalExpressionNeume.Homalon
         else:
-            e.vocal_expression_neume = VocalExpressionNeume.HomalonConnecting
+            e.vocal_expression = VocalExpressionNeume.HomalonConnecting
 
 
 def apply_endofonon(e: NoteGroup, g: NeumeGroup):
     endofonon = find_below(g, "endofonon", 0)
     if endofonon and endofonon[0].bounding_rect.x > g.base.bounding_rect.x:
-        e.vocal_expression_neume = VocalExpressionNeume.Endofonon
+        e.vocal_expression = VocalExpressionNeume.Endofonon
 
 
 def apply_stavros(e: NoteGroup, g: NeumeGroup):
     if has(g, "stavros", 0):
-        e.vocal_expression_neume = VocalExpressionNeume.Cross_Top
+        e.vocal_expression = VocalExpressionNeume.Cross_Top
 
 
 def process_ison(g: NeumeGroup):

@@ -226,7 +226,7 @@ class MyWidget(QWidget):
                 return
 
         output_path, _ = QFileDialog.getSaveFileName(
-            self, "Save File", dir="output.yaml"
+            self, "Save File", dir="output.byzocr", filter="BYZOCR (*.byzocr)"
         )
 
         if len(output_path) == 0:
