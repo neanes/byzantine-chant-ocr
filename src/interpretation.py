@@ -15,12 +15,24 @@ from segmentation import Segmentation
 
 class InterpretedNeumeGroup:
     def __init__(self):
+        self.id: int = -1
         self.ocr_neume_group: NeumeGroup | None = None
 
     def to_dict(self):
-        return {
+        d = {
+            "id": self.id,
             "line": self.ocr_neume_group.line,
+            "components": {
+                "base": self.ocr_neume_group.base.id,
+                **(
+                    {"support": [x.id for x in self.ocr_neume_group.support]}
+                    if len(self.ocr_neume_group.support)
+                    else {}
+                ),
+            },
         }
+
+        return {k: v for k, v in d.items() if v is not None}
 
 
 class NoteGroup(InterpretedNeumeGroup):
@@ -65,7 +77,6 @@ class MartyriaGroup(InterpretedNeumeGroup):
     def __init__(self):
         super().__init__()
         self.fthora: Fthora | None = None
-        self.align_right: bool = False
 
     def to_dict(self):
         d = {
@@ -73,9 +84,6 @@ class MartyriaGroup(InterpretedNeumeGroup):
             "type": "martyria",
             "fthora": self.fthora.value if self.fthora else None,
         }
-
-        if self.align_right:
-            d["align_right"] = True
 
         return {k: v for k, v in d.items() if v is not None}
 
@@ -275,19 +283,6 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
             e.ocr_neume_group = g
             elements.append(e)
 
-            # If martyria is the last neume group on the line...
-            if g.base.line != (next.base.line if next else None):
-                # if it is more than 2 * oligon_width away from the previous neume,
-                # we assume it is a right aligned martyria.
-                if (
-                    prev is not None
-                    and g.base.line == prev.base.line
-                    and g.base.bounding_rect.x
-                    - (prev.base.bounding_rect.x + prev.base.bounding_rect.w)
-                    >= analysis.segmentation.oligon_width * 2
-                ):
-                    e.align_right = True
-
             apply_fthora(e, g)
 
         elif g.base.is_kronos:
@@ -311,6 +306,9 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 e.neume = TempoSign.Slower
 
     analysis.interpreted_groups = elements
+
+    for i, e in enumerate(elements):
+        e.id = i
 
 
 def touches_baseline(match: ContourMatch, baseline: float) -> bool:
