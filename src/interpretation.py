@@ -47,15 +47,10 @@ class NoteGroup(InterpretedNeumeGroup):
         self.vareia: bool = False
 
     def to_dict(self):
-        if self.base is None:
-            print(self.ocr_neume_group.base.to_dict())
-            for x in self.ocr_neume_group.support:
-                print(x.to_dict())
-
         d = {
             **super().to_dict(),
             "type": "note",
-            "neume": self.base.value,
+            "neume": self.base.value if self.base else None,
             "accidental": self.accidental.value if self.accidental else None,
             "fthora": self.fthora.value if self.fthora else None,
             "gorgon": self.gorgon.value if self.gorgon else None,
@@ -95,7 +90,7 @@ class TempoGroup(InterpretedNeumeGroup):
         return {
             **super().to_dict(),
             "type": "tempo",
-            "neume": self.neume.value,
+            "neume": self.neume.value if self.neume else None,
         }
 
 
@@ -308,10 +303,17 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 e.neume = TempoSign.Slow
             elif has(g, "triargon"):
                 e.neume = TempoSign.Slower
+            else:
+                e.neume = TempoSign.VerySlow
 
         i += 1
 
-    analysis.interpreted_groups = elements
+    analysis.interpreted_groups = [
+        e
+        for e in elements
+        if not (isinstance(e, NoteGroup) and e.base is None)
+        and not (isinstance(e, TempoGroup) and e.neume is None)
+    ]
 
     for i, e in enumerate(elements):
         e.id = i
