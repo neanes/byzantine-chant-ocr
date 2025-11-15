@@ -106,7 +106,9 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
 
     vareia = False
 
-    for i in range(len(groups)):
+    i = 0
+
+    while i < len(groups):
         g = groups[i]
 
         prev = groups[i - 1] if i - 1 >= 0 else None
@@ -238,19 +240,23 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 #   e.quantitativeNeume = QuantitativeNeume.VareiaDotted;
                 #   apply_gorgon(e, g);
                 #   elements.push(e);
+                #   i += 1
                 #   continue;
                 # }
                 vareia = True
+                i += 1
                 continue
 
             elif g.base.label == "stavros":
                 e.base = QuantitativeNeume.Cross
                 elements.append(e)
+                i += 1
                 continue
 
             elif g.base.label == "breath":
                 e.base = QuantitativeNeume.Breath
                 elements.append(e)
+                i += 1
                 continue
 
             # Apply modifiers
@@ -302,6 +308,8 @@ def interpret_page_analysis(analysis: PageAnalysis, options: InterpretationOptio
                 e.neume = TempoSign.Slow
             elif has(g, "triargon"):
                 e.neume = TempoSign.Slower
+
+        i += 1
 
     analysis.interpreted_groups = elements
 
