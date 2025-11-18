@@ -1,3 +1,4 @@
+.DS_Store
 .venv/
 __pycache__/
 .ipynb_checkpoints/
@@ -10,6 +11,7 @@ __sources/
 node_modules/
 src/build/
 src/dist/
+output.byzocr
 output.yaml
 output.byzx
 output.png
