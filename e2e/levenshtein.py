@@ -3,9 +3,7 @@ from e2e_models import EmptyElement
 
 def levenshtein_distance(a: list[str], b: list[str]):
     """
-    Computes the Levenshtein distance between two sequences and returns:
-      - distance (int)
-      - matrix (2D list of ints)
+    Computes the Levenshtein distance between two sequences
     """
     m = len(a)
     n = len(b)
