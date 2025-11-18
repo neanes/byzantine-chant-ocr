@@ -18,22 +18,7 @@ Run the app and select a file to perform OCR on. For PDF files, input a page ran
 
 ### Import into Neanes
 
-The resulting `output.yaml` can be imported into [Neanes](https://github.com/neanes/neanes) using the import script found in `integrations/neanes`.
-
-First, install the LTS version of [Node.js](https://nodejs.org/en/download).
-
-Next, copy `output.yaml` to `integrations/neanes` and run the following commands.
-
-```bash
-cd integrations/neanes
-corepack enable npm # only needed the first time you run the importer
-npm install # only needed the first time you run the importer
-npm run start
-```
-
-This will convert `output.yaml` into a Neanes file called `output.byzx`.
-
-Eventually, it will be possible to import directly into Neanes by opening the YAML file within Neanes. However, the import script is still under heavy development. Once the script stabilizes, it will be moved into Neanes.
+The resulting `.byzocr` file can be imported into [Neanes](https://github.com/neanes/neanes).
 
 ### The Neanes file is not as accurate as I would have hoped. What can I do?
 
