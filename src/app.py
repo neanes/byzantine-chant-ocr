@@ -34,27 +34,6 @@ from ocr import (
 from version import __version__
 
 
-def get_default_cwd():
-    """
-    Return a sensible default working directory:
-    - If frozen with PyInstaller, return the folder containing the app.
-    - Otherwise, return the current working directory.
-    """
-    if getattr(sys, "frozen", False):
-        exe = Path(sys.executable).resolve()
-
-        if sys.platform == "darwin":
-            # macOS: inside MyApp.app/Contents/MacOS/
-            # We want the folder *containing* MyApp.app
-            return str(exe.parents[3])
-
-        else:
-            # Windows / Linux — executable is directly in its directory
-            return str(exe.parent)
-    else:
-        return str(Path.cwd())
-
-
 class OCRThread(QThread):
     error = Signal(str)
     finished = Signal()
@@ -80,8 +59,8 @@ class OCRThread(QThread):
 
     def run(self):
         try:
-            classes = load_metadata(os.path.join(get_default_cwd(), self.classes_path))
-            model = load_onnx_model(os.path.join(get_default_cwd(), self.model_path))
+            classes = load_metadata(self.classes_path)
+            model = load_onnx_model(self.model_path)
 
             if self.infile_path.endswith(".pdf"):
                 analysis = process_pdf(
@@ -203,9 +182,7 @@ class MyWidget(QWidget):
         self.layout.addWidget(self.btnGo)
 
     def choose_input_file(self):
-        filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", dir=get_default_cwd()
-        )
+        filepath, _ = QFileDialog.getOpenFileName(self, "Open File")
 
         if len(filepath) > 0:
             self.lblSelectInput.setText(os.path.basename(filepath))
@@ -223,7 +200,7 @@ class MyWidget(QWidget):
 
     def choose_metadata(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", dir=get_default_cwd(), filter="JSON (*.json)"
+            self, "Open File", filter="JSON (*.json)"
         )
 
         if len(filepath) > 0:
@@ -231,7 +208,7 @@ class MyWidget(QWidget):
 
     def choose_model(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", dir=get_default_cwd(), filter="ONNX Model (*.onnx)"
+            self, "Open File", filter="ONNX Model (*.onnx)"
         )
 
         if len(filepath) > 0:
@@ -258,7 +235,7 @@ class MyWidget(QWidget):
         output_path, _ = QFileDialog.getSaveFileName(
             self,
             "Save File",
-            dir=os.path.join(get_default_cwd(), default_file_name),
+            dir=default_file_name,
             filter="BYZOCR (*.byzocr)",
         )
 
