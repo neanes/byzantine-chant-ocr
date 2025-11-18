@@ -5,3 +5,5 @@ onnx==1.19.1
 pytest==9.0.1
 torch==2.9.0
 torchvision==0.24.0
+torch==2.9.1
+torchvision==0.24.1
