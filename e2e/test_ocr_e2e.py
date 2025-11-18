@@ -26,7 +26,7 @@ from ocr import PreprocessOptions, process_image, save_analysis
 from levenshtein import backtrack_alignment, levenshtein_distance
 
 
-# If you are tweaking only the importer, set env SKIP_OCR=true
+# If you are tweaking only the interpretation code, set env SKIP_OCR=true
 import os
 
 SKIP_OCR = os.getenv("SKIP_OCR") == "true"
