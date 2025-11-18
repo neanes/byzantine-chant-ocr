@@ -43,7 +43,7 @@ class NoteGroup(InterpretedNeumeGroup):
         self.fthora: Fthora | None = None
         self.gorgon: GorgonNeume | None = None
         self.time: TimeNeume | None = None
-        self.vocal_expression: VocalExpressionNeume | None = None
+        self.quality: VocalExpressionNeume | None = None
         self.vareia: bool = False
 
     def to_dict(self):
@@ -55,9 +55,7 @@ class NoteGroup(InterpretedNeumeGroup):
             "fthora": self.fthora.value if self.fthora else None,
             "gorgon": self.gorgon.value if self.gorgon else None,
             "time": self.time.value if self.time else None,
-            "vocal_expression": (
-                self.vocal_expression.value if self.vocal_expression else None
-            ),
+            "quality": (self.quality.value if self.quality else None),
         }
 
         if self.vareia:
@@ -508,9 +506,9 @@ def apply_sanity_checks(g: NeumeGroup, segmentation: Segmentation):
 
 def apply_antikenoma(e: NoteGroup, g: NeumeGroup):
     if has_below(g, "antikenoma", 0.5):
-        e.vocal_expression = VocalExpressionNeume.Antikenoma
+        e.quality = VocalExpressionNeume.Antikenoma
     elif has_below(g, "antikenoma_apli", 0.5):
-        e.vocal_expression = VocalExpressionNeume.Antikenoma
+        e.quality = VocalExpressionNeume.Antikenoma
         e.time = TimeNeume.Hapli
 
 
@@ -652,7 +650,7 @@ def apply_accidental(e: NoteGroup, g: NeumeGroup):
 
 def apply_psifiston(e: NoteGroup, g: NeumeGroup):
     if has_below(g, "psifiston", 0.75):
-        e.vocal_expression = VocalExpressionNeume.Psifiston
+        e.quality = VocalExpressionNeume.Psifiston
 
 
 def apply_heteron(e: NoteGroup, g: NeumeGroup):
@@ -660,27 +658,27 @@ def apply_heteron(e: NoteGroup, g: NeumeGroup):
     if heteron and heteron[0].bounding_rect.x > g.base.bounding_rect.x:
         # TODO figure out if it's connecting or not
         # Probably need to be able to detect apli before we can do this.
-        e.vocal_expression = VocalExpressionNeume.HeteronConnecting
+        e.quality = VocalExpressionNeume.HeteronConnecting
 
 
 def apply_homalon(e: NoteGroup, g: NeumeGroup):
     homalon = find_below(g, "omalon", 0)
     if homalon and homalon[0].bounding_rect.x > g.base.bounding_rect.x:
         if has_above(g, "klasma"):
-            e.vocal_expression = VocalExpressionNeume.Homalon
+            e.quality = VocalExpressionNeume.Homalon
         else:
-            e.vocal_expression = VocalExpressionNeume.HomalonConnecting
+            e.quality = VocalExpressionNeume.HomalonConnecting
 
 
 def apply_endofonon(e: NoteGroup, g: NeumeGroup):
     endofonon = find_below(g, "endofonon", 0)
     if endofonon and endofonon[0].bounding_rect.x > g.base.bounding_rect.x:
-        e.vocal_expression = VocalExpressionNeume.Endofonon
+        e.quality = VocalExpressionNeume.Endofonon
 
 
 def apply_stavros(e: NoteGroup, g: NeumeGroup):
     if has(g, "stavros", 0):
-        e.vocal_expression = VocalExpressionNeume.Cross_Top
+        e.quality = VocalExpressionNeume.Cross_Top
 
 
 def process_ison(g: NeumeGroup):
