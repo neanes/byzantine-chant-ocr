@@ -30,6 +30,7 @@ from ocr import (
     save_analysis,
     write_analysis_to_stream,
 )
+from version import __version__
 
 
 class OCRThread(QThread):
@@ -78,6 +79,9 @@ class OCRThread(QThread):
                     preprocess_options=self.preprocess_options,
                     split_lr=self.splitLeftRight,
                 )
+
+            analysis.additional_metadata["app_name"] = "Byzantine Chant OCR"
+            analysis.additional_metadata["app_version"] = __version__
 
             save_analysis(analysis, self.output_path)
             self.finished.emit()
@@ -311,7 +315,7 @@ def launch_normal():
     app = QApplication([])
 
     widget = MyWidget()
-    widget.setWindowTitle("Byzantine Chant OCR")
+    widget.setWindowTitle(f"Byzantine Chant OCR v{__version__}")
     # widget.resize(800, 600)
     widget.show()
 

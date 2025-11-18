@@ -53,12 +53,14 @@ class Analysis:
     def __init__(self):
         self.schema_version = 1
         self.model_metadata = None
+        self.additional_metadata = {}
         self.pages = []
 
     def to_dict(self):
         return {
             "schema_version": self.schema_version,
             "model_metadata": self.model_metadata.to_dict(),
+            "additional_metadata": self.additional_metadata,
             "pages": [x.to_dict() for x in self.pages],
         }
 
