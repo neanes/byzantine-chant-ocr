@@ -227,7 +227,16 @@ class MyWidget(QWidget):
         self.layout.addWidget(self.btnGo)
 
     def choose_input_file(self):
-        filepath, _ = QFileDialog.getOpenFileName(self, "Open File")
+        filepath, _ = QFileDialog.getOpenFileName(
+            self,
+            "Open File",
+            dir=str(Path.home()),
+            filter=(
+                "PDF and Images (*.pdf "
+                "*.bmp *.dib *.gif *.jpeg *.jpg *.jpe *.jp2 *.png *.webp *.avif "
+                "*.pbm *.pgm *.ppm *.pxm *.pnm *.pfm *.sr *.ras *.tiff *.tif *.exr *.hdr *.pic)"
+            ),
+        )
 
         if len(filepath) > 0:
             self.lblSelectInput.setText(os.path.basename(filepath))
@@ -245,7 +254,7 @@ class MyWidget(QWidget):
 
     def choose_metadata(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", filter="JSON (*.json)"
+            self, "Open File", dir=str(Path.home()), filter="JSON (*.json)"
         )
 
         if len(filepath) > 0:
@@ -253,7 +262,7 @@ class MyWidget(QWidget):
 
     def choose_model(self):
         filepath, _ = QFileDialog.getOpenFileName(
-            self, "Open File", filter="ONNX Model (*.onnx)"
+            self, "Open File", dir=str(Path.home()), filter="ONNX Model (*.onnx)"
         )
 
         if len(filepath) > 0:
@@ -275,12 +284,12 @@ class MyWidget(QWidget):
                 )
                 return
 
-        default_file_name = Path(self.infile_path).stem + ".byzocr"
+        default_file_name = Path(self.infile_path).with_suffix(".byzocr")
 
         output_path, _ = QFileDialog.getSaveFileName(
             self,
             "Save File",
-            dir=default_file_name,
+            dir=str(default_file_name),
             filter="BYZOCR (*.byzocr)",
         )
 

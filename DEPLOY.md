@@ -30,3 +30,14 @@ git push --tags
 ```
 
 This will generate a draft release in Github. Go to the draft release and release it.
+
+## Fixing mistakes
+
+Delete the bad tag.
+
+```bash
+git tag -d app/v1.0.0
+git push origin :app/v1.0.0
+```
+
+Re-tag.
