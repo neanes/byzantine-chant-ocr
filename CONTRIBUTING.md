@@ -199,10 +199,10 @@ Note that these tests expect a model and metadata to be present in the `models/`
 
 ### What do the tests do?
 
-The `e2e/data` folder contains images of pages from Byzantine chant publications, as well as a Neanes file that matches the image. The tests loop over these images and does the following for each image.
+The `e2e/data` folder contains images of pages from Byzantine chant publications, as well as Neanes files that contain the expected neumes for each image. The tests loop over these images and do the following for each image.
 
 1. Runs the OCR engine on the image.
-2. Compares the output file with the neumes found in the corresponding Neanes file found in the `e2e/data` folder.
+2. Compares the output file with the neumes found in the corresponding Neanes file.
 
 Comparison uses the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) as metric of correctness. This currently only takes into account the similarity in the sequence of quantitative neumes. It does not consider gorgons, fthores, qualitative neumes, etc. The threshold to pass is set at 90% similarity, as of the writing of this document.
 
