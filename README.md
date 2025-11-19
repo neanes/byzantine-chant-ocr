@@ -8,13 +8,9 @@ This project is a toolset for performing optical character recognition (OCR) on 
 
 Download the latest app version from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Unzip the files to any directory.
 
-### Download the model
-
-Download the latest model from the [Releases page](https://github.com/neanes/byzantine-chant-ocr/releases). Copy the files `current_model.onnx` and `metadata.json` to the same folder where the executable is located.
-
 ### Run the app
 
-Run the app and select a file to perform OCR on. For PDF files, input a page range. Then press Go and choose a location to save the file.
+Run the app and select a file to perform OCR on. For PDF files, input a page range. Then press `Go` and choose a location to save the file.
 
 ### Import into Neanes
 
