@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from model_downloader import download_latest_model
 from model_metadata import load_metadata
 from model import load_onnx_model
 from ocr import (
@@ -46,7 +47,8 @@ class OCRThread(QThread):
         model_path,
         classes_path,
         preprocess_options,
-        splitLeftRight,
+        split_lr,
+        use_latest_model,
     ):
         super().__init__()
         self.infile_path = infile_path
@@ -55,10 +57,21 @@ class OCRThread(QThread):
         self.model_path = model_path
         self.classes_path = classes_path
         self.preprocess_options = preprocess_options
-        self.splitLeftRight = splitLeftRight
+        self.split_lr = split_lr
+        self.use_latest_model = use_latest_model
 
     def run(self):
         try:
+            if self.use_latest_model:
+                model_dir = get_model_dir()
+                self.classes_path = str(model_dir / "latest" / "metadata.json")
+                self.model_path = str(model_dir / "latest" / "current_model.onnx")
+
+                if not os.path.exists(self.classes_path) or not os.path.exists(
+                    self.model_path
+                ):
+                    download_latest_model(model_dir / "latest")
+
             classes = load_metadata(self.classes_path)
             model = load_onnx_model(self.model_path)
 
@@ -69,7 +82,7 @@ class OCRThread(QThread):
                     model,
                     classes,
                     preprocess_options=self.preprocess_options,
-                    split_lr=self.splitLeftRight,
+                    split_lr=self.split_lr,
                 )
             else:
                 image = cv2.imread(self.infile_path, cv2.IMREAD_GRAYSCALE)
@@ -78,7 +91,7 @@ class OCRThread(QThread):
                     model,
                     classes,
                     preprocess_options=self.preprocess_options,
-                    split_lr=self.splitLeftRight,
+                    split_lr=self.split_lr,
                 )
 
             analysis.additional_metadata["app_name"] = "Byzantine Chant OCR"
@@ -90,9 +103,27 @@ class OCRThread(QThread):
             self.error.emit(traceback.format_exc())
 
 
+class UpdateModelThread(QThread):
+    error = Signal(str)
+    finished = Signal(str)
+
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+
+    def run(self):
+        try:
+            tag = download_latest_model(self.path)
+            self.finished.emit(tag)
+        except:
+            self.error.emit(traceback.format_exc())
+
+
 class MyWidget(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.infile_path = ""
 
         self.btnSelectInput = QPushButton("Select Input")
         self.btnSelectInput.clicked.connect(self.choose_input_file)
@@ -101,6 +132,12 @@ class MyWidget(QWidget):
         self.layoutSelectInput.addWidget(self.btnSelectInput)
         self.layoutSelectInput.addWidget(self.lblSelectInput)
 
+        self.chkUseLatestModel = QCheckBox("Use Latest Model", self)
+        self.chkUseLatestModel.setChecked(True)
+        self.chkUseLatestModel.stateChanged.connect(self.toggle_use_latest_model)
+        self.btnUpdateModel = QPushButton("Check for Model Updates")
+        self.btnUpdateModel.clicked.connect(self.update_model)
+
         self.btnSelectModel = QPushButton("Select Model")
         self.btnSelectModel.clicked.connect(self.choose_model)
         self.txtSelectModel = QLineEdit("current_model.onnx")
@@ -108,6 +145,9 @@ class MyWidget(QWidget):
         self.layoutSelectModel = QHBoxLayout()
         self.layoutSelectModel.addWidget(self.btnSelectModel)
         self.layoutSelectModel.addWidget(self.txtSelectModel)
+        self.widgetSelectModel = QWidget()
+        self.widgetSelectModel.setLayout(self.layoutSelectModel)
+        self.widgetSelectModel.setVisible(False)
 
         self.btnSelectMetadata = QPushButton("Select Metadata")
         self.btnSelectMetadata.clicked.connect(self.choose_metadata)
@@ -116,6 +156,9 @@ class MyWidget(QWidget):
         self.layoutSelectMetadata = QHBoxLayout()
         self.layoutSelectMetadata.addWidget(self.btnSelectMetadata)
         self.layoutSelectMetadata.addWidget(self.txtSelectMetadata)
+        self.widgetSelectMetadata = QWidget()
+        self.widgetSelectMetadata.setLayout(self.layoutSelectMetadata)
+        self.widgetSelectMetadata.setVisible(False)
 
         self.lblPages = QLabel("Pages")
         self.txtPages = QLineEdit()
@@ -177,8 +220,10 @@ class MyWidget(QWidget):
         self.layout.addLayout(self.layoutDeskew)
         self.layout.addLayout(self.layoutDespeckle)
         self.layout.addLayout(self.layoutClose)
-        self.layout.addLayout(self.layoutSelectModel)
-        self.layout.addLayout(self.layoutSelectMetadata)
+        self.layout.addWidget(self.chkUseLatestModel)
+        self.layout.addWidget(self.btnUpdateModel)
+        self.layout.addWidget(self.widgetSelectModel)
+        self.layout.addWidget(self.widgetSelectMetadata)
         self.layout.addWidget(self.btnGo)
 
     def choose_input_file(self):
@@ -262,6 +307,7 @@ class MyWidget(QWidget):
             self.txtSelectMetadata.text(),
             preprocess_options,
             self.chkTwoPageSpread.isChecked(),
+            self.chkUseLatestModel.isChecked(),
         )
         self.thread.error.connect(self.display_error)
         self.thread.finished.connect(lambda: self.enable_ui(True))
@@ -290,6 +336,8 @@ class MyWidget(QWidget):
         self.spnDeskew.setEnabled(enabled)
         self.cmbDespeckle.setEnabled(enabled)
         self.spnClose.setEnabled(enabled)
+        self.chkUseLatestModel.setEnabled(enabled)
+        self.btnUpdateModel.setEnabled(enabled)
 
     def parse_page_range(self, page_range):
         """
@@ -316,6 +364,60 @@ class MyWidget(QWidget):
 
         return sorted(indexes)  # Sort the final list
 
+    def update_model(self):
+        try:
+            self.enable_ui(False)
+
+            # Start Model Update in a separate thread
+            self.thread = UpdateModelThread(get_model_dir() / "latest")
+
+            def on_finished(tag):
+                QMessageBox.information(
+                    self,
+                    "Model Update",
+                    f"The latest model ({tag}) has been downloaded successfully.",
+                    buttons=QMessageBox.Ok,
+                    defaultButton=QMessageBox.Ok,
+                )
+
+                self.enable_ui(True)
+
+            def on_error(msg):
+                QMessageBox.critical(
+                    self,
+                    "Error",
+                    f"An error occurred while updating the model:\n{msg}",
+                    buttons=QMessageBox.Ok,
+                    defaultButton=QMessageBox.Ok,
+                )
+
+                self.enable_ui(True)
+
+            self.thread.error.connect(on_error)
+            self.thread.finished.connect(on_finished)
+            self.thread.start()
+
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                "Error",
+                f"An error occurred while updating the model:\n{str(e)}",
+                buttons=QMessageBox.Ok,
+                defaultButton=QMessageBox.Ok,
+            )
+
+            self.enable_ui(True)
+
+    def toggle_use_latest_model(self, state):
+        if not state:
+            self.widgetSelectMetadata.show()
+            self.widgetSelectModel.show()
+            self.adjustSize()
+        else:
+            self.widgetSelectMetadata.hide()
+            self.widgetSelectModel.hide()
+            self.adjustSize()
+
 
 def launch_normal():
     app = QApplication([])
@@ -332,6 +434,14 @@ def launch_headless(args):
     if args.input is None:
         print("Please specify an input file with -i or --input.")
         sys.exit(1)
+
+    if args.use_latest_model:
+        model_dir = get_model_dir()
+        args.model = str(model_dir / "latest" / "current_model.onnx")
+        args.meta = str(model_dir / "latest" / "metadata.json")
+
+        if not os.path.exists(args.meta) or not os.path.exists(args.model):
+            download_latest_model(model_dir / "latest")
 
     metadata = load_metadata(args.meta)
     model = load_onnx_model(args.model)
@@ -388,6 +498,31 @@ def launch_headless(args):
         save_analysis(results, args.output)
 
 
+def get_datadir() -> Path:
+    """
+    Returns a parent directory path
+    where persistent application data can be stored.
+    """
+
+    home = Path.home()
+
+    if sys.platform == "win32":
+        return home / "AppData/Local" / "ByzantineChantOCR"
+    elif sys.platform == "linux":
+        return home / ".local/share" / "ByzantineChantOCR"
+    elif sys.platform == "darwin":
+        return home / "Library/Application Support" / "ByzantineChantOCR"
+
+
+def get_model_dir() -> Path:
+    """
+    Returns the directory path
+    where models are stored.
+    """
+
+    return get_datadir() / "models"
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Performs OCR on an image or PDF")
 
@@ -431,6 +566,12 @@ if __name__ == "__main__":
         "--meta",
         help="Relative path to model metadata",
         default="metadata.json",
+    )
+
+    parser.add_argument(
+        "--use-latest-model",
+        help="Use the latest available model from GitHub. Downloads the model if not already present.",
+        action="store_true",
     )
 
     parser.add_argument(

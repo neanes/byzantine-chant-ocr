@@ -3,7 +3,7 @@ name: Publish App
 on:
   push:
     tags:
-      - "v*.*.*-app"
+      - 'app/v*.*.*'
 defaults:
   run:
     shell: bash
@@ -17,10 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Set app version
+        id: set_version
+        run: echo "app_version=${GITHUB_REF_NAME#app/}" >> $GITHUB_OUTPUT
+
       - uses: actions/setup-python@v6
         id: setup_python
         with:
-          python-version: "3.12"
+          python-version: '3.12'
 
       - name: Restore cached venv
         uses: actions/cache/restore@v4
@@ -53,17 +57,17 @@ jobs:
         run: |
           cd src/dist
           if ($env:RUNNER_OS -eq "Windows") {
-            7z a byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr 
+            7z a byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip byzantine-chant-ocr 
           }
           elseif ($env:RUNNER_OS -eq "macOS") {
-            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr.app 
+            zip -r byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip byzantine-chant-ocr.app 
           }
           else {
-            zip -r byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip byzantine-chant-ocr
+            zip -r byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip byzantine-chant-ocr
           }
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: src/dist/byzantine-chant-ocr-${{github.ref_name}}-${{ runner.os }}.zip
+          files: src/dist/byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip
           draft: true
