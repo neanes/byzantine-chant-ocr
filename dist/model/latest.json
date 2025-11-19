@@ -1,0 +1,8 @@
+{
+  "latest_release": "model/v0.0.4",
+  "release_url": "https://github.com/neanes/byzantine-chant-ocr/releases/tag/model/v0.0.4",
+  "assets": {
+    "model": "https://github.com/neanes/byzantine-chant-ocr/releases/download/model/v0.0.4/current_model.onnx",
+    "metadata": "https://github.com/neanes/byzantine-chant-ocr/releases/download/model/v0.0.4/metadata.json"
+  }
+}
