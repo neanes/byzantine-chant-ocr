@@ -42,10 +42,8 @@ report_full = []
 @pytest.fixture(scope="session", autouse=True)
 def write_reports_at_end():
     yield
-    Path("OcrImporter.report.json").write_text(
-        json.dumps(report, indent=2), encoding="utf8"
-    )
-    Path("OcrImporter.report.full.json").write_text(
+    Path("e2e.report.json").write_text(json.dumps(report, indent=2), encoding="utf8")
+    Path("e2e.report.full.json").write_text(
         json.dumps(report_full, indent=2), encoding="utf8"
     )
 

@@ -17,7 +17,6 @@ git clone https://github.com/neanes/byzantine-chant-ocr.git
 ## Repo Struture
 
 - `data/`: Contains the model's dataset.
-- `integrations/`: Contains scripts that use the output of the OCR engine to integrate with other software applications.
 - `models/`: Contains the model(s) and any supporting files.
 - `scripts/`: Contains scripts that are used for building the dataset, training the model, and using the OCR engine to perform OCR on images and PDFs.
 - `src/`: Contains the OCR engine.
@@ -182,27 +181,28 @@ python do_ocr.py doc.pdf 100 105
 
 ## End-to-End (E2E) Testing
 
-To run the E2E tests, make sure you are in your Python virtual environment (if you are using one), and go to the `e2e` directory. Before running the tests the first time, you must first run
+To run the E2E tests, make sure you are in your Python virtual environment (if you are using one), and go to the `e2e` directory. Then run the following command.
 
 ```bash
-npm install
+pytest
 ```
 
-After that, run the tests with the following command.
+These tests will generate two files called `e2e.report.json` and `e2e.report.full.json`, which contain detailed results of the tests.
+
+If you are making changes to code that does not affect the OCR process, you can set the `SKIP_OCR` environment variable to speed up the tests.
 
 ```bash
-npm test
+SKIP_OCR=true pytest
 ```
 
-In addition to the standard jest report, these tests will also generate a file called `OcrImporter.report.json`, which contain more detailed results.
+Note that these tests expect a model and metadata to be present in the `models/` folder.
 
 ### What do the tests do?
 
-The `e2e/data` folder contains images of pages from Byzantine chant publications, as well as a Neanes file that matches the image. The tests loop over these pages and does the following for each page.
+The `e2e/data` folder contains images of pages from Byzantine chant publications, as well as a Neanes file that matches the image. The tests loop over these images and does the following for each image.
 
-1. Runs the OCR engine on the page.
-2. Generates a Neanes file from the OCR output.
-3. Compare the generated Neanes file with the expected Neanes file found in the `e2e/data` folder.
+1. Runs the OCR engine on the image.
+2. Compares the output file with the neumes found in the corresponding Neanes file found in the `e2e/data` folder.
 
 Comparison uses the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) as metric of correctness. This currently only takes into account the similarity in the sequence of quantitative neumes. It does not consider gorgons, fthores, qualitative neumes, etc. The threshold to pass is set at 90% similarity, as of the writing of this document.
 
