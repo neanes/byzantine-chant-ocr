@@ -10,7 +10,18 @@ Download the latest app version from the [Releases page](https://github.com/nean
 
 ### Run the app
 
-Run the app and select a file to perform OCR on. For PDF files, input a page range. Then press `Go` and choose a location to save the file.
+Run the app and select a file to perform OCR on. For PDF files, input a page range. The table below explains the available settings. Select the options you want, then press `Go` and choose a location to save the file.
+
+| Setting              | What It Does                                                                                                                                                                                                                                                                                                               | Example                                                      |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| **Two-Page Spread**  | Check this if your image (or PDF page) shows two pages side-by-side. The app will automatically split them before processing.                                                                                                                                                                                              | <img src="./docs/images/ex_two_page_spread.png" width="300"> |
+| **Deskew**           | Straightens pages that are tilted. Even a small tilt—sometimes so small you can't see it—can confuse the OCR. Check this if the scan isn’t perfectly straight. The **max deg** parameter sets the maximum tilt angle the app will search for. Higher values correct larger tilts but increase processing time.             | <img src="./docs/images/ex_deskew.png" width="300">          |
+| **Despeckle**        | Check this if the image has lots of tiny black or white dots (“salt-and-pepper” noise). This applies a gentle smoothing filter. A larger **k-size** removes more dots but can slightly blur details.                                                                                                                       | <img src="./docs/images/ex_despeckle.png" width="300">       |
+| **Close Holes**      | Check this if neumes look broken or have small gaps. This fills in tiny holes so the shapes are easier for the OCR to read. A larger **k-size** fills in more, but may slightly thicken shapes. If you’ve also enabled **Despeckle**, it’s a good idea to turn this on, since despeckling can sometimes create tiny holes. | <img src="./docs/images/ex_close_holes.png" width="300">     |
+| **Use Latest Model** | When checked, the app automatically downloads the newest OCR model the first time you press **Go**. If a new model becomes available later, click **Check for Model Updates**. If unchecked, you'll need to choose the model files manually.                                                                               |                                                              |
+
+> [!NOTE]
+> Even small issues in your scan—like slight skew, tiny speckles, or small gaps in neumes—can have a surprisingly large impact on OCR accuracy. Applying the right settings can make a big difference, so don’t underestimate their effect.
 
 ### Import into Neanes
 
