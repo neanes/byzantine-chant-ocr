@@ -1,7 +1,7 @@
 -r requirements.txt
 fiftyone==1.10.0
 jupyter==1.1.1
-onnx==1.19.1
+onnx==1.20.0
 pytest==9.0.1
 torch==2.9.1
 torchvision==0.24.1
