@@ -20,7 +20,7 @@ jobs:
           python-version: '3.12'
 
       - name: Restore cached venv
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-model.txt') }}
           path: .venv
@@ -34,7 +34,7 @@ jobs:
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
 
       - name: Saved cached venv
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-model.txt') }}
           path: .venv
