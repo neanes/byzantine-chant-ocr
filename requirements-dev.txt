@@ -1,5 +1,5 @@
 -r requirements.txt
-fiftyone==1.13.1
+fiftyone==1.13.2
 jupyter==1.1.1
 onnx==1.20.1
 pytest==9.0.2
