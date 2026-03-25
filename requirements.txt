@@ -1,5 +1,5 @@
 imutils==0.5.4
-onnxruntime==1.24.3
+onnxruntime==1.24.4
 opencv-contrib-python==4.13.0.92
 opencv-python==4.13.0.92
 PyMuPDF==1.27.2
