@@ -17,8 +17,9 @@ from model_metadata import load_metadata
 def convert_to_onnx(model, onnx_path):
     model.eval()
 
+    device = next(model.parameters()).device
     size = 224
-    dummy_input = torch.randn(1, 3, size, size)
+    dummy_input = torch.randn(1, 3, size, size, device=device)
 
     torch.onnx.export(
         model,
