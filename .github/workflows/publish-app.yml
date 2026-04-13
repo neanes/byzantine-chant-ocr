@@ -27,30 +27,16 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-
-      - name: Restore cached venv
-        uses: actions/cache/restore@v5
-        with:
-          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-app.txt', 'requirements.txt') }}
-          path: .venv
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements-ci-app.txt
+            requirements.txt
 
       - name: Install dependencies
-        run: |
-          python -m venv .venv
-          source .venv/bin/activate || source .venv/scripts/activate
-          python -m pip install -r requirements-ci-app.txt
-          echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
-          echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
-
-      - name: Save cached venv
-        uses: actions/cache/save@v5
-        with:
-          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-app.txt', 'requirements.txt') }}
-          path: .venv
+        run: pip install -r requirements-ci-app.txt
 
       - name: Build
         run: |
-          source .venv/bin/activate || source .venv/scripts/activate
           cd src
           pyinstaller --noconsole --name byzantine-chant-ocr app.py
 
