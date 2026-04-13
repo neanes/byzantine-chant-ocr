@@ -5,16 +5,17 @@ on:
   push:
     tags:
       - 'model/v*.*.*'
-defaults:
-  run:
-    shell: bash
-
 jobs:
   train-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
         uses: actions/checkout@v6
+
+      - name: Set model version
+        id: set_version
+        shell: bash
+        run: printf 'model_version=%s\n' "${GITHUB_REF_NAME#model/v}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -29,13 +30,12 @@ jobs:
       - name: Train
         run: |
           cd scripts
-          python train.py --version $(echo "${{github.ref_name}}" | tr -d 'model/v')
+          python train.py --version "${{ steps.set_version.outputs.model_version }}"
           mv current_model.pth ../models/
 
       - name: Convert to ONNX
-        run: |
-          cd scripts
-          python convert_to_onnx.py
+        run: python convert_to_onnx.py
+        working-directory: scripts
 
       - name: Release
         uses: softprops/action-gh-release@v3
