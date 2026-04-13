@@ -35,7 +35,7 @@ jobs:
           echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
 
-      - name: Saved cached venv
+      - name: Save cached venv
         uses: actions/cache/save@v5
         with:
           key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements-ci-model.txt') }}
