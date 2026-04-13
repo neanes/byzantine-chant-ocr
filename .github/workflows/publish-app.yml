@@ -16,14 +16,15 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-14]
     steps:
-      - uses: actions/checkout@v6
+      - name: Check out
+        uses: actions/checkout@v6
 
       - name: Set app version
         id: set_version
         run: echo "app_version=${GITHUB_REF_NAME#app/}" >> $GITHUB_OUTPUT
 
-      - uses: actions/setup-python@v6
-        id: setup_python
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
