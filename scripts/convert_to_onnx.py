@@ -32,6 +32,7 @@ def convert_to_onnx(model, onnx_path):
         dynamic_axes={
             "input": {0: "batch_size", 2: "height", 3: "width"},
         },
+        dynamo=False,
     )
 
 
