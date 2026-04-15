@@ -36,7 +36,7 @@ jobs:
       - name: Train
         run: |
           cd scripts
-          python train.py
+          python train.py --epochs 1
           mv current_model.pth ../models/
 
       - name: Convert to ONNX
