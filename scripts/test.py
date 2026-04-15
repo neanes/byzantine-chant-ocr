@@ -8,12 +8,12 @@ Usage: python test.py
 
 import json
 import sys
-from torch.utils.data import DataLoader
-import torch
-from torch import nn
-import torch.nn.functional as F
 
+import torch
+import torch.nn.functional as F
 from ImageFolderWithPaths import ImageFolderWithPaths
+from torch import nn
+from torch.utils.data import DataLoader
 from torch_model import get_transform, load_model
 
 sys.path.append("../src")

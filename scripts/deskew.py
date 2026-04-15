@@ -1,10 +1,10 @@
-import cv2
 import sys
 
+import cv2
 from show_baselines_and_textlines import show_baselines_and_textlines
 
 sys.path.append("../src")
-from util import downsize, deskew
+from util import deskew, downsize
 
 
 def correct_skew(img_path, output_path):

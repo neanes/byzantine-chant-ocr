@@ -1,5 +1,6 @@
-import cv2
 import sys
+
+import cv2
 
 sys.path.append("../src")
 import util

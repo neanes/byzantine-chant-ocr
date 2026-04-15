@@ -1,7 +1,7 @@
 import os
-import matplotlib.pyplot as plt
 import re
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 DATASET_FOLDER = "../data/dataset"

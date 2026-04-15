@@ -1,7 +1,8 @@
 import argparse
 import os
-import pymupdf
 from pathlib import Path
+
+import pymupdf
 
 
 def extract(pdf_path, page_range, pdf_folder):

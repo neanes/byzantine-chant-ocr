@@ -1,6 +1,7 @@
-import cv2
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import cv2
 
 
 def split(img_path, output_path_left, output_path_right):

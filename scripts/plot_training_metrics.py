@@ -1,8 +1,9 @@
 import os
-import numpy as np
 import sys
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 
 def plot_metrics(file_path):

@@ -1,15 +1,16 @@
 """
 Show Baselines and Textlines
 
-This script draws an overlay of the baselines and textlines calculated by the OCR engine. 
+This script draws an overlay of the baselines and textlines calculated by the OCR engine.
 
 It is used for evaluating and debugging the segmentation logic.
 
 Usage: python show_baselines_and_textlines.py image.png
 """
 
-import cv2
 import sys
+
+import cv2
 
 sys.path.append("../src")
 from segmentation import segment

@@ -1,6 +1,7 @@
+import math
+
 import cv2
 import imutils
-import math
 import numpy as np
 from scipy.ndimage import interpolation as inter
 
@@ -141,7 +142,7 @@ def deskew(img, limit, delta):
 
     best_angle = gss_max(determine_score, lower_limit, upper_limit, 0.1)
 
-    (h, w) = img.shape[:2]
+    h, w = img.shape[:2]
     center = (w // 2, h // 2)
     M = cv2.getRotationMatrix2D(center, best_angle, 1.0)
     corrected = cv2.warpAffine(

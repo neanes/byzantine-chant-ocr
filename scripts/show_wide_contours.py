@@ -8,11 +8,12 @@ It is used for evaluating and debugging the segmentation logic.
 Usage: python show_wide_contours.py image.png
 """
 
-import cv2
 import sys
 
+import cv2
+
 sys.path.append("../src")
-from segmentation import segment, find_wide_contours
+from segmentation import find_wide_contours, segment
 
 
 def show_wide_contours(img_path, output_path):

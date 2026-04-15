@@ -1,6 +1,5 @@
 import torch
-from torchvision import models
-from torchvision import transforms
+from torchvision import models, transforms
 
 
 def load_model(model_path, classes):

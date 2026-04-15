@@ -1,9 +1,10 @@
-import cv2
 import sys
 
+import cv2
+
 sys.path.append("../src")
-from segmentation import segment
 import util
+from segmentation import segment
 
 
 def show_all_contours(img_path, output_path):

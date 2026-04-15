@@ -9,8 +9,8 @@ It is useful for quickly searching many pages for circular neumes and creating a
 only likely candidates.
 """
 
-from show_circles2 import filter
 from create_dataset import setup
+from show_circles2 import filter
 
 if __name__ == "__main__":
     setup(contour_filter=filter)

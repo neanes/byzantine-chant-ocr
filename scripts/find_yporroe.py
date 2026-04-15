@@ -7,8 +7,8 @@ It is useful for quickly searching many pages for yprorre neumes and creating a 
 only likely candidates.
 """
 
-from show_yporroe import filter
 from create_dataset import setup
+from show_yporroe import filter
 
 if __name__ == "__main__":
     setup(contour_filter=filter)
