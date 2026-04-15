@@ -2,6 +2,6 @@
 fiftyone==1.14.1
 jupyter==1.1.1
 onnx==1.21.0
-pytest==9.0.2
+pytest==9.0.3
 torch==2.11.0
 torchvision==0.26.0
