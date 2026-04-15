@@ -2,13 +2,14 @@
 Segmentation
 
 This script contains utilities for detecting baselines, textlines
-and other dimensional properties in scanned documents using OpenCV 
+and other dimensional properties in scanned documents using OpenCV
 and mathematical tools.
 """
 
+import math
+
 import cv2
 import numpy as np
-import math
 from scipy import signal, stats
 
 import util

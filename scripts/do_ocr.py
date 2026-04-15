@@ -1,7 +1,7 @@
 """
 Do OCR
 
-This is the main script. 
+This is the main script.
 
 Usage: python do_ocr.py infile start end
 
@@ -11,13 +11,14 @@ end: The last page of the PDF to process.
 """
 
 import argparse
-import cv2
 import sys
+
+import cv2
 import yaml
 
 sys.path.append("../src")
-from model_metadata import load_metadata
 from model import load_onnx_model
+from model_metadata import load_metadata
 from ocr import PreprocessOptions, process_image, process_pdf
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 """
 Show Text Regions
 
-This script highlights the regions that are considered to be occupied by text, 
+This script highlights the regions that are considered to be occupied by text,
 as determined by the OCR engine. Text regions are defined as regions that are
 localized around the calculated textlines.
 
@@ -10,8 +10,9 @@ It is used for evaluating and debugging the segmentation logic.
 Usage: python show_text_regions.py image.png
 """
 
-import cv2
 import sys
+
+import cv2
 
 sys.path.append("../src")
 from segmentation import segment

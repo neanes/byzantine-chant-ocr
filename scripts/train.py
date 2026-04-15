@@ -10,20 +10,17 @@ Usage: python train.py
 
 import argparse
 import csv
+import datetime
 import json
 import sys
+from test import test_model
+
 import torch
-import datetime
-from torchvision import models
-from torchvision import transforms
-from torch.utils.data import DataLoader
-from torch.utils.data import Dataset
-from torchvision import datasets
 import torch.nn as nn
 import torch.optim as optim
-
 from ImageFolderWithPaths import ImageFolderWithPaths
-from test import test_model
+from torch.utils.data import DataLoader, Dataset
+from torchvision import datasets, models, transforms
 
 sys.path.append("../src")
 from model_metadata import ModelMetadata

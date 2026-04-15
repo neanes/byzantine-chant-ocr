@@ -1,5 +1,5 @@
-from enum import Enum
 from dataclasses import dataclass, field
+from enum import Enum
 
 from e2e_models import EmptyElement, NoteElement
 

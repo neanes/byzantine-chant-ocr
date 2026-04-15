@@ -3,10 +3,10 @@ import numpy as np
 import pymupdf
 import yaml
 
+import util
 from analysis_models import Analysis, Circle, ContourMatch, PageAnalysis, Rect
 from interpretation import interpret_page_analysis
 from interpretation_options import InterpretationOptions
-import util
 from model import transform
 from segmentation import segment
 from text_removal import remove_text
@@ -219,7 +219,7 @@ def prepare_matches_from_contours(
             if new_w > 0 and new_h > 0:
                 resized = cv2.resize(roi, (new_w, new_h), interpolation=cv2.INTER_CUBIC)
 
-                (tH, tW) = resized.shape
+                tH, tW = resized.shape
                 dX = int(max(0, target_size - tW) / 2.0)
                 dY = int(max(0, target_size - tH) / 2.0)
                 # pad the image and force dimensions

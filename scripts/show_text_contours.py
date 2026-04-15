@@ -8,8 +8,9 @@ It is used for evaluating and debugging the segmentation logic.
 Usage: python show_text_contours.py image.png
 """
 
-import cv2
 import sys
+
+import cv2
 
 sys.path.append("../src")
 import text_removal

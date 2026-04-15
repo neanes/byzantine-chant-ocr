@@ -7,14 +7,14 @@ Usage: python predict_image.py image.png
 """
 
 import argparse
-import cv2
 import json
 import sys
+
+import cv2
 import torch
 import torch.nn as nn
 from PIL import Image
-
-from torch_model import load_model, get_transform
+from torch_model import get_transform, load_model
 
 sys.path.append("../src")
 from model_metadata import load_metadata

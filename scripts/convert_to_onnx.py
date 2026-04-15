@@ -6,8 +6,8 @@ This script converts a PTH model into the ONNX format.
 
 import argparse
 import sys
-import torch
 
+import torch
 from torch_model import load_model
 
 sys.path.append("../src")

@@ -1,15 +1,15 @@
-import cv2
 import datetime
-import imutils
 import os
-import pymupdf
 import sys
+from pathlib import Path
+
+import cv2
+import imutils
+import pymupdf
 import torch
 import torch.nn as nn
-from pathlib import Path
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
-
 from torch_model import get_transform
 
 sys.path.append("../src")
@@ -89,7 +89,7 @@ def process_pdf(pdf_path, page_range, pdf_folder, contour_folder, target_size=22
             if new_w > 0 and new_h > 0:
                 resized = cv2.resize(roi, (new_w, new_h), interpolation=cv2.INTER_CUBIC)
 
-                (tH, tW) = resized.shape
+                tH, tW = resized.shape
                 dX = int(max(0, target_size - tW) / 2.0)
                 dY = int(max(0, target_size - tH) / 2.0)
                 # pad the image and force dimensions

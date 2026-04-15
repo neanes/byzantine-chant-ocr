@@ -1,13 +1,13 @@
 import argparse
-import cv2
 import os
 import sys
+
+import cv2
 import torch
 import torch.nn as nn
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
-
-from torch_model import load_model, get_transform
+from torch_model import get_transform, load_model
 
 sys.path.append("../src")
 from model_metadata import load_metadata

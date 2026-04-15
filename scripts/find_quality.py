@@ -7,9 +7,8 @@ It is useful for quickly searching many pages for such neumes and creating a dat
 only likely candidates.
 """
 
-from show_quality import transform
 from create_dataset import setup
-
+from show_quality import transform
 
 if __name__ == "__main__":
     setup(transform)

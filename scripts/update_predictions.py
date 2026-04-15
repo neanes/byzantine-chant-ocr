@@ -1,10 +1,11 @@
 import sys
+
 import cv2
-from torchvision import transforms
-import torchvision.models as models
 import torch
-from torch import nn
+import torchvision.models as models
 from PIL import Image
+from torch import nn
+from torchvision import transforms
 
 sys.path.append("../src")
 from model_metadata import load_metadata

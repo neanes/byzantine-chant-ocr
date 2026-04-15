@@ -1,33 +1,33 @@
+import json
+import os
+import sys
 from dataclasses import asdict
 from enum import Enum
-import json
-import sys
-import cv2
-import os
-import pytest
 from pathlib import Path
 
+import cv2
+import pytest
 import yaml
 
 sys.path.append("../src")
 
-from neume_map import neume_map
-from neume_compare import (
-    calculate_scorecard,
-)
+# If you are tweaking only the interpretation code, set env SKIP_OCR=true
+import os
+
 from e2e_models import (
     MartyriaElement,
     NoteElement,
     TempoElement,
 )
+from levenshtein import backtrack_alignment, levenshtein_distance
+from neume_compare import (
+    calculate_scorecard,
+)
+from neume_map import neume_map
+
 from model import load_onnx_model
 from model_metadata import load_metadata
 from ocr import PreprocessOptions, process_image, save_analysis
-from levenshtein import backtrack_alignment, levenshtein_distance
-
-
-# If you are tweaking only the interpretation code, set env SKIP_OCR=true
-import os
 
 SKIP_OCR = os.getenv("SKIP_OCR") == "true"
 

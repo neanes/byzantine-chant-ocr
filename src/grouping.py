@@ -1,5 +1,5 @@
-from interpretation_options import InterpretationOptions
 from analysis_models import ContourMatch, PageAnalysis
+from interpretation_options import InterpretationOptions
 
 
 class AugmentedContourMatch(ContourMatch):

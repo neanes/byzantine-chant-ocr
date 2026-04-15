@@ -5,7 +5,7 @@ This script creates a dataset by searching a PDF or image.
 
 Before extracting contours, the text is removed.
 
-If you want to find rarer neumes without wading through many common neumes, 
+If you want to find rarer neumes without wading through many common neumes,
 consider using the "find" scripts:
 - find_circles.py
 - find_ypsili.py
@@ -16,18 +16,18 @@ neumes are extracted.
 """
 
 import argparse
-import cv2
 import datetime
-import imutils
 import os
-import pymupdf
 import sys
+from pathlib import Path
+
+import cv2
+import imutils
+import pymupdf
 import torch
 import torch.nn as nn
-from pathlib import Path
 from PIL import Image
-
-from torch_model import load_model, get_transform
+from torch_model import get_transform, load_model
 
 sys.path.append("../src")
 from model_metadata import load_metadata
@@ -116,7 +116,7 @@ def process_pdf(
             if new_w > 0 and new_h > 0:
                 resized = cv2.resize(roi, (new_w, new_h), interpolation=cv2.INTER_CUBIC)
 
-                (tH, tW) = resized.shape
+                tH, tW = resized.shape
                 dX = int(max(0, target_size - tW) / 2.0)
                 dY = int(max(0, target_size - tH) / 2.0)
                 # pad the image and force dimensions

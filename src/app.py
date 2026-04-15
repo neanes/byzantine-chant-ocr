@@ -1,11 +1,11 @@
 import argparse
-from pathlib import Path
-import cv2
 import os
-import pymupdf
 import sys
 import traceback
+from pathlib import Path
 
+import cv2
+import pymupdf
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
@@ -22,9 +22,9 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from model import load_onnx_model
 from model_downloader import download_latest_model
 from model_metadata import load_metadata
-from model import load_onnx_model
 from ocr import (
     PreprocessOptions,
     process_image,
