@@ -198,6 +198,11 @@ def train(model_version="0.0.0", num_epochs=50):
             for phase in ["train", "val"]:
                 if phase == "train":
                     model.train()
+                    # Backbone is frozen (requires_grad=False), but that doesn't stop
+                    # BN running_mean/running_var from updating in train() mode. Keep
+                    # features in eval mode so frozen gamma/beta stay matched to the
+                    # pretrained running stats they were calibrated for.
+                    model.features.eval()
                 else:
                     model.eval()
 
