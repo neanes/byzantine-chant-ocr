@@ -3,7 +3,7 @@ import math
 import cv2
 import imutils
 import numpy as np
-from scipy.ndimage import interpolation as inter
+from scipy.ndimage import rotate
 
 
 def to_binary(image):
@@ -92,7 +92,7 @@ def pixels_in_row(binary_image):
 
 def find_skew_angles(binary_image, limit, delta):
     def determine_score(arr, angle):
-        data = inter.rotate(arr, angle, reshape=False, order=0)
+        data = rotate(arr, angle, reshape=False, order=0)
         histogram = np.sum(data, axis=1, dtype=float)
         score = np.sum((histogram[1:] - histogram[:-1]) ** 2, dtype=float)
         return score
@@ -135,7 +135,7 @@ def deskew(img, limit, delta):
     lower_limit = min(sorted_angles[:3])
 
     def determine_score(angle):
-        data = inter.rotate(binary_image, angle, reshape=False, order=0)
+        data = rotate(binary_image, angle, reshape=False, order=0)
         histogram = np.sum(data, axis=1, dtype=float)
         score = np.sum((histogram[1:] - histogram[:-1]) ** 2, dtype=float)
         return score
