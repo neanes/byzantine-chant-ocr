@@ -9,6 +9,7 @@ Usage: python train.py
 """
 
 import argparse
+import copy
 import csv
 import datetime
 import json
@@ -38,7 +39,7 @@ class EarlyStopper:
         if validation_loss < self.min_validation_loss:
             self.min_validation_loss = validation_loss
             self.counter = 0
-            self.best_model_weights = model.state_dict()
+            self.best_model_weights = copy.deepcopy(model.state_dict())
         elif validation_loss > (self.min_validation_loss + self.min_delta):
             self.counter += 1
             if self.counter >= self.patience:
@@ -78,7 +79,7 @@ def train(model_version="0.0.0", num_epochs=50):
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # Define augmentations for training data
+    # Define preprocessing transforms
     data_transforms = {
         "train": transforms.Compose(
             [
@@ -173,13 +174,36 @@ def train(model_version="0.0.0", num_epochs=50):
     for param in model.features.parameters():
         param.requires_grad = False
 
+    # Unfreeze the last InvertedResidual block (features[17]) and the final
+    # 1x1 conv (features[18]) so the head of the backbone can adapt to neume
+    # crops, which are far enough from ImageNet that frozen features alone
+    # leave accuracy on the table.
+    for block in (model.features[17], model.features[18]):
+        for param in block.parameters():
+            param.requires_grad = True
+
+    # Discriminative learning rates: standard rate for the new classifier head,
+    # 10x lower for the unfrozen backbone tail to avoid catastrophic forgetting
+    # of the pretrained features.
     optimizer = optim.Adam(
-        model.classifier.parameters(), lr=0.001
-    )  # Only update classifier layers
+        [
+            {"params": model.classifier.parameters(), "lr": 1e-3},
+            {
+                "params": [p for p in model.features.parameters() if p.requires_grad],
+                "lr": 1e-4,
+            },
+        ]
+    )
     criterion = nn.CrossEntropyLoss()
 
-    # Training loop (same as before)
-    # patience=5, min_delta=1e-4
+    # Frozen backbone modules must stay in eval() during the train phase so
+    # their BN running stats remain matched to the pretrained gamma/beta.
+    # Unfrozen blocks stay in train() mode so their BN stats adapt alongside
+    # the weights being fine-tuned.
+    frozen_blocks = [
+        b for b in model.features if not any(p.requires_grad for p in b.parameters())
+    ]
+
     early_stopper = EarlyStopper(patience=3, min_delta=1e-3)
 
     stop_early = False
@@ -198,11 +222,8 @@ def train(model_version="0.0.0", num_epochs=50):
             for phase in ["train", "val"]:
                 if phase == "train":
                     model.train()
-                    # Backbone is frozen (requires_grad=False), but that doesn't stop
-                    # BN running_mean/running_var from updating in train() mode. Keep
-                    # features in eval mode so frozen gamma/beta stay matched to the
-                    # pretrained running stats they were calibrated for.
-                    model.features.eval()
+                    for block in frozen_blocks:
+                        block.eval()
                 else:
                     model.eval()
 
