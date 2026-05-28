@@ -13,7 +13,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-14]
     steps:
       - name: Check out
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Set app version
         id: set_version
@@ -21,7 +21,7 @@ jobs:
         run: printf 'app_version=%s\n' "${GITHUB_REF_NAME#app/v}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.0.2
         with:
           python-version: '3.12'
           cache: 'pip'
@@ -51,7 +51,7 @@ jobs:
           }
 
       - name: Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v3.0.0
         with:
           files: src/dist/byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip
           draft: true
