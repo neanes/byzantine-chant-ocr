@@ -38,7 +38,7 @@ jobs:
         working-directory: scripts
 
       - name: Release
-        uses: softprops/action-gh-release@v3.0.0
+        uses: softprops/action-gh-release@v3.0.1
         with:
           files: |
             models/metadata.json

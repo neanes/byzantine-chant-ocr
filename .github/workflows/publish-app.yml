@@ -51,7 +51,7 @@ jobs:
           }
 
       - name: Release
-        uses: softprops/action-gh-release@v3.0.0
+        uses: softprops/action-gh-release@v3.0.1
         with:
           files: src/dist/byzantine-chant-ocr-${{ steps.set_version.outputs.app_version }}-${{ runner.os }}.zip
           draft: true
