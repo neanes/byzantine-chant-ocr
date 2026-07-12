@@ -8,6 +8,11 @@ updates:
       interval: 'daily'
     cooldown:
       default-days: 7
+    groups:
+      opencv:
+        patterns:
+          - 'opencv-contrib-python'
+          - 'opencv-python'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
