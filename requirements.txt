@@ -2,7 +2,7 @@ imutils==0.5.4
 onnxruntime==1.28.0
 opencv-contrib-python==5.0.0.93
 opencv-python==5.0.0.93
-PyMuPDF==1.28.0
+PyMuPDF==1.28.2
 PyYAML==6.0.3
 requests==2.34.2
 scipy==1.18.0
