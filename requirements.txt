@@ -5,5 +5,5 @@ opencv-python==5.0.0.93
 PyMuPDF==1.28.2
 PyYAML==6.0.3
 requests==2.34.2
-scipy==1.18.0
+scipy==1.18.1
 PySide6==6.11.2
