@@ -4,7 +4,7 @@ fiftyone==1.21.0
 isort==9.0.1
 jupyter==1.1.1
 onnx==1.22.0
-onnxscript==0.7.1
+onnxscript==0.7.2
 pytest==9.1.1
 torch==2.14.0
 torchvision==0.29.0
