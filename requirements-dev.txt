@@ -1,7 +1,7 @@
 -r requirements.txt
 black==26.5.1
 fiftyone==1.22.1
-isort==9.0.1
+isort==9.0.2
 jupyter==1.1.1
 onnx==1.23.0
 onnxscript==0.7.2
