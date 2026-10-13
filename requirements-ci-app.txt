@@ -1,4 +1,4 @@
 -r requirements.txt
-black==26.5.1
+black==26.10.0
 isort==9.0.2
 pyinstaller==6.22.3
