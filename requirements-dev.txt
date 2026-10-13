@@ -1,5 +1,5 @@
 -r requirements.txt
-black==26.5.1
+black==26.10.0
 fiftyone==1.22.1
 isort==9.0.2
 jupyter==1.1.1
