@@ -1,5 +1,5 @@
 onnx==1.23.2
-onnxruntime==1.30.0
+onnxruntime==1.31.0
 onnxscript==0.7.2
 torch==2.14.1
 torchvision==0.29.1
