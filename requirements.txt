@@ -3,7 +3,7 @@ onnxruntime==1.32.0
 opencv-contrib-python==5.1.0.95
 opencv-python==5.1.0.95
 PyMuPDF==2.1
-PyYAML==6.0.3
+PyYAML==6.0.4
 requests==2.34.2
 scipy==1.18.1
 PySide6==6.12.0
